@@ -122,7 +122,7 @@ class SignalProcessing:
 
 
 signal = SignalProcessing()
-signal.read_signal_file()
+signal.read_signal_file(filename='signal1.txt')
 
 
 signal.plot_analog()
