@@ -40,8 +40,8 @@ class SignalProcessing:
         # Draw the x-axis line
         plt.axhline(0, color='black')
 
-        # Set y-axis limits
-        plt.ylim(-y_range, y_range)
+        plt.xlim(min(self.x_values), max(self.x_values) + 1)
+        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
 
         # Set labels and title
         plt.xlabel('n')
@@ -57,7 +57,8 @@ class SignalProcessing:
         plt.step(self.x_values, self.y_values, 'b', where='post')
 
         plt.axhline(0, color='black')
-        plt.ylim(-y_range, y_range)
+        plt.xlim(min(self.x_values), max(self.x_values) + 1)
+        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
         plt.xlabel('n')
         plt.ylabel('x[n]')
         plt.title('Continuous(t) Discrete(A) Representation')
@@ -65,7 +66,6 @@ class SignalProcessing:
         plt.show()
 
     def plot_analog(self):
-
         # Determine the range of the y-axis
         y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)
 
@@ -74,12 +74,11 @@ class SignalProcessing:
         p = Polynomial.fit(self.x_values, self.y_values, degree)
         x_smooth = np.linspace(min(self.x_values), max(self.x_values), 1000)
         y_smooth = p(x_smooth)
-
         plt.plot(x_smooth, y_smooth, 'b')
         plt.axhline(0, color='black')
-
         # Set y-axis limits
-        plt.ylim(-y_range, y_range)
+        plt.xlim(min(x_smooth) , max(x_smooth)+1)
+        plt.ylim(min(y_smooth)-1, max(y_smooth)+1)
         plt.xlabel('n')
         plt.ylabel('x[n]')
         plt.title('Analog Representation')
