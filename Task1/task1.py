@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from numpy.polynomial import Polynomial
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+import tkinter as tk
 
 
 class SignalProcessing:
@@ -106,6 +108,59 @@ class SignalProcessing:
 
         if current_test_case:
             self.test_cases.append(current_test_case)
+
+    # Function to display sine or cosine wave
+    def display_wave(self, wave_type):
+        x = np.linspace(0, 2 * np.pi, 1000)
+        if wave_type == "sin":
+            y = np.sin(x)
+            title = "Sinusoidal Signal"
+        elif wave_type == "cos":
+            y = np.cos(x)
+            title = "Cosinusoidal Signal"
+        # If the canvas exists, delete it
+        if hasattr(self.display_wave, "canvas"):
+            self.display_wave.canvas.get_tk_widget().pack_forget()
+
+        # Create a new figure for the plot
+        fig, ax = plt.subplots()
+        ax.plot(x, y)
+        ax.set_title(title)
+
+        # Embed the plot in the Tkinter window
+        self.display_wave = FigureCanvasTkAgg(fig, master=self.window)
+        self.display_wave.canvas.get_tk_widget().pack()
+        self.display_wave.canvas.draw()
+
+    def gui_display(self):
+
+        # Create the main window
+        self.window = tk.Tk()
+        self.window.title("Sine/Cosine Wave Viewer")
+
+        # Create a label
+        label = tk.Label(self.window, text="Select a wave to view:")
+        label.pack()
+
+        # Create radio buttons for selecting the wave type
+        wave_var = tk.StringVar()
+        wave_var.set("sin")  # Default selection
+        sine_radio = tk.Radiobutton(
+            self.window, text="sin", variable=wave_var, value="sin")
+        cosine_radio = tk.Radiobutton(
+            self.window, text="cos", variable=wave_var, value="cos")
+        sine_radio.pack()
+        cosine_radio.pack()
+
+        # Create a button to display the selected wave
+        display_button = tk.Button(
+            self.window, text="Display", command=lambda: self.display_wave(wave_var.get()))
+        display_button.pack()
+
+        # Run the main loop
+        self.window.mainloop()
+
+
 signal = SignalProcessing()
 signal.read_signal_file(filename='signal1.txt')
 
@@ -114,3 +169,4 @@ signal.read_signal_file(filename='signal1.txt')
 # signal.plot_digital()
 # signal.plot_continuous_discrete()
 signal.read_input()
+signal.gui_display()

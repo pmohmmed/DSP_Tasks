@@ -1,7 +1,7 @@
 import tkinter as tk
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+# from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 # Function to display sine or cosine wave
