@@ -85,6 +85,41 @@ class SignalProcessing:
         plt.grid(True)
         plt.show()
 
+    def read_input(self,filename = 'Sin_Cos\Inputs.txt'):
+        # Read the contents of the file
+        with open(filename, 'r') as file:
+            lines = file.readlines()
+
+        # Parse the lines and extract the values for "sin" and "cos" cases
+        for line in lines:
+            parts = line.split("=")
+            if len(parts) == 2:
+                parameter_name = parts[0].strip()
+                parameter_value = parts[1].strip()
+
+                if parameter_name == "type" and parameter_value == "sin":
+                    type_sin = parameter_value
+                elif parameter_name == "A":
+                    if type_sin == "sin":
+                        A_sin = float(parameter_value)
+                    elif type_sin == "cos":
+                        A_cos = float(parameter_value)
+                elif parameter_name == "AnalogFrequency":
+                    if type_sin == "sin":
+                        AnalogFrequency_sin = float(parameter_value)
+                    elif type_sin == "cos":
+                        AnalogFrequency_cos = float(parameter_value)
+                elif parameter_name == "SamplingFrequency":
+                    if type_sin == "sin":
+                        SamplingFrequency_sin = float(parameter_value)
+                    elif type_sin == "cos":
+                        SamplingFrequency_cos = float(parameter_value)
+                elif parameter_name == "PhaseShift":
+                    if type_sin == "sin":
+                        PhaseShift_sin = float(parameter_value)
+                    elif type_sin == "cos":
+                        PhaseShift_cos = float(parameter_value)
+
 
 signal = SignalProcessing()
 signal.read_signal_file()
