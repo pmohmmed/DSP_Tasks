@@ -86,7 +86,6 @@ class SignalProcessing:
         plt.show()
 
     def read_input(self, filename='Sin_Cos/Inputs.txt'):
-
         with open(filename, "r") as file:
             file_content = file.read()
 
@@ -101,12 +100,12 @@ class SignalProcessing:
                     current_test_case = {}
             elif "=" in line:
                 key, value = line.split("=")
-                current_test_case[key.strip()] = value.strip()
+                key = key.strip()
+                value = value.strip().strip('"')  # Remove double quotes if present
+                current_test_case[key] = value
 
         if current_test_case:
             self.test_cases.append(current_test_case)
-
-
 signal = SignalProcessing()
 signal.read_signal_file(filename='signal1.txt')
 

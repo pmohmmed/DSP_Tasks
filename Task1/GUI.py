@@ -1,46 +1,50 @@
+import tkinter as tk
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Parameters
-A = 3
-AnalogFrequency = 200
-SamplingFrequency = 500
-PhaseShift = 2.35619449019235
 
-# Calculate the angular frequency (ω) based on the Analog Frequency
-angular_frequency = 2 * np.pi * AnalogFrequency
-print(np.pi)
-print(angular_frequency)
+# Function to display sine or cosine wave
+def display_wave(wave_type):
+    x = np.linspace(0, 2 * np.pi, 1000)
+    if wave_type == "Sine":
+        y = np.sin(x)
+        title = "Sine Wave"
+    elif wave_type == "Cosine":
+        y = np.cos(x)
+        title = "Cosine Wave"
 
-# Given data points
-data = [
-    0,
-    0,
-    720,
-    0, 2.771639,
-    1, -2.771639,
-    2, 2.771639,
-    3, -2.771639,
-    4, 2.771639,
-    5, -2.771639,
-    6, 2.771639,
-    7, -2.771639,
-    8, 2.771639,
-    9, -2.771639
-]
 
-# Initialize an empty list to store the modeled sine wave
-sine_wave = []
+    # Create a new figure for the plot
+    fig, ax = plt.subplots()
+    ax.plot(x, y)
+    ax.set_title(title)
 
-# Loop through the data points
-for i in range(2, len(data), 2):
-    time = i // 2
-    print(time)# Time is derived from the data index
-    value = data[i]  # Amplitude value from the data
+    # Embed the plot in the Tkinter window
+    display_wave.canvas = FigureCanvasTkAgg(fig, master=window)
+    display_wave.canvas.get_tk_widget().pack()
+    display_wave.canvas.draw()
 
-    # Calculate the sine wave at this time point
-    sine_value = A * np.cos(angular_frequency * time / SamplingFrequency + PhaseShift)
 
-    # Append the modeled sine value to the list
-    sine_wave.append(sine_value)
-    print(f"Time = {time}, Modeled Sine Value = {sine_value:.6f}")
-# Now, 'sine_wave' contains the modeled sine wave for each data point
+# Create the main window
+window = tk.Tk()
+window.title("Sine/Cosine Wave Viewer")
+
+# Create a label
+label = tk.Label(window, text="Select a wave to view:")
+label.pack()
+
+# Create radio buttons for selecting the wave type
+wave_var = tk.StringVar()
+wave_var.set("Sine")  # Default selection
+sine_radio = tk.Radiobutton(window, text="Sine", variable=wave_var, value="Sine")
+cosine_radio = tk.Radiobutton(window, text="Cosine", variable=wave_var, value="Cosine")
+sine_radio.pack()
+cosine_radio.pack()
+
+# Create a button to display the selected wave
+display_button = tk.Button(window, text="Display", command=lambda: display_wave(wave_var.get()))
+display_button.pack()
+
+# Run the main loop
+window.mainloop()
