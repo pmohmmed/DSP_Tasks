@@ -77,7 +77,7 @@ class SignalProcessing:
         plt.plot(x_smooth, y_smooth, 'b')
         plt.axhline(0, color='black')
         # Set y-axis limits
-        plt.xlim(min(x_smooth) , max(x_smooth)+1)
+        plt.xlim(min(x_smooth), max(x_smooth)+1)
         plt.ylim(min(y_smooth)-1, max(y_smooth)+1)
         plt.xlabel('n')
         plt.ylabel('x[n]')
@@ -85,12 +85,33 @@ class SignalProcessing:
         plt.grid(True)
         plt.show()
 
+    def read_input(self, filename='Sin_Cos/Inputs.txt'):
+
+        with open(filename, "r") as file:
+            file_content = file.read()
+
+        self.test_cases = []
+        current_test_case = {}
+
+        lines = file_content.split("\n")
+        for line in lines:
+            if line.strip() == "":
+                if current_test_case:
+                    self.test_cases.append(current_test_case)
+                    current_test_case = {}
+            elif "=" in line:
+                key, value = line.split("=")
+                current_test_case[key.strip()] = value.strip()
+
+        if current_test_case:
+            self.test_cases.append(current_test_case)
+
 
 signal = SignalProcessing()
 signal.read_signal_file(filename='signal1.txt')
 
 
-signal.plot_analog()
-signal.plot_digital()
-signal.plot_continuous_discrete()
-
+# signal.plot_analog()
+# signal.plot_digital()
+# signal.plot_continuous_discrete()
+signal.read_input()
