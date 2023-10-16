@@ -36,7 +36,6 @@ class SignalProcessing:
         # Extract x and y values from the two-value groups
         self.x_values = self.samples[:, 0]
         self.y_values = self.samples[:, 1]
-        file.close()
 
     def plot_digital(self):
 
@@ -116,95 +115,80 @@ class SignalProcessing:
         if current_test_case:
             self.test_cases.append(current_test_case)
 
-        file.close()
-
     # Function to display sine or cosine wave
     def display_wave(self, wave_type):
         title = ''
-        wave_sin = []
-        wave_cos = []
+        wave = []
+        indicis = None
 
-        # =====================================
-        # ---             SIN
-        # Calculate the angular frequency (ω) based on the Analog Frequency
-        angular_frequency = 2 * np.pi * \
-            int(self.test_cases[0]['AnalogFrequency'])
-        # Initialize an empty list to store the modeled sine wave and indices
-        indicis_sin = range(
-            0, int(self.test_cases[0]['SamplingFrequency']))
+        if wave_type == "sin":
+            # Calculate the angular frequency (ω) based on the Analog Frequency
+            angular_frequency = 2 * np.pi * \
+                int(self.test_cases[0]['AnalogFrequency'])
+            # Initialize an empty list to store the modeled sine wave and indices
+            indicis = range(
+                0, int(self.test_cases[0]['SamplingFrequency']))
 
-        # Loop through the data points
-        for i in indicis_sin:
-            # Calculate the sine wave at this time point
-            sine_value = int(self.test_cases[0]['A']) * np.sin(angular_frequency * i / int(
-                self.test_cases[0]['SamplingFrequency']) + float(self.test_cases[0]['PhaseShift']))
+            # Loop through the data points
+            for i in indicis:
+                # Calculate the sine wave at this time point
+                sine_value = int(self.test_cases[0]['A']) * np.sin(angular_frequency * i / int(
+                    self.test_cases[0]['SamplingFrequency']) + float(self.test_cases[0]['PhaseShift']))
 
-            # Append the modeled sine value to the list
-            wave_sin.append(sine_value)
+                # Append the modeled sine value to the list
+                wave.append(sine_value)
+            # Now, 'wave' contains the modeled sine wave for each data point
+            print(indicis)
+            print(wave)
+            SignalSamplesAreEqual(
+                file_name='Sin_Cos/SinOutput.txt', indices=indicis, samples=wave)
 
-        # =====================================
-        # ---             COS
-        # Calculate the angular frequency (ω) based on the Analog Frequency
-        angular_frequency = 2 * np.pi * \
-            int(self.test_cases[1]['AnalogFrequency'])
-        # Initialize an empty list to store the modeled sine wave and indices
-        indicis_cos = range(
-            0, int(self.test_cases[1]['SamplingFrequency']))
+            title = "Sinusoidal Signal"
 
-        # Loop through the data points
-        for i in indicis_cos:
-            # Calculate the cos wave at this time point
-            cosine_value = int(self.test_cases[1]['A']) * np.cos(
-                angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(
-                    self.test_cases[1]['PhaseShift']))
+        elif wave_type == "cos":
+            # Calculate the angular frequency (ω) based on the Analog Frequency
+            angular_frequency = 2 * np.pi * \
+                int(self.test_cases[1]['AnalogFrequency'])
+            # Initialize an empty list to store the modeled sine wave and indices
+            indicis = range(
+                0, int(self.test_cases[1]['SamplingFrequency']))
 
-            # Append the modeled sine value to the list
-            wave_cos.append(cosine_value)
+            # Loop through the data points
+            for i in indicis:
+                # Calculate the cos wave at this time point
+                cosine_value = int(self.test_cases[1]['A']) * np.cos(
+                    angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(
+                        self.test_cases[1]['PhaseShift']))
 
+                # Append the modeled sine value to the list
+                wave.append(cosine_value)
+            # Now, 'cos_wave' contains the modeled sine wave for each data point
+            print(indicis)
+            print(wave)
+            SignalSamplesAreEqual(
+                file_name='Sin_Cos/CosOutput.txt', indices=indicis, samples=wave)
+
+            title = "Cosinusoidal Signal"
         # If the canvas exists, delete it
         if self.display_canvas:
             self.display_canvas.get_tk_widget().pack_forget()
 
-        # x_smooth = np.linspace(min(indicis), max(indicis), 10000)
-        # y_smooth = []
-        # for i in x_smooth:
-        #     # Calculate the cos wave at this time point
-        #     cosine_value = int(self.test_cases[1]['A']) * np.cos(
-        #         angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(
-        #             self.test_cases[1]['PhaseShift']))
-        #     y_smooth.append(cosine_value)
+        x_smooth = np.linspace(min(indicis), max(indicis), 10000)
+        y_smooth = []
+        for i in x_smooth:
+            # Calculate the cos wave at this time point
+            cosine_value = int(self.test_cases[1]['A']) * np.cos(
+                angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(
+                    self.test_cases[1]['PhaseShift']))
+            y_smooth.append(cosine_value)
+
         # Create a new figure for the plot
         fig, ax = plt.subplots()
-
-        if(wave_type == 'sin'):
-            ax.plot(indicis_sin[:10], wave_sin[:10], color='#eb34ae')
-            print(f'sin indicis: {indicis_sin}')
-            print(f'sin wave: {wave_sin}')
-            SignalSamplesAreEqual(
-                file_name='Sin_Cos/CosOutput.txt', indices=indicis_sin, samples=wave_sin)
-            title = 'Sin Signal'
-
-        elif(wave_type == 'cos'):
-            ax.plot(indicis_cos[:10], wave_cos[:10], color='#524a49')
-            print(f'cos indicis: {indicis_cos}')
-            print(f'cos wave: {wave_cos}')
-            SignalSamplesAreEqual(
-                file_name='Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
-            title = 'Cos Signal'
-
-        else:
-            ax.plot(indicis_cos[:10], wave_cos[:10],
-                    label='Cos', color='#524a49')
-            ax.plot(indicis_sin[:10], wave_sin[:10],
-                    label='Sin', color='#eb34ae')
-            title = 'Sin & Cos signals'
-            print(f'sin indicis: {indicis_sin}')
-            print(f'sin wave: {wave_sin}')
-            print(f'cos indicis: {indicis_cos}')
-            print(f'cos wave: {wave_cos}')
-            plt.legend(loc='upper right')
+        ax.plot(indicis[:10], wave[:10])
+        ax.plot(indicis[:10], wave[1:11])
 
         ax.set_title(title)
+
         # Embed the plot in the Tkinter window
         self.display_canvas = FigureCanvasTkAgg(fig, master=self.window)
         self.display_canvas.get_tk_widget().pack()
@@ -214,7 +198,7 @@ class SignalProcessing:
         # Create the main window
         self.window = tk.Tk()
         self.window.title("Sine/Cosine Wave Viewer")
-        self.window.geometry('550x550')
+
         # Create a label
         label = tk.Label(self.window, text="Select a wave to view:")
         label.pack()
@@ -228,19 +212,19 @@ class SignalProcessing:
 
         cosine_radio = tk.Radiobutton(
             self.window, text="cos", variable=self.wave_var, value="cos")
-
-        both_radio = tk.Radiobutton(
+        cosine_radio = tk.Radiobutton(
             self.window, text="both", variable=self.wave_var, value="both")
 
         sine_radio.pack()
         cosine_radio.pack()
-        both_radio.pack()
 
         # Create a button to display the selected wave
         single_display_button = tk.Button(
             self.window, text="Display", command=lambda: self.display_wave(self.wave_var.get()))
         single_display_button.pack()
-
+        display_all_button = tk.Button(self.window,
+                                       title='Display All',
+                                       command=display_all)
         # Program icon
         icon = tk.PhotoImage(
             file='../signal.png')
@@ -251,12 +235,11 @@ class SignalProcessing:
 
 
 signal = SignalProcessing()
-signal.read_signal_file(filename='signal1.txt')
+# signal.read_signal_file(filename='signal1.txt')
 
 
 # signal.plot_analog()
 # signal.plot_digital()
 # signal.plot_continuous_discrete()
-
 signal.read_input()
 signal.gui_display()
