@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="Finish this task">
-      <change afterPath="$PROJECT_DIR$/Task1/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Task1/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Task1/a.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Task1/task1_copy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/signal.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task1/Sin_Cos/testtest" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task1/GUI.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Task1/task1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task1/task1.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -49,6 +44,11 @@
     &quot;last_opened_file_path&quot;: &quot;K:/رابعة الترم الاول/DSP/Tasks/DSP_Tasks&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="K:\رابعة الترم الاول\DSP\Tasks\DSP_Tasks\Task1\Sin_Cos" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
