@@ -1,0 +1,183 @@
+Index: Task1/task1.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import numpy as np\r\nimport matplotlib.pyplot as plt\r\nfrom numpy.polynomial import Polynomial\r\n\r\n\r\nclass SignalProcessing:\r\n\r\n    def read_signal_file(self, filename='signal1.txt'):\r\n\r\n        # Read the contents of the file\r\n        with open(filename, 'r') as file:\r\n            lines = file.readlines()\r\n\r\n        # Remove leading/trailing whitespaces and newline characters\r\n        lines = [line.strip() for line in lines]\r\n\r\n        # Read the first three rows into separate variables\r\n        self.signalType = int(lines[0])\r\n        self.isPeriodic = int(lines[1])\r\n        self.N = int(lines[2])\r\n\r\n        # Read the remaining rows into a list of lists\r\n        samples = [list(map(float, line.split(' ')))\r\n                   for line in lines[3:]]\r\n\r\n        self.samples = np.array(samples)\r\n\r\n        # Extract x and y values from the two-value groups\r\n        self.x_values = self.samples[:, 0]\r\n        self.y_values = self.samples[:, 1]\r\n\r\n    def plot_digital(self):\r\n\r\n        # Determine the range of the y-axis\r\n        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)\r\n        # Plot the digital signal with red points\r\n        plt.stem(self.x_values, self.y_values, linefmt='-',\r\n                 markerfmt='ro', basefmt=' ')\r\n\r\n        # Draw the x-axis line\r\n        plt.axhline(0, color='black')\r\n\r\n        plt.xlim(min(self.x_values), max(self.x_values) + 1)\r\n        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)\r\n\r\n        # Set labels and title\r\n        plt.xlabel('n')\r\n        plt.ylabel('x[n]')\r\n        plt.title('Digital Representation')\r\n\r\n        # Show the plot\r\n        plt.show()\r\n\r\n    def plot_continuous_discrete(self):\r\n        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)\r\n\r\n        plt.step(self.x_values, self.y_values, 'b', where='post')\r\n\r\n        plt.axhline(0, color='black')\r\n        plt.xlim(min(self.x_values), max(self.x_values) + 1)\r\n        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)\r\n        plt.xlabel('n')\r\n        plt.ylabel('x[n]')\r\n        plt.title('Continuous(t) Discrete(A) Representation')\r\n        plt.grid(True)\r\n        plt.show()\r\n\r\n    def plot_analog(self):\r\n        # Determine the range of the y-axis\r\n        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)\r\n\r\n        # Polynomial curve fitting\r\n        degree = 6  # Change the degree based on desired smoothness\r\n        p = Polynomial.fit(self.x_values, self.y_values, degree)\r\n        x_smooth = np.linspace(min(self.x_values), max(self.x_values), 1000)\r\n        y_smooth = p(x_smooth)\r\n        plt.plot(x_smooth, y_smooth, 'b')\r\n        plt.axhline(0, color='black')\r\n        # Set y-axis limits\r\n        plt.xlim(min(x_smooth), max(x_smooth)+1)\r\n        plt.ylim(min(y_smooth)-1, max(y_smooth)+1)\r\n        plt.xlabel('n')\r\n        plt.ylabel('x[n]')\r\n        plt.title('Analog Representation')\r\n        plt.grid(True)\r\n        plt.show()\r\n\r\n    def read_input(self, filename='Sin_Cos/Inputs.txt'):\r\n        with open(filename, \"r\") as file:\r\n            file_content = file.read()\r\n\r\n        self.test_cases = []\r\n        current_test_case = {}\r\n\r\n        lines = file_content.split(\"\\n\")\r\n        for line in lines:\r\n            if line.strip() == \"\":\r\n                if current_test_case:\r\n                    self.test_cases.append(current_test_case)\r\n                    current_test_case = {}\r\n            elif \"=\" in line:\r\n                key, value = line.split(\"=\")\r\n                key = key.strip()\r\n                value = value.strip().strip('\"')  # Remove double quotes if present\r\n                current_test_case[key] = value\r\n\r\n        if current_test_case:\r\n            self.test_cases.append(current_test_case)\r\nsignal = SignalProcessing()\r\nsignal.read_signal_file(filename='signal1.txt')\r\n\r\n\r\n# signal.plot_analog()\r\n# signal.plot_digital()\r\n# signal.plot_continuous_discrete()\r\nsignal.read_input()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Task1/task1.py b/Task1/task1.py
+--- a/Task1/task1.py	
++++ b/Task1/task1.py	
+@@ -1,10 +1,16 @@
+ import numpy as np
+ import matplotlib.pyplot as plt
+ from numpy.polynomial import Polynomial
++import matplotlib.pyplot as plt
++from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
++import tkinter as tk
++
++from Task1.Sin_Cos.comparesignals import SignalSamplesAreEqual
+ 
+ 
+ class SignalProcessing:
+-
++    indices = []
++    samples = []
+     def read_signal_file(self, filename='signal1.txt'):
+ 
+         # Read the contents of the file
+@@ -106,6 +112,84 @@
+ 
+         if current_test_case:
+             self.test_cases.append(current_test_case)
++
++    def gui_display(self):
++        # Function to display sine or cosine wave
++        def display_wave(wave_type,window):
++            wave = []
++            if wave_type == "sin":
++                # Calculate the angular frequency (ω) based on the Analog Frequency
++                angular_frequency = 2 * np.pi * int(self.test_cases[0]['AnalogFrequency'])
++                # Initialize an empty list to store the modeled sine wave
++                self.indices = range(0, int(self.test_cases[0]['SamplingFrequency']))
++                wave = []
++                # Loop through the data points
++                for i in range(0, int(self.test_cases[0]['SamplingFrequency'])):
++
++                    # Calculate the sine wave at this time point
++                    sine_value = int(self.test_cases[0]['A']) * np.sin(angular_frequency * i / int(self.test_cases[0]['SamplingFrequency']) + float(self.test_cases[0]['PhaseShift']))
++                    # Append the modeled sine value to the list
++                    wave.append(sine_value)
++                # Now, 'sine_wave' contains the modeled sine wave for each data point
++                # y = np.sin(wave)
++                title = "Sinusoidal Signal"
++            elif wave_type == "cos":
++                # Calculate the angular frequency (ω) based on the Analog Frequency
++                angular_frequency = 2 * np.pi * int(self.test_cases[1]['AnalogFrequency'])
++                # Initialize an empty list to store the modeled cosine wave
++                self.indices = range(0, int(self.test_cases[1]['SamplingFrequency']))
++                wave = []
++                # Loop through the data points
++                for i in range(0, int(self.test_cases[1]['SamplingFrequency'])):
++                    # Calculate the cosine wave at this time point
++                    cosine_value = int(self.test_cases[1]['A']) * np.cos( angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(self.test_cases[1]['PhaseShift']))
++                    # Append the modeled cosine value to the list
++                    wave.append(cosine_value)
++                # Now, 'cosine_wave' contains the modeled sine wave for each data point
++                # y = np.cos(wave)
++                title = "Cosinusoidal Signal"
++            # If the canvas exists, delete it
++            if hasattr(display_wave, "canvas"):
++                display_wave.canvas.get_tk_widget().pack_forget()
++
++            # Create a new figure for the plot
++            fig, ax = plt.subplots()
++            ax.plot(wave, wave)
++            ax.set_title(title)
++
++            # Embed the plot in the Tkinter window
++            display_wave.canvas = FigureCanvasTkAgg(fig, master=window)
++            display_wave.canvas.get_tk_widget().pack()
++            display_wave.canvas.draw()
++            self.samples = wave
++
++
++        # Create the main window
++        window = tk.Tk()
++        window.title("Sine/Cosine Wave Viewer")
++
++        # Create a label
++        label = tk.Label(window, text="Select a wave to view:")
++        label.pack()
++
++        # Create radio buttons for selecting the wave type
++        wave_var = tk.StringVar()
++        wave_var.set("sin")  # Default selection
++        sine_radio = tk.Radiobutton(
++            window, text="sin", variable=wave_var, value="sin")
++        cosine_radio = tk.Radiobutton(
++            window, text="cos", variable=wave_var, value="cos")
++        sine_radio.pack()
++        cosine_radio.pack()
++
++        # Create a button to display the selected wave
++        display_button = tk.Button(
++            window, text="Display", command=lambda: display_wave(wave_var.get(),window))
++        display_button.pack()
++        # Run the main loop
++        window.mainloop()
++
++
+ signal = SignalProcessing()
+ signal.read_signal_file(filename='signal1.txt')
+ 
+@@ -113,4 +197,7 @@
+ # signal.plot_analog()
+ # signal.plot_digital()
+ # signal.plot_continuous_discrete()
+-signal.read_input()
++signal.read_input(filename='Sin_Cos\Inputs.txt')
++signal.gui_display()
++
++
+Index: Task1/GUI.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Task1/GUI.py b/Task1/GUI.py
+deleted file mode 100644
+--- a/Task1/GUI.py	
++++ /dev/null	
+@@ -1,50 +0,0 @@
+-import tkinter as tk
+-import numpy as np
+-import matplotlib.pyplot as plt
+-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+-
+-
+-# Function to display sine or cosine wave
+-def display_wave(wave_type):
+-    x = np.linspace(0, 2 * np.pi, 1000)
+-    if wave_type == "Sine":
+-        y = np.sin(x)
+-        title = "Sine Wave"
+-    elif wave_type == "Cosine":
+-        y = np.cos(x)
+-        title = "Cosine Wave"
+-
+-
+-    # Create a new figure for the plot
+-    fig, ax = plt.subplots()
+-    ax.plot(x, y)
+-    ax.set_title(title)
+-
+-    # Embed the plot in the Tkinter window
+-    display_wave.canvas = FigureCanvasTkAgg(fig, master=window)
+-    display_wave.canvas.get_tk_widget().pack()
+-    display_wave.canvas.draw()
+-
+-
+-# Create the main window
+-window = tk.Tk()
+-window.title("Sine/Cosine Wave Viewer")
+-
+-# Create a label
+-label = tk.Label(window, text="Select a wave to view:")
+-label.pack()
+-
+-# Create radio buttons for selecting the wave type
+-wave_var = tk.StringVar()
+-wave_var.set("Sine")  # Default selection
+-sine_radio = tk.Radiobutton(window, text="Sine", variable=wave_var, value="Sine")
+-cosine_radio = tk.Radiobutton(window, text="Cosine", variable=wave_var, value="Cosine")
+-sine_radio.pack()
+-cosine_radio.pack()
+-
+-# Create a button to display the selected wave
+-display_button = tk.Button(window, text="Display", command=lambda: display_wave(wave_var.get()))
+-display_button.pack()
+-
+-# Run the main loop
+-window.mainloop()
+\ No newline at end of file

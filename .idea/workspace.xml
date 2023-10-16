@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="finish task but the data without smoothing in plot">
+      <change beforePath="$PROJECT_DIR$/Task1/task1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task1/task1.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2Wi4rEHt0AhtLKXqNBPFhiZMumh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;K:/رابعة الترم الاول/DSP/Tasks/DSP_Tasks&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="" />
+      <created>1697202262557</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1697202262557</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠١" summary="update plt.stem because the warning">
+      <created>1697216004390</created>
+      <option name="number" value="٠٠٠٠١" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠١" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697216004390</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٢" summary="add GUI file With a temporary code">
+      <created>1697216194936</created>
+      <option name="number" value="٠٠٠٠٢" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٢" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697216194936</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٣" summary="add temporary code to GUI file">
+      <created>1697216681748</created>
+      <option name="number" value="٠٠٠٠٣" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٣" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697216681748</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٤" summary="finish phase 1 from task 1">
+      <created>1697220923252</created>
+      <option name="number" value="٠٠٠٠٤" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٤" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697220923252</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٥" summary="finish phase 1 from task 1">
+      <created>1697235737683</created>
+      <option name="number" value="٠٠٠٠٥" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٥" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697235737683</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٦" summary="Phase 2 commit 1">
+      <created>1697238248770</created>
+      <option name="number" value="٠٠٠٠٦" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٦" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697238248770</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٧" summary="to before plot sine or cosine">
+      <created>1697245825992</created>
+      <option name="number" value="٠٠٠٠٧" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٧" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697245825992</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠٠٨" summary="finish task but the data without smoothing in plot">
+      <created>1697271155746</created>
+      <option name="number" value="٠٠٠٠٨" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٨" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697271155746</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update plt.stem because the warning" />
+    <MESSAGE value="add GUI file With a temporary code" />
+    <MESSAGE value="add temporary code to GUI file" />
+    <MESSAGE value="finish phase 1 from task 1" />
+    <MESSAGE value="Phase 2 commit 1" />
+    <MESSAGE value="to before plot sine or cosine" />
+    <MESSAGE value="finish task but the data without smoothing in plot" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish task but the data without smoothing in plot" />
+  </component>
+</project>

@@ -1,0 +1,60 @@
+Index: Task1/task1.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import numpy as np\r\nimport matplotlib.pyplot as plt\r\nfrom numpy.polynomial import Polynomial\r\n\r\n\r\nclass SignalProcessing:\r\n\r\n    def read_signal_file(self, filename='signal1.txt'):\r\n\r\n        # Read the contents of the file\r\n        with open(filename, 'r') as file:\r\n            lines = file.readlines()\r\n\r\n        # Remove leading/trailing whitespaces and newline characters\r\n        lines = [line.strip() for line in lines]\r\n\r\n        # Read the first three rows into separate variables\r\n        self.signalType = int(lines[0])\r\n        self.isPeriodic = int(lines[1])\r\n        self.N = int(lines[2])\r\n\r\n        # Read the remaining rows into a list of lists\r\n        samples = [list(map(float, line.split(' ')))\r\n                   for line in lines[3:]]\r\n\r\n        self.samples = np.array(samples)\r\n\r\n        # Extract x and y values from the two-value groups\r\n        self.x_values = self.samples[:, 0]\r\n        self.y_values = self.samples[:, 1]\r\n\r\n    def plot_digital(self):\r\n\r\n        # Determine the range of the y-axis\r\n        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)\r\n        # Plot the digital signal with red points\r\n        plt.stem(self.x_values, self.y_values, linefmt='-',\r\n                 markerfmt='ro', basefmt=' ')\r\n\r\n        # Draw the x-axis line\r\n        plt.axhline(0, color='black')\r\n\r\n        plt.xlim(min(self.x_values), max(self.x_values) + 1)\r\n        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)\r\n\r\n        # Set labels and title\r\n        plt.xlabel('n')\r\n        plt.ylabel('x[n]')\r\n        plt.title('Digital Representation')\r\n\r\n        # Show the plot\r\n        plt.show()\r\n\r\n    def plot_continuous_discrete(self):\r\n        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)\r\n\r\n        plt.step(self.x_values, self.y_values, 'b', where='post')\r\n\r\n        plt.axhline(0, color='black')\r\n        plt.xlim(min(self.x_values), max(self.x_values) + 1)\r\n        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)\r\n        plt.xlabel('n')\r\n        plt.ylabel('x[n]')\r\n        plt.title('Continuous(t) Discrete(A) Representation')\r\n        plt.grid(True)\r\n        plt.show()\r\n\r\n    def plot_analog(self):\r\n        # Determine the range of the y-axis\r\n        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)\r\n\r\n        # Polynomial curve fitting\r\n        degree = 6  # Change the degree based on desired smoothness\r\n        p = Polynomial.fit(self.x_values, self.y_values, degree)\r\n        x_smooth = np.linspace(min(self.x_values), max(self.x_values), 1000)\r\n        y_smooth = p(x_smooth)\r\n        plt.plot(x_smooth, y_smooth, 'b')\r\n        plt.axhline(0, color='black')\r\n        # Set y-axis limits\r\n        plt.xlim(min(x_smooth) , max(x_smooth)+1)\r\n        plt.ylim(min(y_smooth)-1, max(y_smooth)+1)\r\n        plt.xlabel('n')\r\n        plt.ylabel('x[n]')\r\n        plt.title('Analog Representation')\r\n        plt.grid(True)\r\n        plt.show()\r\n\r\n    def read_input(self,filename = 'Sin_Cos\\Inputs.txt'):\r\n        # Read the contents of the file\r\n        with open(filename, 'r') as file:\r\n            lines = file.readlines()\r\n\r\n        # Parse the lines and extract the values for \"sin\" and \"cos\" cases\r\n        for line in lines:\r\n            parts = line.split(\"=\")\r\n            if len(parts) == 2:\r\n                parameter_name = parts[0].strip()\r\n                parameter_value = parts[1].strip()\r\n\r\n                if parameter_name == \"type\" and parameter_value == \"sin\":\r\n                    type_sin = parameter_value\r\n                elif parameter_name == \"A\":\r\n                    if type_sin == \"sin\":\r\n                        A_sin = float(parameter_value)\r\n                    elif type_sin == \"cos\":\r\n                        A_cos = float(parameter_value)\r\n                elif parameter_name == \"AnalogFrequency\":\r\n                    if type_sin == \"sin\":\r\n                        AnalogFrequency_sin = float(parameter_value)\r\n                    elif type_sin == \"cos\":\r\n                        AnalogFrequency_cos = float(parameter_value)\r\n                elif parameter_name == \"SamplingFrequency\":\r\n                    if type_sin == \"sin\":\r\n                        SamplingFrequency_sin = float(parameter_value)\r\n                    elif type_sin == \"cos\":\r\n                        SamplingFrequency_cos = float(parameter_value)\r\n                elif parameter_name == \"PhaseShift\":\r\n                    if type_sin == \"sin\":\r\n                        PhaseShift_sin = float(parameter_value)\r\n                    elif type_sin == \"cos\":\r\n                        PhaseShift_cos = float(parameter_value)\r\n\r\n\r\nsignal = SignalProcessing()\r\nsignal.read_signal_file(filename='signal1.txt')\r\n\r\n\r\nsignal.plot_analog()\r\nsignal.plot_digital()\r\nsignal.plot_continuous_discrete()\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Task1/task1.py b/Task1/task1.py
+--- a/Task1/task1.py	(revision c49e3c8e7f620bd90a22fcfce960e5da43a6c598)
++++ b/Task1/task1.py	(date 1697236230712)
+@@ -85,41 +85,6 @@
+         plt.grid(True)
+         plt.show()
+ 
+-    def read_input(self,filename = 'Sin_Cos\Inputs.txt'):
+-        # Read the contents of the file
+-        with open(filename, 'r') as file:
+-            lines = file.readlines()
+-
+-        # Parse the lines and extract the values for "sin" and "cos" cases
+-        for line in lines:
+-            parts = line.split("=")
+-            if len(parts) == 2:
+-                parameter_name = parts[0].strip()
+-                parameter_value = parts[1].strip()
+-
+-                if parameter_name == "type" and parameter_value == "sin":
+-                    type_sin = parameter_value
+-                elif parameter_name == "A":
+-                    if type_sin == "sin":
+-                        A_sin = float(parameter_value)
+-                    elif type_sin == "cos":
+-                        A_cos = float(parameter_value)
+-                elif parameter_name == "AnalogFrequency":
+-                    if type_sin == "sin":
+-                        AnalogFrequency_sin = float(parameter_value)
+-                    elif type_sin == "cos":
+-                        AnalogFrequency_cos = float(parameter_value)
+-                elif parameter_name == "SamplingFrequency":
+-                    if type_sin == "sin":
+-                        SamplingFrequency_sin = float(parameter_value)
+-                    elif type_sin == "cos":
+-                        SamplingFrequency_cos = float(parameter_value)
+-                elif parameter_name == "PhaseShift":
+-                    if type_sin == "sin":
+-                        PhaseShift_sin = float(parameter_value)
+-                    elif type_sin == "cos":
+-                        PhaseShift_cos = float(parameter_value)
+-
+ 
+ signal = SignalProcessing()
+ signal.read_signal_file(filename='signal1.txt')
+@@ -127,5 +92,4 @@
+ 
+ signal.plot_analog()
+ signal.plot_digital()
+-signal.plot_continuous_discrete()
+-
++signal.plot_continuous_discrete()
+\ No newline at end of file
