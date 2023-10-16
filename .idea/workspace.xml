@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="finish task but the data without smoothing in plot">
+    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="Finish this task">
+      <change afterPath="$PROJECT_DIR$/Task1/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task1/Untitled.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task1/a.ipynb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Task1/task1_copy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/signal.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Task1/GUI.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Task1/task1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task1/task1.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="beforecompare" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -107,7 +114,14 @@
       <option name="project" value="LOCAL؜" />
       <updated>1697271155746</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL؜-٠٠٠٠٩" summary="finish task but the data without smoothing in plot">
+      <created>1697482718724</created>
+      <option name="number" value="٠٠٠٠٩" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠٠٩" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697482718724</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -118,6 +132,7 @@
     <MESSAGE value="Phase 2 commit 1" />
     <MESSAGE value="to before plot sine or cosine" />
     <MESSAGE value="finish task but the data without smoothing in plot" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish task but the data without smoothing in plot" />
+    <MESSAGE value="Finish this task" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish this task" />
   </component>
 </project>
