@@ -4,8 +4,14 @@ from numpy.polynomial import Polynomial
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import tkinter as tk
 
+from Sin_Cos.comparesignals import SignalSamplesAreEqual
+
 
 class SignalProcessing:
+
+    def __init__(self):
+        # Initialize the display canvas as None
+        self.display_canvas = None
 
     def read_signal_file(self, filename='signal1.txt'):
 
@@ -111,29 +117,71 @@ class SignalProcessing:
 
     # Function to display sine or cosine wave
     def display_wave(self, wave_type):
+        title = ''
         x = np.linspace(0, 2 * np.pi, 1000)
+        y = np.sin(x)
         if wave_type == "sin":
-            y = np.sin(x)
+            # Calculate the angular frequency (ω) based on the Analog Frequency
+            angular_frequency = 2 * np.pi * \
+                int(self.test_cases[0]['AnalogFrequency'])
+            # Initialize an empty list to store the modeled sine wave and indices
+            indicis = range(
+                0, int(self.test_cases[0]['SamplingFrequency']))
+            sine_wave = []
+            # Loop through the data points
+            for i in indicis:
+                # Calculate the sine wave at this time point
+                sine_value = int(self.test_cases[0]['A']) * np.sin(angular_frequency * i / int(
+                    self.test_cases[0]['SamplingFrequency']) + float(self.test_cases[0]['PhaseShift']))
+
+                # Append the modeled sine value to the list
+                sine_wave.append(sine_value)
+            # Now, 'sine_wave' contains the modeled sine wave for each data point
+            print(indicis)
+            print(sine_wave)
+            SignalSamplesAreEqual(
+                file_name='Sin_Cos/SinOutput.txt', indices=indicis, samples=sine_wave)
+            y = np.sin(sine_wave)
             title = "Sinusoidal Signal"
+
         elif wave_type == "cos":
-            y = np.cos(x)
+            # Calculate the angular frequency (ω) based on the Analog Frequency
+            angular_frequency = 2 * np.pi * \
+                int(self.test_cases[1]['AnalogFrequency'])
+            # Initialize an empty list to store the modeled sine wave and indices
+            indicis = range(0, int(self.test_cases[1]['SamplingFrequency']))
+            cosine_wave = []
+            # Loop through the data points
+            for i in indicis:
+                # Calculate the sine wave at this time point
+                cosine_value = int(self.test_cases[1]['A']) * np.cos(
+                    angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(
+                        self.test_cases[1]['PhaseShift']))
+
+                # Append the modeled sine value to the list
+                cosine_wave.append(cosine_value)
+            # Now, 'sine_wave' contains the modeled sine wave for each data point
+            print(indicis)
+            print(cosine_wave)
+            SignalSamplesAreEqual(
+                file_name='Sin_Cos/CosOutput.txt', indices=indicis, samples=cosine_wave)
+            y = np.cos(cosine_wave)
             title = "Cosinusoidal Signal"
         # If the canvas exists, delete it
-        if hasattr(self.display_wave, "canvas"):
-            self.display_wave.canvas.get_tk_widget().pack_forget()
+        if self.display_canvas:
+            self.display_canvas.get_tk_widget().pack_forget()
 
         # Create a new figure for the plot
         fig, ax = plt.subplots()
-        ax.plot(x, y)
+        ax.plot(indicis, y)
         ax.set_title(title)
 
         # Embed the plot in the Tkinter window
-        self.display_wave = FigureCanvasTkAgg(fig, master=self.window)
-        self.display_wave.canvas.get_tk_widget().pack()
-        self.display_wave.canvas.draw()
+        self.display_canvas = FigureCanvasTkAgg(fig, master=self.window)
+        self.display_canvas.get_tk_widget().pack()
+        self.display_canvas.draw()
 
     def gui_display(self):
-
         # Create the main window
         self.window = tk.Tk()
         self.window.title("Sine/Cosine Wave Viewer")
@@ -143,26 +191,31 @@ class SignalProcessing:
         label.pack()
 
         # Create radio buttons for selecting the wave type
-        wave_var = tk.StringVar()
-        wave_var.set("sin")  # Default selection
+        self.wave_var = tk.StringVar()
+        self.wave_var.set("sin")  # Default selection
         sine_radio = tk.Radiobutton(
-            self.window, text="sin", variable=wave_var, value="sin")
+            self.window, text="sin", variable=self.wave_var, value="sin")
         cosine_radio = tk.Radiobutton(
-            self.window, text="cos", variable=wave_var, value="cos")
+            self.window, text="cos", variable=self.wave_var, value="cos")
         sine_radio.pack()
         cosine_radio.pack()
 
         # Create a button to display the selected wave
         display_button = tk.Button(
-            self.window, text="Display", command=lambda: self.display_wave(wave_var.get()))
+            self.window, text="Display", command=lambda: self.display_wave(self.wave_var.get()))
         display_button.pack()
 
+        # Program icon
+        icon = tk.PhotoImage(
+            file='../signal.png')
+
+        self.window.iconphoto(True, icon)
         # Run the main loop
         self.window.mainloop()
 
 
 signal = SignalProcessing()
-signal.read_signal_file(filename='signal1.txt')
+# signal.read_signal_file(filename='signal1.txt')
 
 
 # signal.plot_analog()
