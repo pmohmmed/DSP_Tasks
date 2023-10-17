@@ -24,32 +24,37 @@ class SignalProcessing:
         self.signalType = int(lines[0])
         self.isPeriodic = int(lines[1])
         self.N = int(lines[2])
+        if (self.N == 0):
+            self.x_values = None
+            self.y_values = None
+        else:
+            # Read the remaining rows into a list of lists
+            samples = [list(map(float, line.split(' ')))
+                       for line in lines[3:]]
 
-        # Read the remaining rows into a list of lists
-        samples = [list(map(float, line.split(' ')))
-                   for line in lines[3:]]
+            self.samples = np.array(samples)
 
-        self.samples = np.array(samples)
-
-        # Extract x and y values from the two-value groups
-        self.x_values = self.samples[:, 0]
-        self.y_values = self.samples[:, 1]
+            # Extract x and y values from the two-value groups
+            self.x_values = self.samples[:, 0]
+            self.y_values = self.samples[:, 1]
         file.close()
 
     def plot_discrete(self):
-
-        # Determine the range of the y-axis
-        y_range = max(abs(min(self.y_values))+1, abs(max(self.y_values))+1)
-        # Plot the digital signal with red points
-        plt.stem(self.x_values, self.y_values, linefmt='-',
-                 markerfmt='ro', basefmt=' ')
+        if self.x_values is not None and self.y_values is not None and len(self.x_values) > 0:
+            # Determine the range of the y-axis
+            y_range = max(abs(min(self.y_values)) + 1,
+                          abs(max(self.y_values)) + 1)
+            # Plot the digital signal with red points
+            plt.stem(self.x_values, self.y_values, linefmt='-',
+                     markerfmt='ro', basefmt=' ')
+            plt.xlim(min(self.x_values), max(self.x_values) + 1)
+            plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
+        else:
+            # Create an empty plot if x_values and y_values are None or empty
+            plt.figure()
 
         # Draw the x-axis line
         plt.axhline(0, color='black')
-
-        plt.xlim(min(self.x_values), max(self.x_values) + 1)
-        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
-
         # Set labels and title
         plt.xlabel('n')
         plt.ylabel('x[n]')
@@ -59,40 +64,51 @@ class SignalProcessing:
         plt.show()
 
     def plot_continuous_discrete(self):
-        # Plot continuous representation
-        # Generate x values for a smooth curve
-        x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
-        # Interpolate for a smooth curve
-        y_continuous = np.interp(x_continuous, self.x_values, self.y_values)
-        # Draw the x-axis line
-        plt.axhline(0, color='black')
-        # Plot discrete representation
-        # Plot the digital signal with red points
-        plt.stem(self.x_values, self.y_values, linefmt='-',
-                 markerfmt='ro', basefmt=' ', label="Discrete")
-        plt.xlim(min(self.x_values), max(self.x_values) + 1)
-        plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
-
-        plt.plot(x_continuous, y_continuous, 'b-', label="Continuous")
-
+        if self.x_values is not None and self.y_values is not None and len(self.x_values) > 0:
+            # Plot continuous representation
+            # Generate x values for a smooth curve
+            x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
+            # Interpolate for a smooth curve
+            y_continuous = np.interp(
+                x_continuous, self.x_values, self.y_values)
+            # Plot discrete representation
+            # Plot the digital signal with red points
+            plt.stem(self.x_values, self.y_values, linefmt='-',
+                     markerfmt='ro', basefmt=' ', label="Discrete")
+            # Draw the x-axis line
+            plt.axhline(0, color='black')
+            plt.xlim(min(self.x_values), max(self.x_values) + 1)
+            plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
+            plt.plot(x_continuous, y_continuous, 'b-', label="Continuous")
+        else:
+            # Create an empty plot if x_values and y_values are None or empty
+            plt.figure()
         plt.xlabel('n')
         plt.ylabel('x[n]')
         plt.title('Continuous and Discrete Representation')
         plt.grid(True)
-        plt.legend()
+        if self.x_values is not None:
+            plt.legend()
+        # Show the plot
         plt.show()
 
     def plot_continuous(self):
-        # Plot continuous representation
-        # Generate x values for a smooth curve
-        x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
-        # Interpolate for a smooth curve
-        y_continuous = np.interp(x_continuous, self.x_values, self.y_values)
-        plt.plot(x_continuous, y_continuous, 'b')
-        plt.axhline(0, color='black')
-        # Set y-axis limits
-        plt.xlim(min(x_continuous), max(x_continuous)+1)
-        plt.ylim(min(y_continuous)-1, max(y_continuous)+1)
+        if self.x_values is not None and self.y_values is not None and len(self.x_values) > 0:
+            # Plot continuous representation
+            # Generate x values for a smooth curve
+            x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
+            # Interpolate for a smooth curve
+            y_continuous = np.interp(
+                x_continuous, self.x_values, self.y_values)
+            # Set y-axis limits
+            plt.axhline(0, color='black')
+            plt.xlim(min(x_continuous), max(x_continuous) + 1)
+            plt.ylim(min(y_continuous) - 1, max(y_continuous) + 1)
+            plt.plot(x_continuous, y_continuous, 'b')
+        else:
+            # Create an empty plot if x_values and y_values are None or empty
+            plt.figure()
+
         plt.xlabel('n')
         plt.ylabel('x[n]')
         plt.title('Continuous Representation')
