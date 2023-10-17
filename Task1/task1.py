@@ -139,26 +139,71 @@ class SignalProcessing:
 
         file.close()
 
+    def toggle_entry(self):
+        if self.data_var.get() == 'input':
+            self.amplitude_label.pack()
+            self.amplitude_entry.pack()
+            self.analog_frequency_label.pack()
+            self.analog_frequency_entry.pack()
+            self.sampling_frequency_label.pack()
+            self.sampling_frequency_entry.pack()
+            self.phase_shift_label.pack()
+            self.phase_shift_entry.pack()
+            # data check porpuse
+            self.completed_data = False
+        else:
+            self.amplitude_label.pack_forget()
+            self.amplitude_entry.pack_forget()
+            self.analog_frequency_label.pack_forget()
+            self.analog_frequency_entry.pack_forget()
+            self.sampling_frequency_label.pack_forget()
+            self.sampling_frequency_entry.pack_forget()
+            self.phase_shift_label.pack_forget()
+            self.phase_shift_entry.pack_forget()
+            # data check porpuse
+            self.completed_data = True
+
     # Function to display sine or cosine wave
+
     def display_wave(self):
         title = ''
         wave_sin = []
         wave_cos = []
 
+        if(self.data_var.get() == 'input'):
+            if(self.completed_data == False):
+                print("There is missing data !!")
+                return
+            analog_frequency_sin = analog_frequency_cos = self.analog_frequency_entry.get()
+            amblitude_sin = amblitude_cos = self.amplitude_entry.get()
+            sampling_frequency_sin = sampling_frequency_cos = self.sampling_frequency_entry.get()
+            phase_shift_sin = phase_shift_cos = self.phase_shift_entry.get()
+
+        else:
+            analog_frequency_sin = self.test_cases[0]['AnalogFrequency']
+            amblitude_sin = self.test_cases[0]['A']
+            sampling_frequency_sin = self.test_cases[0]['SamplingFrequency']
+            phase_shift_sin = self.test_cases[0]['PhaseShift']
+            # cos
+            analog_frequency_cos = self.test_cases[1]['AnalogFrequency']
+            amblitude_cos = self.test_cases[1]['A']
+            sampling_frequency_cos = self.test_cases[1]['SamplingFrequency']
+            phase_shift_cos = self.test_cases[1]['PhaseShift']
+
         # =====================================
         # ---             SIN
         # Calculate the angular frequency (ω) based on the Analog Frequency
         angular_frequency = 2 * np.pi * \
-            int(self.test_cases[0]['AnalogFrequency'])
+            int(analog_frequency_sin)
         # Initialize an empty list to store the modeled sine wave and indices
         indicis_sin = range(
-            0, int(self.test_cases[0]['SamplingFrequency']))
+            0, int(sampling_frequency_sin))
 
         # Loop through the data points
         for i in indicis_sin:
             # Calculate the sine wave at this time point
-            sine_value = int(self.test_cases[0]['A']) * np.sin(angular_frequency * i / int(
-                self.test_cases[0]['SamplingFrequency']) + float(self.test_cases[0]['PhaseShift']))
+            sine_value = int(amblitude_sin) * np.sin(angular_frequency * i / int(
+                sampling_frequency_sin) + float(phase_shift_sin))
 
             # Append the modeled sine value to the list
             wave_sin.append(sine_value)
@@ -167,17 +212,17 @@ class SignalProcessing:
         # ---             COS
         # Calculate the angular frequency (ω) based on the Analog Frequency
         angular_frequency = 2 * np.pi * \
-            int(self.test_cases[1]['AnalogFrequency'])
+            int(analog_frequency_cos)
         # Initialize an empty list to store the modeled sine wave and indices
         indicis_cos = range(
-            0, int(self.test_cases[1]['SamplingFrequency']))
+            0, int(sampling_frequency_cos))
 
         # Loop through the data points
         for i in indicis_cos:
             # Calculate the cos wave at this time point
-            cosine_value = int(self.test_cases[1]['A']) * np.cos(
-                angular_frequency * i / int(self.test_cases[1]['SamplingFrequency']) + float(
-                    self.test_cases[1]['PhaseShift']))
+            cosine_value = int(amblitude_cos) * np.cos(
+                angular_frequency * i / int(sampling_frequency_cos) + float(
+                    phase_shift_cos))
 
             # Append the modeled sine value to the list
             wave_cos.append(cosine_value)
@@ -217,9 +262,10 @@ class SignalProcessing:
             plt.legend(loc='upper right')
 
         ax.set_title(title)
+        fig.show()
         # Embed the plot in the Tkinter window
-        self.display_canvas = FigureCanvasTkAgg(figure=fig, master=self.window)
-        self.display_canvas.get_tk_widget().pack()
+        # self.display_canvas = FigureCanvasTkAgg(figure=fig, master=self.window)
+        # self.display_canvas.get_tk_widget().pack()
         # self.display_canvas.draw()
 
     def gui_display(self):
@@ -242,16 +288,51 @@ class SignalProcessing:
 
         sine_radio = tk.Radiobutton(
             self.window, text="sin", variable=self.wave_var, value="sin")
+        sine_radio.pack()
 
         cosine_radio = tk.Radiobutton(
             self.window, text="cos", variable=self.wave_var, value="cos")
+        cosine_radio.pack()
 
         both_radio = tk.Radiobutton(
             self.window, text="both", variable=self.wave_var, value="both")
-
-        sine_radio.pack()
-        cosine_radio.pack()
         both_radio.pack()
+
+        self.data_var = tk.StringVar()
+        self.data_var.set('default')  # Default selection
+
+        # Data source selection
+        self.data_var = tk.StringVar()
+        self.data_var.set('default')  # Default selection
+
+        data_label = tk.Label(self.window, text="Select Data Source:")
+
+        input_button = tk.Radiobutton(
+            self.window, text="Enter Own Data", variable=self.data_var, value='input', command=self.toggle_entry)
+        input_button.pack()
+
+        default_button = tk.Radiobutton(
+            self.window, text="Default Data", variable=self.data_var, value='default', command=self.toggle_entry)
+        default_button.pack()
+
+        # Amplitude input
+        self.amplitude_label = tk.Label(self.window, text="Enter Amplitude:")
+        self.amplitude_entry = tk.Entry(self.window)
+
+        # analog Frequency input
+        self.analog_frequency_label = tk.Label(
+            self.window, text="Enter Analog Frequency:")
+        self.analog_frequency_entry = tk.Entry(self.window)
+
+        # sampling Frequency input
+        self.sampling_frequency_label = tk.Label(
+            self.window, text="Enter Sampling Frequency:")
+        self.sampling_frequency_entry = tk.Entry(self.window)
+
+        # Phase shift input
+        self.phase_shift_label = tk.Label(
+            self.window, text="Enter Phase Shift:")
+        self.phase_shift_entry = tk.Entry(self.window)
 
         # Create a button to display the selected wave
         single_display_button = tk.Button(
