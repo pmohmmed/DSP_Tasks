@@ -60,8 +60,10 @@ class SignalProcessing:
 
     def plot_continuous_discrete(self):
         # Plot continuous representation
-        x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)  # Generate x values for a smooth curve
-        y_continuous = np.interp(x_continuous, self.x_values, self.y_values)  # Interpolate for a smooth curve
+        # Generate x values for a smooth curve
+        x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
+        # Interpolate for a smooth curve
+        y_continuous = np.interp(x_continuous, self.x_values, self.y_values)
         # Draw the x-axis line
         plt.axhline(0, color='black')
         # Plot discrete representation
@@ -82,8 +84,10 @@ class SignalProcessing:
 
     def plot_continuous(self):
         # Plot continuous representation
-        x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)  # Generate x values for a smooth curve
-        y_continuous = np.interp(x_continuous, self.x_values, self.y_values)  # Interpolate for a smooth curve
+        # Generate x values for a smooth curve
+        x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
+        # Interpolate for a smooth curve
+        y_continuous = np.interp(x_continuous, self.x_values, self.y_values)
         plt.plot(x_continuous, y_continuous, 'b')
         plt.axhline(0, color='black')
         # Set y-axis limits
@@ -95,7 +99,7 @@ class SignalProcessing:
         plt.grid(True)
         plt.show()
 
-    def read_input(self, filename='Sin_Cos\Inputs.txt'):
+    def read_input(self, filename='Sin_Cos/Inputs.txt'):
         with open(filename, "r") as file:
             file_content = file.read()
 
@@ -173,7 +177,7 @@ class SignalProcessing:
             print(f'sin indicis: {indicis_sin}')
             print(f'sin wave: {wave_sin}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos\SinOutput.txt', indices=indicis_sin, samples=wave_sin)
+                file_name='Sin_Cos/SinOutput.txt', indices=indicis_sin, samples=wave_sin)
             title = 'Sin Signals'
 
         elif(self.wave_var.get() == 'cos'):
@@ -181,7 +185,7 @@ class SignalProcessing:
             print(f'cos indicis: {indicis_cos}')
             print(f'cos wave: {wave_cos}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos\CosOutput.txt', indices=indicis_cos, samples=wave_cos)
+                file_name='Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
             title = 'Cos Signals'
 
         else:
@@ -212,7 +216,7 @@ class SignalProcessing:
         label.pack()
         # Program icon
         icon = tk.PhotoImage(
-            file='..\signal.png')
+            file='../signal.png')
 
         self.window.iconphoto(True, icon)
 
@@ -245,9 +249,9 @@ signal = SignalProcessing()
 signal.read_signal_file(filename='signal1.txt')
 
 
-signal.plot_continuous_discrete()
-signal.plot_continuous()
-signal.plot_discrete()
+# signal.plot_continuous_discrete()
+# signal.plot_continuous()
+# signal.plot_discrete()
 
 signal.read_input()
 signal.gui_display()
