@@ -150,7 +150,7 @@ class SignalProcessing:
             self.phase_shift_label.pack()
             self.phase_shift_entry.pack()
             # data check porpuse
-            self.completed_data = False
+            # self.completed_data = True
         else:
             self.amplitude_label.pack_forget()
             self.amplitude_entry.pack_forget()
@@ -161,7 +161,7 @@ class SignalProcessing:
             self.phase_shift_label.pack_forget()
             self.phase_shift_entry.pack_forget()
             # data check porpuse
-            self.completed_data = True
+            # self.completed_data = True
 
     # Function to display sine or cosine wave
 
@@ -171,13 +171,17 @@ class SignalProcessing:
         wave_cos = []
 
         if(self.data_var.get() == 'input'):
-            if(self.completed_data == False):
-                print("There is missing data !!")
-                return
+            # if(self.completed_data == False):
+            #     print("There is missing data !!")
+            #     return
+
             analog_frequency_sin = analog_frequency_cos = self.analog_frequency_entry.get()
             amblitude_sin = amblitude_cos = self.amplitude_entry.get()
             sampling_frequency_sin = sampling_frequency_cos = self.sampling_frequency_entry.get()
             phase_shift_sin = phase_shift_cos = self.phase_shift_entry.get()
+            if(phase_shift_sin == "" or analog_frequency_sin == "" or amblitude_sin == "" or sampling_frequency_sin == ""):
+                print("There is missing data !!")
+                return
 
         else:
             analog_frequency_sin = self.test_cases[0]['AnalogFrequency']
@@ -189,7 +193,8 @@ class SignalProcessing:
             amblitude_cos = self.test_cases[1]['A']
             sampling_frequency_cos = self.test_cases[1]['SamplingFrequency']
             phase_shift_cos = self.test_cases[1]['PhaseShift']
-
+        if(sampling_frequency_cos == "0" or sampling_frequency_sin == "0"):
+            print("incorrect value of sampling frequency")
         # =====================================
         # ---             SIN
         # Calculate the angular frequency (ω) based on the Analog Frequency
@@ -351,4 +356,5 @@ signal.read_signal_file(filename='signal1.txt')
 # signal.plot_discrete()
 
 signal.read_input()
+
 signal.gui_display()
