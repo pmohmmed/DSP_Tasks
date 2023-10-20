@@ -5,9 +5,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
 import numpy as np
-import helper_functions
-import sys
-sys.path.append('../helper_functions.py')
 
 
 class SignalProcessing:
