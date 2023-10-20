@@ -115,7 +115,7 @@ class SignalProcessing:
         plt.grid(True)
         plt.show()
 
-    def read_input(self, filename='Sin_Cos/Inputs.txt'):
+    def read_input(self, filename='Sin_Cos\\Inputs.txt'):
         with open(filename, "r") as file:
             file_content = file.read()
 
@@ -243,7 +243,7 @@ class SignalProcessing:
             print(f'sin indicis: {indicis_sin}')
             print(f'sin wave: {wave_sin}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos/SinOutput.txt', indices=indicis_sin, samples=wave_sin)
+                file_name='Sin_Cos\\SinOutput.txt', indices=indicis_sin, samples=wave_sin)
             title = 'Sin Signals'
 
         elif(self.wave_var.get() == 'cos'):
@@ -251,7 +251,7 @@ class SignalProcessing:
             print(f'cos indicis: {indicis_cos}')
             print(f'cos wave: {wave_cos}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
+                file_name='Sin_Cos\\CosOutput.txt', indices=indicis_cos, samples=wave_cos)
             title = 'Cos Signals'
 
         else:
@@ -351,10 +351,10 @@ signal = SignalProcessing()
 signal.read_signal_file(filename='signal1.txt')
 
 
-# signal.plot_continuous_discrete()
-# signal.plot_continuous()
-# signal.plot_discrete()
+signal.plot_continuous_discrete()
+signal.plot_continuous()
+signal.plot_discrete()
 
-signal.read_input()
-
-signal.gui_display()
+# signal.read_input()
+#
+# signal.gui_display()
