@@ -5,6 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
 import numpy as np
+import helper_functions as hf
 
 
 class SignalProcessing:
@@ -87,10 +88,6 @@ class SignalProcessing:
         else:
             # Create an empty plot if x_values and y_values are None or empty
             plt.figure()
-        plt.xlabel('n')
-        plt.ylabel('x[n]')
-        plt.title('Continuous and Discrete Representation')
-        plt.grid(True)
         if self.x_values is not None:
             plt.legend()
         # Show the plot

@@ -14,7 +14,9 @@ def draw(x = [], y = [],type = "disctete", title = 'Signal', color='black'):
         plt.stem(x, y, linefmt='-',
                      markerfmt='ro', basefmt=' ', label="Discrete")
 
-    
+    plt.xlabel('n')
+    plt.ylabel('x[n]')
+    plt.grid(True)
     plt.show()
         
     
