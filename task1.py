@@ -109,9 +109,6 @@ class SignalProcessing:
         wave_cos = []
 
         if(self.data_var.get() == 'input'):
-            # if(self.completed_data == False):
-            #     print("There is missing data !!")
-            #     return
 
             analog_frequency_sin = analog_frequency_cos = self.analog_frequency_entry.get()
             amblitude_sin = amblitude_cos = self.amplitude_entry.get()
@@ -173,43 +170,30 @@ class SignalProcessing:
         # If the canvas exists, delete it
         if self.display_canvas:
             self.display_canvas.get_tk_widget().pack_forget()
+
         # Create a new figure for the plot
         fig, ax = plt.subplots()
 
         if(self.wave_var.get() == 'sin'):
-            ax.plot(indicis_sin[:10], wave_sin[:10], color='#eb34ae')
-            print(f'sin indicis: {indicis_sin}')
-            print(f'sin wave: {wave_sin}')
+
             SignalSamplesAreEqual(
                 file_name='task1_data/Sin_Cos/SinOutput.txt', indices=indicis_sin, samples=wave_sin)
-            title = 'Sin Signals'
+
+            hf.draw(x1=indicis_sin[:10], y1=wave_sin[:10],
+                    type="both", title='Sin Signals')
 
         elif(self.wave_var.get() == 'cos'):
-            ax.plot(indicis_cos[:10], wave_cos[:10], color='#524a49')
-            print(f'cos indicis: {indicis_cos}')
-            print(f'cos wave: {wave_cos}')
+
             SignalSamplesAreEqual(
                 file_name='task1_data/Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
-            title = 'Cos Signals'
+
+            hf.draw(x2=indicis_cos[:10], y2=wave_cos[:10],
+                    type="both", title='Cos Signals')
 
         else:
-            ax.plot(indicis_cos[:10], wave_cos[:10],
-                    label='Cos', color='#524a49')
-            ax.plot(indicis_sin[:10], wave_sin[:10],
-                    label='Sin', color='#eb34ae')
-            title = 'Sin & Cos signals'
-            print(f'sin indicis: {indicis_sin}')
-            print(f'sin wave: {wave_sin}')
-            print(f'cos indicis: {indicis_cos}')
-            print(f'cos wave: {wave_cos}')
-            plt.legend(loc='upper right')
 
-        ax.set_title(title)
-        fig.show()
-        # Embed the plot in the Tkinter window
-        # self.display_canvas = FigureCanvasTkAgg(figure=fig, master=self.window)
-        # self.display_canvas.get_tk_widget().pack()
-        # self.display_canvas.draw()
+            hf.draw(x1=indicis_sin[:10], y1=wave_sin[:10], x2=indicis_cos[:10], y2=wave_cos[:10],
+                    label1="Sin sinal", label2='Cos signal', type="both", title='Sin & Cos signals')
 
     def gui_display(self):
         # Create the main window
