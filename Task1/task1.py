@@ -225,8 +225,7 @@ class SignalProcessing:
         label.pack()
         # Program icon
         icon = tk.PhotoImage(
-            file='..\signal.png')
-
+            file='..\\signal.png')
         self.window.iconphoto(True, icon)
 
         # Create radio buttons for selecting the wave type

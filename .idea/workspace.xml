@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="Finish this task">
-      <change afterPath="$PROJECT_DIR$/Task1/Sin_Cos/testtest" afterDir="false" />
+    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="update this conflict when N = 0">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at________Changes_.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_١٣_١٠_٢٠٢٣_٠٦_٥٠_م_[Changes]/shelved.patch" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Task1/task1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Task1/task1.py" afterDir="false" />
     </list>
@@ -20,6 +21,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -121,7 +125,14 @@
       <option name="project" value="LOCAL؜" />
       <updated>1697482718724</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL؜-٠٠٠١٠" summary="update this conflict when N = 0">
+      <created>1697498509294</created>
+      <option name="number" value="٠٠٠١٠" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠١٠" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697498509294</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -133,6 +144,7 @@
     <MESSAGE value="to before plot sine or cosine" />
     <MESSAGE value="finish task but the data without smoothing in plot" />
     <MESSAGE value="Finish this task" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish this task" />
+    <MESSAGE value="update this conflict when N = 0" />
+    <option name="LAST_COMMIT_MESSAGE" value="update this conflict when N = 0" />
   </component>
 </project>
