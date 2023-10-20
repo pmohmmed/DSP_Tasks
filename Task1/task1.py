@@ -1,9 +1,10 @@
-import numpy as np
-import matplotlib.pyplot as plt
-from numpy.polynomial import Polynomial
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-import tkinter as tk
+
 from Sin_Cos.comparesignals import SignalSamplesAreEqual
+import tkinter as tk
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from numpy.polynomial import Polynomial
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 class SignalProcessing:
@@ -73,13 +74,16 @@ class SignalProcessing:
                 x_continuous, self.x_values, self.y_values)
             # Plot discrete representation
             # Plot the digital signal with red points
-            plt.stem(self.x_values, self.y_values, linefmt='-',
-                     markerfmt='ro', basefmt=' ', label="Discrete")
-            # Draw the x-axis line
-            plt.axhline(0, color='black')
-            plt.xlim(min(self.x_values), max(self.x_values) + 1)
-            plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
-            plt.plot(x_continuous, y_continuous, 'b-', label="Continuous")
+            # plt.stem(self.x_values, self.y_values, linefmt='-',
+            #          markerfmt='ro', basefmt=' ', label="Discrete")
+
+            # # Draw the x-axis line
+            # plt.axhline(0, color='black')
+            # plt.xlim(min(self.x_values), max(self.x_values) + 1)
+            # plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
+            # plt.plot(x_continuous, y_continuous, 'b-', label="Continuous")
+            hf.draw(x_continuous, y_continuous, type='both')
+
         else:
             # Create an empty plot if x_values and y_values are None or empty
             plt.figure()
@@ -115,7 +119,7 @@ class SignalProcessing:
         plt.grid(True)
         plt.show()
 
-    def read_input(self, filename='Sin_Cos\\Inputs.txt'):
+    def read_input(self, filename='Sin_Cos/Inputs.txt'):
         with open(filename, "r") as file:
             file_content = file.read()
 
@@ -238,12 +242,15 @@ class SignalProcessing:
         # Create a new figure for the plot
         fig, ax = plt.subplots()
 
+        plt.stem(self.x_values, self.y_values, linefmt='-',
+                 markerfmt='ro', basefmt=' ', label="Discrete")
+
         if(self.wave_var.get() == 'sin'):
             ax.plot(indicis_sin[:10], wave_sin[:10], color='#eb34ae')
             print(f'sin indicis: {indicis_sin}')
             print(f'sin wave: {wave_sin}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos\\SinOutput.txt', indices=indicis_sin, samples=wave_sin)
+                file_name='Sin_Cos/SinOutput.txt', indices=indicis_sin, samples=wave_sin)
             title = 'Sin Signals'
 
         elif(self.wave_var.get() == 'cos'):
@@ -251,7 +258,7 @@ class SignalProcessing:
             print(f'cos indicis: {indicis_cos}')
             print(f'cos wave: {wave_cos}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos\\CosOutput.txt', indices=indicis_cos, samples=wave_cos)
+                file_name='Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
             title = 'Cos Signals'
 
         else:
@@ -352,9 +359,9 @@ signal.read_signal_file(filename='signal1.txt')
 
 
 signal.plot_continuous_discrete()
-signal.plot_continuous()
-signal.plot_discrete()
+# signal.plot_continuous()
+# signal.plot_discrete()
 
 # signal.read_input()
-#
+
 # signal.gui_display()
