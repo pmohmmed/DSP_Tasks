@@ -1,10 +1,11 @@
 
-from Sin_Cos.comparesignals import SignalSamplesAreEqual
+from task1_data.Sin_Cos.comparesignals import SignalSamplesAreEqual
 import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from numpy.polynomial import Polynomial
 import matplotlib.pyplot as plt
 import numpy as np
+import helper_functions as hf
 
 
 class SignalProcessing:
@@ -12,7 +13,7 @@ class SignalProcessing:
         # Initialize the display canvas as None
         self.display_canvas = None
 
-    def read_signal_file(self, filename='signal1.txt'):
+    def read_signal_file(self, filename='task1_data.signal1.txt'):
 
         # Read the contents of the file
         with open(filename, 'r') as file:
@@ -41,85 +42,18 @@ class SignalProcessing:
         file.close()
 
     def plot_discrete(self):
-        if self.x_values is not None and self.y_values is not None and len(self.x_values) > 0:
-            # Determine the range of the y-axis
-            y_range = max(abs(min(self.y_values)) + 1,
-                          abs(max(self.y_values)) + 1)
-            # Plot the digital signal with red points
-            plt.stem(self.x_values, self.y_values, linefmt='-',
-                     markerfmt='ro', basefmt=' ')
-            plt.xlim(min(self.x_values), max(self.x_values) + 1)
-            plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
-        else:
-            # Create an empty plot if x_values and y_values are None or empty
-            plt.figure()
-
-        # Draw the x-axis line
-        plt.axhline(0, color='black')
-        # Set labels and title
-        plt.xlabel('n')
-        plt.ylabel('x[n]')
-        plt.title('Discrete Representation')
-
-        # Show the plot
-        plt.show()
+        hf.draw(self.x_values, self.y_values,
+                type='discrete', title='Discrete Signal')
 
     def plot_continuous_discrete(self):
-        if self.x_values is not None and self.y_values is not None and len(self.x_values) > 0:
-            # Plot continuous representation
-            # Generate x values for a smooth curve
-            x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
-            # Interpolate for a smooth curve
-            y_continuous = np.interp(
-                x_continuous, self.x_values, self.y_values)
-            # Plot discrete representation
-            # Plot the digital signal with red points
-            # plt.stem(self.x_values, self.y_values, linefmt='-',
-            #          markerfmt='ro', basefmt=' ', label="Discrete")
 
-            # # Draw the x-axis line
-            # plt.axhline(0, color='black')
-            # plt.xlim(min(self.x_values), max(self.x_values) + 1)
-            # plt.ylim(min(self.y_values) - 1, max(self.y_values) + 1)
-            # plt.plot(x_continuous, y_continuous, 'b-', label="Continuous")
-            hf.draw(x_continuous, y_continuous, type='both')
-
-        else:
-            # Create an empty plot if x_values and y_values are None or empty
-            plt.figure()
-        plt.xlabel('n')
-        plt.ylabel('x[n]')
-        plt.title('Continuous and Discrete Representation')
-        plt.grid(True)
-        if self.x_values is not None:
-            plt.legend()
-        # Show the plot
-        plt.show()
+        hf.draw(self.x_values, self.y_values, type='both',
+                title='Continous & Discrete signal')
 
     def plot_continuous(self):
-        if self.x_values is not None and self.y_values is not None and len(self.x_values) > 0:
-            # Plot continuous representation
-            # Generate x values for a smooth curve
-            x_continuous = np.linspace(0, len(self.x_values) - 1, 1000)
-            # Interpolate for a smooth curve
-            y_continuous = np.interp(
-                x_continuous, self.x_values, self.y_values)
-            # Set y-axis limits
-            plt.axhline(0, color='black')
-            plt.xlim(min(x_continuous), max(x_continuous) + 1)
-            plt.ylim(min(y_continuous) - 1, max(y_continuous) + 1)
-            plt.plot(x_continuous, y_continuous, 'b')
-        else:
-            # Create an empty plot if x_values and y_values are None or empty
-            plt.figure()
+        hf.draw(self.x_values, self.y_values, type='continuous')
 
-        plt.xlabel('n')
-        plt.ylabel('x[n]')
-        plt.title('Continuous Representation')
-        plt.grid(True)
-        plt.show()
-
-    def read_input(self, filename='Sin_Cos/Inputs.txt'):
+    def read_input(self, filename='task1_data/Sin_Cos/Inputs.txt'):
         with open(filename, "r") as file:
             file_content = file.read()
 
@@ -242,15 +176,12 @@ class SignalProcessing:
         # Create a new figure for the plot
         fig, ax = plt.subplots()
 
-        plt.stem(self.x_values, self.y_values, linefmt='-',
-                 markerfmt='ro', basefmt=' ', label="Discrete")
-
         if(self.wave_var.get() == 'sin'):
             ax.plot(indicis_sin[:10], wave_sin[:10], color='#eb34ae')
             print(f'sin indicis: {indicis_sin}')
             print(f'sin wave: {wave_sin}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos/SinOutput.txt', indices=indicis_sin, samples=wave_sin)
+                file_name='task1_data/Sin_Cos/SinOutput.txt', indices=indicis_sin, samples=wave_sin)
             title = 'Sin Signals'
 
         elif(self.wave_var.get() == 'cos'):
@@ -258,7 +189,7 @@ class SignalProcessing:
             print(f'cos indicis: {indicis_cos}')
             print(f'cos wave: {wave_cos}')
             SignalSamplesAreEqual(
-                file_name='Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
+                file_name='task1_data/Sin_Cos/CosOutput.txt', indices=indicis_cos, samples=wave_cos)
             title = 'Cos Signals'
 
         else:
@@ -290,7 +221,7 @@ class SignalProcessing:
         label.pack()
         # Program icon
         icon = tk.PhotoImage(
-            file='../signal.png')
+            file='signal.png')
 
         self.window.iconphoto(True, icon)
 
@@ -355,12 +286,12 @@ class SignalProcessing:
 
 
 signal = SignalProcessing()
-signal.read_signal_file(filename='signal1.txt')
+signal.read_signal_file(filename='task1_data/signal1.txt')
 
 
 signal.plot_continuous_discrete()
-# signal.plot_continuous()
-# signal.plot_discrete()
+signal.plot_continuous()
+signal.plot_discrete()
 
 # signal.read_input()
 
