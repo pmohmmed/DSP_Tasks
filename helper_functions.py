@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 
 def draw(x1 = [], y1 = [],x2 = None, y2 = None, label1 = "", label2="",type = "disctete", title = 'Signal'):
+    plt.close()
     plt.axhline(0, color='black')
     count = 0
     if x1 is not None and y1 is not None and len(x1) > 0:

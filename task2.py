@@ -21,6 +21,8 @@ def on_select(event):
         twofiles_frame()
     elif(selected_item == "Multiplication" or selected_item == "Shifting"):
         constant_file_frame()
+    elif(selected_item == "Normalization"):
+        normalization_rad_frame()
     else:
         onefile_frame()
 
@@ -33,10 +35,15 @@ def display_wave():
 
     x = []
     y = []
-    x, y = Addition()
-    x, y = Normalization()
-    x, y = Subtraction()
-    x, y = Multiplication()
+
+    if(selected_item == "Addition"):
+        x, y = Addition()
+    elif(selected_item == "Subtraction"):
+        x, y = Subtraction()
+    elif(selected_item == "Multiplication"):
+        x, y = Multiplication()
+    elif(selected_item == "Normalization"):
+        x, y = Normalization()
 
     hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="continuous")
 
@@ -62,6 +69,12 @@ def clear_widgets():
     constant_frame.forget()
     file1_frame.forget()
     file2_frame.forget()
+    normalization_frame.forget()
+
+
+def normalization_rad_frame():
+    normalization_frame.pack()
+    file1_frame.pack()
 
 
 def constant_file_frame():
@@ -93,9 +106,19 @@ def Subtraction():
     return None, None
 
 
+def cast_to_float(value):
+    try:
+        float(value)
+        return float(value)
+    except ValueError:
+        return 0
+
+
 def Multiplication():
-    if (y1 is not None) and (y2 is not None):
-        return x1, y1 * float(constant_entry.get())
+    constant = cast_to_float(constant_entry.get())
+
+    if (y1 is not None) and constant:
+        return x1, y1 * constant
 
     return None, None
 
@@ -121,7 +144,7 @@ def Normalization():
         ymax = np.max(y1)
 
         # 0 to 1
-        if(choice):
+        if(normalization_choice.get() == 'option1'):
             y = (y1 - ymin) / (ymax - ymin)
         # -1 to 1
         else:
@@ -171,6 +194,20 @@ constant_label = Label(constant_frame, text="Constant:", font=('Arial', 10))
 constant_entry = Entry(constant_frame, width=39)
 constant_label = Label(constant_frame, text="Constant:", font=('Arial', 10))
 constant_entry = Entry(constant_frame, width=39)
+
+normalization_frame = tk.Frame(window)
+
+normalization_choice = tk.StringVar()
+normalization_choice.set("option1")  # Default selection
+
+option1_radio = tk.Radiobutton(
+    normalization_frame, text="0 to 1", variable=normalization_choice, value="option1")
+option1_radio.pack()
+
+option2_radio = tk.Radiobutton(
+    normalization_frame, text="-1 to 1", variable=normalization_choice, value="option2")
+option2_radio.pack()
+
 constant_label.pack()
 constant_entry.pack()
 
