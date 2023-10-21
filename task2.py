@@ -30,6 +30,7 @@ def on_select(event):
 
 
 def display_wave():
+    file_content = ""
     selected_item = dropdown_var.get()
     # if(selected_item == 'Norma')
 

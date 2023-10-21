@@ -34,7 +34,52 @@ def draw(x1 = [], y1 = [],x2 = None, y2 = None, label1 = "", label2="",type = "d
         plt.legend(loc='upper right')
     
     plt.show()
-        
-    
-    
+
+def read_file(filename = ""):
+    # Initialize variables
+    signalType = 0
+    isPeriodic = 0
+    N = 0
+    values = []
+
+    # Read the file
+    with open(filename, 'r') as file:
+        lines = file.readlines()
+
+    # Check if there are at least 4 lines in the file
+    if len(lines) >= 4:
+        signalType = int(lines[0].strip())
+        isPeriodic = int(lines[1].strip())
+        N = int(lines[2].strip())
+        values_lines = lines[3:]
+
+        # Split the remaining lines into pairs of numbers
+        for line in values_lines:
+            numbers = [int(num) for num in line.split()]
+            if len(numbers) == 2:
+                values.append(numbers)
+
+    # # Print the variables (you can replace this with any desired use)
+    # print(f"signalType: {signalType}")
+    # print(f"isPeriodic: {isPeriodic}")
+    # print(f"N: {N}")
+    # print(f"values: {values}")
+    return signalType,isPeriodic,N,values
+
+def write_file(file_name = "",signalType = 0,isPeriodic = 0,N = 0,values = []):
+    file_contents = ""
+    # Write the values back to a file in the same format
+    with open(file_name, "w") as file:
+        file.write(f"{signalType}\n")
+        file.write(f"{isPeriodic}\n")
+        file.write(f"{N}\n")
+
+        for pair in values:
+            file.write(f"{pair[0]} {pair[1]}\n")
+    # Specify the file name you want to read and print
+    output_file = file_name
+    # Read and print the contents of the file
+    with open(output_file, 'r') as file:
+        file_contents = file.read()
+    return file_contents
     
