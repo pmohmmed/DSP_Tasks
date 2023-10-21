@@ -101,6 +101,15 @@ def cast_to_float(value):
         return 0
 
 
+def Multiplication():
+    constant = cast_to_float(constant_entry.get())
+
+    if (y1 is not None) and constant:
+        return x1, y1 * constant
+
+    return None, None
+
+
 def Addition():
 
     if (y1 is not None) and (y2 is not None):
