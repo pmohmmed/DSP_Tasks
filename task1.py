@@ -13,10 +13,10 @@ class SignalProcessing:
         # Initialize the display canvas as None
         self.display_canvas = None
 
-    def read_signal_file(self, filename='task1_data.signal1.txt'):
+    def read_signal_file(self, path='task1_data.signal1.txt'):
 
         # Read the contents of the file
-        with open(filename, 'r') as file:
+        with open(path, 'r') as file:
             lines = file.readlines()
 
         # Remove leading/trailing whitespaces and newline characters
@@ -40,6 +40,7 @@ class SignalProcessing:
             self.x_values = self.samples[:, 0]
             self.y_values = self.samples[:, 1]
         file.close()
+        return self.x_values, self.y_values
 
     def plot_discrete(self):
         hf.draw(self.x_values, self.y_values,
@@ -53,8 +54,8 @@ class SignalProcessing:
     def plot_continuous(self):
         hf.draw(self.x_values, self.y_values, type='continuous')
 
-    def read_input(self, filename='task1_data/Sin_Cos/Inputs.txt'):
-        with open(filename, "r") as file:
+    def read_input(self, path='task1_data/Sin_Cos/Inputs.txt'):
+        with open(path, "r") as file:
             file_content = file.read()
 
         self.test_cases = []
@@ -270,13 +271,13 @@ class SignalProcessing:
 
 
 signal = SignalProcessing()
-signal.read_signal_file(filename='task1_data/signal1.txt')
+signal.read_signal_file(path='task1_data/signal1.txt')
 
 
-# signal.plot_continuous_discrete()
-# signal.plot_continuous()
-# signal.plot_discrete()
+# # signal.plot_continuous_discrete()
+# # signal.plot_continuous()
+# # signal.plot_discrete()
 
-signal.read_input()
+# signal.read_input()
 
-signal.gui_display()
+# signal.gui_display()
