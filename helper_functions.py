@@ -66,7 +66,7 @@ def read_file(filename = ""):
     # print(f"values: {values}")
     return signalType,isPeriodic,N,values
 
-def write_file(file_name = "",signalType = 0,isPeriodic = 0,N = 0,values = []):
+def write_file(file_name = "",signalType = 0,isPeriodic = 0,N = 0,x = [],y=[]):
     file_contents = ""
     # Write the values back to a file in the same format
     with open(file_name, "w") as file:
@@ -74,8 +74,8 @@ def write_file(file_name = "",signalType = 0,isPeriodic = 0,N = 0,values = []):
         file.write(f"{isPeriodic}\n")
         file.write(f"{N}\n")
 
-        for pair in values:
-            file.write(f"{pair[0]} {pair[1]}\n")
+        for i in range(N):
+            file.write(f"{x[i]} {y[i]}\n")
     # Specify the file name you want to read and print
     output_file = file_name
     # Read and print the contents of the file
