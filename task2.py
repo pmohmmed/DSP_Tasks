@@ -30,21 +30,18 @@ def on_select(event):
 
 
 def display_wave():
-    file_content = ""
+
     selected_item = dropdown_var.get()
-    # if(selected_item == 'Norma')
 
     x = []
     y = []
 
-    if(selected_item == "Addition"):
-        x, y = Addition()
-    elif(selected_item == "Subtraction"):
-        x, y = Subtraction()
-    elif(selected_item == "Multiplication"):
-        x, y = Multiplication()
-    elif(selected_item == "Normalization"):
-        x, y = Normalization()
+    if selected_item in globals() and callable(globals()[selected_item]):
+        # Call the function using the string name
+        x, y = globals()[selected_item]()
+
+    else:
+        print("Function not found or not callable")
 
     hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="continuous")
 
@@ -52,15 +49,19 @@ def display_wave():
 def open_file(signal_number=1):
 
     file_path = filedialog.askopenfilename()
-    if file_path:
-        file_name = os.path.basename(file_path)
-        file1_entry.delete(0, 'end')
-        file1_entry.insert(0, file_name)
+    if not file_path:
+        return
+    file_name = os.path.basename(file_path)
+
     global x1, x2, y1, y2
 
     if(signal_number == 1):
+        file1_entry.delete(0, 'end')
+        file1_entry.insert(0, file_name)
         x1, y1 = signal.read_signal_file(path=file_path)
     elif(signal_number == 2):
+        file2_entry.delete(0, 'end')
+        file2_entry.insert(0, file_name)
         x2, y2 = signal.read_signal_file(path=file_path)
     else:
         print("Invalid signal number")
@@ -92,6 +93,14 @@ def twofiles_frame():
     file2_frame.pack()
 
 
+def cast_to_float(value):
+    try:
+        float(value)
+        return float(value)
+    except ValueError:
+        return 0
+
+
 def Addition():
 
     if (y1 is not None) and (y2 is not None):
@@ -107,37 +116,8 @@ def Subtraction():
     return None, None
 
 
-def cast_to_float(value):
-    try:
-        float(value)
-        return float(value)
-    except ValueError:
-        return 0
-
-
-def Multiplication():
-    constant = cast_to_float(constant_entry.get())
-
-    if (y1 is not None) and constant:
-        return x1, y1 * constant
-
-    return None, None
-
-
-def Squaring():
-    # note: delete print('plapla) and return x , y
-    # todo
-    print('plapla')
-
-
-def Shifting():
-    # note: delete print('plapla) and return x , y
-    # todo
-    print('plapla')
-
-
 def Normalization():
-    choice = 0
+
     y = None
 
     if (y1 is not None):
@@ -152,6 +132,18 @@ def Normalization():
             y = 2 * ((y1 - ymin) / (ymax - ymin)) - 1
 
     return x1, y
+
+
+def Squaring():
+    # note: delete print('plapla) and return x , y
+    # todo
+    print('plapla')
+
+
+def Shifting():
+    # note: delete print('plapla) and return x , y
+    # todo
+    print('plapla')
 
 
 def Accumulation():
