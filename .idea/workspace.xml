@@ -4,40 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="update this conflict when N = 0">
-      <change afterPath="$PROJECT_DIR$/helper_functions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/.ipynb_checkpoints/Untitled-checkpoint.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/Sin_Cos/CosOutput.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/Sin_Cos/Inputs.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/Sin_Cos/SinOutput.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/Sin_Cos/comparesignals.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/Sin_Cos/testtest" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/Untitled.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/[Read ME] SignalFileConstruction.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/signal1.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/task1_copy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task1_data/tmp.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/task2.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/testfile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/input/Input Shifting.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/input/Input Shifting.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/input/Signal1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/input/Signal1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/input/Signal2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/input/Signal2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/input/signal3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/input/signal3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/MultiplySignalByConstant-Signal1 - by 5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/MultiplySignalByConstant-Signal1 - by 5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/MultiplySignalByConstant-signal2 - by 10.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/MultiplySignalByConstant-signal2 - by 10.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/Output squaring signal 1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/Output squaring signal 1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/Signal1+signal2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/Signal1+signal2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/normalize of signal 1 -- output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/normalize of signal 1 -- output.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/normlize signal 2 -- output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/normlize signal 2 -- output.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/output accumulation for signal1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/output accumulation for signal1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/output shifting by add 500.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/output shifting by add 500.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/output shifting by minus 500.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/output shifting by minus 500.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/signal1+signal3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/signal1+signal3.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/signal1-signal2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/signal1-signal2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Task2/outputs/signal1-signal3.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task2_data/outputs/signal1-signal3.txt" afterDir="false" />
-    </list>
+    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

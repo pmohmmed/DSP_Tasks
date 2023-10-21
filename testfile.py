@@ -1,27 +1,23 @@
-import tkinter as tk
-from tkinter import filedialog
+import helper_functions as hf
+# Initialize variables
+signalType = 0
+isPeriodic = 0
+N = 0
+values = []
 
-def open_folder():
-    folder_path = filedialog.askdirectory()
-    if folder_path:
-        folder_entry.delete(0, 'end')
-        folder_entry.insert(0, folder_path)
+signalType, isPeriodic, N, values = hf.read_file("task2_data\\input\\Input Shifting.txt")
 
-# Create the main window
-window = tk.Tk()
-window.title("Folder Selector")
+# Define the constant for shifting the first number
+constant = 500 * -1  # You can replace this with your desired constant value
 
-# Create a custom frame to contain the folder selection entry
-folder_frame = tk.Frame(window)
-folder_frame.pack()
+# Shift the first number in each pair in variable4
+shifted_variable4 = []
+for pair in values:
+    shifted_pair = [pair[0] + constant, pair[1]]
+    shifted_variable4.append(shifted_pair)
 
-# Create an entry widget for the folder path
-folder_entry = tk.Entry(folder_frame, width=30)
-folder_entry.grid(row=0, column=0)
+# Print the shifted_variable4 (you can replace this with any desired use)
+print(f"Shifted Variable 4: {shifted_variable4}")
 
-# Create a button for opening the folder selection dialog
-folder_button = tk.Button(folder_frame, text="Browse", command=open_folder)
-folder_button.grid(row=0, column=1)
-
-# Run the main loop
-window.mainloop()
+file_content = hf.write_file("output.txt", signalType, isPeriodic, N, shifted_variable4)
+print(file_content)
