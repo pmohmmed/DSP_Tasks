@@ -8,7 +8,11 @@ import numpy as np
 
 
 signal = t1.SignalProcessing()
-x1 = y1 = x2 = y2 = None
+
+# total files
+# list of lists ex: x[[file1], [file2], [file3]]
+x = None
+y = None
 
 
 def on_select(event):
@@ -46,79 +50,71 @@ def display_wave():
     hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="continuous")
 
 
-def open_file(signal_number=1):
+def open_file(entry):
 
     file_path = filedialog.askopenfilename()
     if not file_path:
         return
     file_name = os.path.basename(file_path)
 
-    global x1, x2, y1, y2
-
-    if(signal_number == 1):
-        file_entry.delete(0, 'end')
-        file_entry.insert(0, file_name)
-        x1, y1 = signal.read_signal_file(path=file_path)
-    #
-    else:
-        print("Invalid signal number")
-
-# num_signals = int(cast_to_float(signal_num_entry.get()))
+    global x, y
+    xi, yi = signal.read_signal_file(path=file_path)
+    x.append(xi)
+    y.append(yi)
+    entry.delete(0, 'end')
+    entry.insert(0, file_name)
 
 
 def create_signal_inputs(N=1):
+    # clear x and y
+    global x, y
+    x = []
+    y = []
 
     # Clear existing signal frames and widgets
-    for widget in signal_frame.winfo_children():
+    for widget in signal_files_frame.winfo_children():
         widget.destroy()
 
     # Generate signal input fields
+
     for i in range(N):
-        file_frame = tk.Frame(signal_frame)
 
-        label = tk.Label(file_frame, text=f"File {i+1}:", font=('Arial', 10))
-        entry = tk.Entry(file_frame)
-        button = tk.Button(file_frame, text="Browse",
-                           command=lambda i=i: open_file(i+1))
+        label = tk.Label(signal_files_frame,
+                         text=f"File {i+1}:",
+                         font=('Arial', 10))  # label
+        entry = tk.Entry(signal_files_frame)  # entry
+        button = tk.Button(signal_files_frame,
+                           text="Browse",
+                           command=lambda e=entry: open_file(e))  # button
 
-        label.grid(row=0, column=0)
-        entry.grid(row=0, column=1)
-        button.grid(row=0, column=2)
+        # display
+        label.grid(row=i, column=0)
+        entry.grid(row=i, column=1)
+        button.grid(row=i, column=2)
 
-        file_frame.pack()
-    signal_frame.pack()
+    # display frame
+    signal_files_frame.pack()
 
 
 def clear_widgets():
     constant_frame.forget()
-    file_frame.forget()
     normalization_frame.forget()
-    signal_frame.forget()
+    signal_files_frame.forget()
     num_frame.forget()
 
 
 def normalization_rad_frame():
     normalization_frame.pack()
-    file_frame.pack()
+    create_signal_inputs(1)
 
 
 def constant_file_frame():
     constant_frame.pack()
-    file_frame.pack()
+    create_signal_inputs(1)
 
 
 def onefile_frame():
-    file_frame.pack()
-
-
-def files_frame(N=1):
-    file1_frame.pack()
-    file2_frame.pack()
-
-    # signal_frame.pack()
-
-    # for i in range(N):
-    #     file1_frame.pack()
+    create_signal_inputs(1)
 
 
 def cast_to_float(value):
@@ -130,113 +126,161 @@ def cast_to_float(value):
 
 
 def Addition():
-    y = None
-    if (y1 is not None) and (y2 is not None):
-        y = y1 + y2
+
+    y_ = None
+    flag = True
+    length = 0
+
+    if (y is None) or (y == []):
+        return None, None
+
+    length = len(y)
+    for i in range(length):
+
+        if (y[i] is not None):
+            if(flag):
+                # initialize the y_ with first signal
+                y_ = y[i]
+                flag = False
+                continue
+
+            y_ += y[i]
+
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x1.astype(int), y.astype(int)
+        file_name="output.txt",
+        N=signal.N, x=x[0].astype(int), y=y_.astype(int)
     )
-    return x1, y
+
+    return x[0], y_
 
 
 def Subtraction():
-    y = None
-    if (y1 is not None) and (y2 is not None):
-        y = y1 - y2
+
+    y_ = None
+    flag = True
+    length = 0
+    if (y is None) or (y == []):
+        return None, None
+
+    length = len(y)
+
+    for i in range(length):
+
+        if (y[i] is not None):
+            if(flag):
+                # initialize the y_ with first signal
+                y_ = y[i]
+                flag = False
+                continue
+
+            y_ -= y[i]
 
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x1.astype(int), y.astype(int)
+        file_name="output.txt",
+        N=signal.N, x=x[0].astype(int), y=y_.astype(int)
     )
-    return x1, y
+    return x[0], y_
 
 
 def Multiplication():
     constant = cast_to_float(constant_entry.get())
-    y = None
-    if (y1 is not None) and constant:
-        y = y1 * constant
+    y_ = None
+    if (y is None) or (y == []):
+        return None, None
+
+    y_ = y[0] * constant
 
     hf.write_file(
         "output.txt", signal.signalType,
         signal.isPeriodic,
-        signal.N, x1.astype(int), y.astype(int)
+        signal.N, x[0].astype(int), y_.astype(int)
     )
 
-    return x1, y
+    return x[0], y_
 
 
 def Squaring():
-    y = None
-    if (y1 is not None):
-        y = np.power(y1, 2)
+    y_ = None
+    if (y is None) or (y == []):
+        return None, None
+
+    y_ = np.power(y[0], 2)
 
     hf.write_file(
         "output.txt", signal.signalType,
         signal.isPeriodic,
-        signal.N, x1.astype(int), y.astype(int)
+        signal.N, x[0].astype(int), y_.astype(int)
     )
-    return x1, y
+
+    return x[0], y_
 
 
 def Shifting():
 
-    x = None
+    x_ = None
     constant = cast_to_float(constant_entry.get()) * -1
 
-    if (x1 is not None):
-        x = x1 + constant
+    if (y is None) or (y == []):
+        return None, None
+
+    x_ = x[0] + constant
 
     hf.write_file(
         "output.txt", signal.signalType,
         signal.isPeriodic,
-        signal.N, x.astype(int), y1.astype(int)
+        signal.N, x_.astype(int), y[0].astype(int)
     )
-
-    return x, y1
+    return x_, y[0]
 
 
 def Normalization():
 
-    y = None
+    y_ = None
 
-    if (y1 is not None):
-        ymin = np.min(y1)
-        ymax = np.max(y1)
+    if (x is None) or (x == []):
+        return None, None
 
-        # 0 to 1
-        if(normalization_choice.get() == 'option1'):
-            y = (y1 - ymin) / (ymax - ymin)
-        # -1 to 1
-        else:
-            y = 2 * ((y1 - ymin) / (ymax - ymin)) - 1
+    ymin = np.min(y[0])
+    ymax = np.max(y[0])
+
+    # 0 to 1
+    if(normalization_choice.get() == 'option1'):
+        y_ = (y[0] - ymin) / (ymax - ymin)
+    # -1 to 1
+    else:
+        y_ = 2 * ((y[0] - ymin) / (ymax - ymin)) - 1
     hf.write_file(
         "output.txt", signal.signalType,
         signal.isPeriodic,
-        signal.N, x1.astype(int), y
+        signal.N, x[0].astype(int), y_
     )
-    return x1, y
+    return x[0], y_
 
 
 def Accumulation():
-
-    y = np.add.accumulate(y1).astype(int)
+    if (y is None) or (y == []):
+        return None, None
+    y_ = np.add.accumulate(y[0]).astype(int)
 
     hf.write_file(
         "output.txt", signal.signalType,
         signal.isPeriodic,
-        signal.N, x1.astype(int), y.astype(int)
+        signal.N, x[0].astype(int), y_.astype(int)
     )
-    return x1, y
+    return x[0], y_
 
 
 # Create the main window
 window = tk.Tk()
 window.title("Dropdown List Example")
 window.geometry("500x500")
+
+
+# ============= Signal file ============
+# frame contain : label, entry, button
+# signal frames
+signal_files_frame = tk.Frame(window)
+
 
 # ============================= Start the selection ======================
 label = tk.Label(window, text="Select an operation:",
@@ -312,22 +356,7 @@ option2_radio.pack()
 constant_label.pack()
 constant_entry.pack()
 
-# ======one signal (Squaring, Mulitiplication, Shifitig, Accumulation, Normalization)=====
-# frame
-file_frame = tk.Frame(window)
-
-file_label = Label(file_frame, text="File:", font=('Arial', 10))  # label
-file_entry = tk.Entry(file_frame)  # entry
-file_button = Button(file_frame, text="Browse",
-                     command=lambda: open_file(1))  # button
-
-# display
-file_label.grid(row=1, column=0)
-file_entry.grid(row=1, column=1)
-file_button.grid(row=1, column=2)
-
-
-# =========== addition and subtraction frames ============
+# =========== Addition and subtraction frames ============
 
 num_frame = tk.Frame(window)
 # number of signals
@@ -343,9 +372,6 @@ signal_num_button = Button(num_frame, text="Apply", command=lambda: create_signa
 signal_num_label.grid(row=0, column=0)
 signal_num_entry.grid(row=0, column=1)
 signal_num_button.grid(row=0, column=2)
-
-# signal frames
-signal_frame = tk.Frame(window)
 
 
 # Run the main loop
