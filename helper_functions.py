@@ -8,7 +8,7 @@ def draw(x1 = [], y1 = [],x2 = None, y2 = None, label1 = "", label2="",type = "d
             
         count +=1
         
-        if (type == "continuous" or type == 'both'):
+        if (type == "continuous" or type == 'both' or (type != "continuous" and type != "discrete" )):
             plt.plot(x1, y1, label=label1,color='#eb34ae')
             
         if(type == "discrete" or type == 'both'):

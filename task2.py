@@ -47,7 +47,7 @@ def display_wave():
     else:
         print("Function not found or not callable")
 
-    hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="continuous")
+    hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="discrete")
 
 
 def open_file(entry):
