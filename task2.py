@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+import random
 from tkinter import filedialog
 from tkinter.ttk import *
 import helper_functions as hf
@@ -46,8 +47,19 @@ def display_wave():
 
     else:
         print("Function not found or not callable")
-    x_samples = x[::100] if x is not None else []
-    y_samples = y[::100] if y is not None else []
+    num_samples = 10
+    # Sample 10 random values from x and y
+    if x is not None and y is not None:
+        sample_indices = random.sample(range(len(x)), num_samples)
+        x_samples = [x[i] for i in sample_indices]
+        y_samples = [y[i] for i in sample_indices]
+    else:
+        x_samples = [0] * num_samples if x is not None else []
+        y_samples = [0] * num_samples if y is not None else []
+    if(selected_item == "Squaring" or selected_item == "Accumulation"):
+        x_samples = x
+        y_samples = y
+
     hf.draw(x1=x_samples, y1=y_samples, title=f"{selected_item} Signal", type="both")
 
 
