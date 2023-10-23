@@ -8,6 +8,8 @@ import task1 as t1
 import numpy as np
 
 
+
+
 signal = t1.SignalProcessing()
 
 # total files
@@ -48,7 +50,7 @@ def display_wave():
         print("Function not found or not callable")
     num_samples = 10
     # Sample 10 random values from x and y
-    if ((x == [] and y == []) or (x is None and y is None)):
+    if ((len(x) == 0 and len(y) == 0) or (x is None and y is None)):
         x_samples = x
         y_samples = y
     else:
