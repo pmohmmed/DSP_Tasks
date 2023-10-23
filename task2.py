@@ -46,8 +46,9 @@ def display_wave():
 
     else:
         print("Function not found or not callable")
-
-    hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="continuous")
+    x_samples = x[::100] if x is not None else []
+    y_samples = y[::100] if y is not None else []
+    hf.draw(x1=x_samples, y1=y_samples, title=f"{selected_item} Signal", type="both")
 
 
 def open_file(entry):
@@ -272,9 +273,13 @@ def Accumulation():
 
 # Create the main window
 window = tk.Tk()
-window.title("Dropdown List Example")
+window.title("Calculating by operations")
 window.geometry("500x500")
+# Program icon
+icon = tk.PhotoImage(
+    file='signal.png')
 
+window.iconphoto(True, icon)
 
 # ============= Signal file ============
 # frame contain : label, entry, button
@@ -361,7 +366,7 @@ constant_entry.pack()
 num_frame = tk.Frame(window)
 # number of signals
 signal_num_label = Label(
-    num_frame, text="# Signals:", font=('Arial', 10))  # label
+    num_frame, text="# Files:", font=('Arial', 10))  # label
 signal_num_entry = Entry(num_frame)  # entry
 
 # button

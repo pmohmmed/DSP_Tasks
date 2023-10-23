@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="" />
+    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="problem 1003">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/helper_functions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task1.py" beforeDir="false" afterPath="$PROJECT_DIR$/task1.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task2.py" beforeDir="false" afterPath="$PROJECT_DIR$/task2.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="beforecompare" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -155,7 +161,21 @@
       <option name="project" value="LOCAL؜" />
       <updated>1697833804608</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL؜-٠٠٠١٥" summary="empty commit">
+      <created>1697972247112</created>
+      <option name="number" value="٠٠٠١٥" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠١٥" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697972247112</updated>
+    </task>
+    <task id="LOCAL؜-٠٠٠١٦" summary="problem 1003">
+      <created>1697972772536</created>
+      <option name="number" value="٠٠٠١٦" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠١٦" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1697972772536</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -168,6 +188,8 @@
     <MESSAGE value="finish task but the data without smoothing in plot" />
     <MESSAGE value="Finish this task" />
     <MESSAGE value="update this conflict when N = 0" />
-    <option name="LAST_COMMIT_MESSAGE" value="update this conflict when N = 0" />
+    <MESSAGE value="empty commit" />
+    <MESSAGE value="problem 1003" />
+    <option name="LAST_COMMIT_MESSAGE" value="problem 1003" />
   </component>
 </project>
