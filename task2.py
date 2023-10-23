@@ -1,5 +1,6 @@
 import os
 import tkinter as tk
+import random
 from tkinter import filedialog
 from tkinter.ttk import *
 import helper_functions as hf
@@ -43,11 +44,24 @@ def display_wave():
     if selected_item in globals() and callable(globals()[selected_item]):
         # Call the function using the string name
         x, y = globals()[selected_item]()
-
     else:
         print("Function not found or not callable")
+    num_samples = 10
+    # Sample 10 random values from x and y
+    if ((len(x) == 0 and len(y) == 0) or (x is None and y is None)):
+        x_samples = x
+        y_samples = y
+    else:
+        if (selected_item == "Squaring" or selected_item == "Accumulation"):
+            x_samples = x
+            y_samples = y
+        else:
+            sample_indices = random.sample(range(len(x)), num_samples)
+            x_samples = [x[i] for i in sample_indices]
+            y_samples = [y[i] for i in sample_indices]
 
-    hf.draw(x1=x, y1=y, title=f"{selected_item} Signal", type="discrete")
+    hf.draw(x1=x_samples, y1=y_samples,
+            title=f"{selected_item} Signal", type="both")
 
 
 def open_file(entry):
@@ -272,9 +286,13 @@ def Accumulation():
 
 # Create the main window
 window = tk.Tk()
-window.title("Dropdown List Example")
+window.title("Calculating by operations")
 window.geometry("500x500")
+# Program icon
+icon = tk.PhotoImage(
+    file='signal.png')
 
+window.iconphoto(True, icon)
 
 # ============= Signal file ============
 # frame contain : label, entry, button
@@ -361,7 +379,7 @@ constant_entry.pack()
 num_frame = tk.Frame(window)
 # number of signals
 signal_num_label = Label(
-    num_frame, text="# Signals:", font=('Arial', 10))  # label
+    num_frame, text="# Files:", font=('Arial', 10))  # label
 signal_num_entry = Entry(num_frame)  # entry
 
 # button
