@@ -44,21 +44,21 @@ def display_wave():
     if selected_item in globals() and callable(globals()[selected_item]):
         # Call the function using the string name
         x, y = globals()[selected_item]()
-
     else:
         print("Function not found or not callable")
     num_samples = 10
     # Sample 10 random values from x and y
-    if x is not None and y is not None:
-        sample_indices = random.sample(range(len(x)), num_samples)
-        x_samples = [x[i] for i in sample_indices]
-        y_samples = [y[i] for i in sample_indices]
-    else:
-        x_samples = [0] * num_samples if x is not None else []
-        y_samples = [0] * num_samples if y is not None else []
-    if(selected_item == "Squaring" or selected_item == "Accumulation"):
+    if ((x == [] and y == []) or (x is None and y is None)):
         x_samples = x
         y_samples = y
+    else:
+        if (selected_item == "Squaring" or selected_item == "Accumulation"):
+            x_samples = x
+            y_samples = y
+        else:
+            sample_indices = random.sample(range(len(x)), num_samples)
+            x_samples = [x[i] for i in sample_indices]
+            y_samples = [y[i] for i in sample_indices]
 
     hf.draw(x1=x_samples, y1=y_samples, title=f"{selected_item} Signal", type="both")
 

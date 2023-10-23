@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="problem 1003">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/output.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
+    <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="add only some samples in fun draw.">
       <change beforePath="$PROJECT_DIR$/task2.py" beforeDir="false" afterPath="$PROJECT_DIR$/task2.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -173,7 +171,14 @@
       <option name="project" value="LOCAL؜" />
       <updated>1697972772536</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL؜-٠٠٠١٧" summary="add only some samples in fun draw.">
+      <created>1698087042285</created>
+      <option name="number" value="٠٠٠١٧" />
+      <option name="presentableId" value="LOCAL؜-٠٠٠١٧" />
+      <option name="project" value="LOCAL؜" />
+      <updated>1698087042285</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -188,6 +193,7 @@
     <MESSAGE value="update this conflict when N = 0" />
     <MESSAGE value="empty commit" />
     <MESSAGE value="problem 1003" />
-    <option name="LAST_COMMIT_MESSAGE" value="problem 1003" />
+    <MESSAGE value="add only some samples in fun draw." />
+    <option name="LAST_COMMIT_MESSAGE" value="add only some samples in fun draw." />
   </component>
 </project>
