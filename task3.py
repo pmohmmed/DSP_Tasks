@@ -6,6 +6,7 @@ from tkinter.ttk import *
 import helper_functions as hf
 import numpy as np
 import task3_data.test1.QuanTest1 as t1
+import task3_data.test2.QuanTest2 as t2
 
 
 x = None
@@ -67,11 +68,55 @@ def quntization():
         mid_points[i] = ((n + (n+delta)) / 2)
         n = n+delta
 
+    # for i in range(hf.N):
+    #     y_tmp = np.abs(mid_points - y[i])
+    #     min_indices = np.where(y_tmp == np.min(y_tmp))[0]
+    #     min_index = min_indices[0]
+    #     interval_index[i] = min_index
+
+    # for i in range(hf.N):
+    #     y_tmp = np.abs(mid_points - y[i])
+    #     min_indx = 0
+    #     min_val = 100000000
+    #     print("iteration: ", i+1)
+    #     print(y_tmp)
+    #     for j in range(levels):
+    #         print(f'min: {min_val}, new: {y_tmp[j]}')
+
+    #         if(y_tmp[j] < min_val):
+    #             print('here')
+    #             min_val = y_tmp[j]
+    #             min_indx = j
+
+    #     interval_index[i] = min_indx
+    # for i in range(hf.N):
+    #     y_tmp = np.abs(mid_points - y[i])
+    #     min_indx = 0
+    #     min_val = np.finfo(float).max
+    #     print("iteration: ", i+1)
+    #     print(y_tmp)
+    #     for j in range(levels):
+    #         print(f'min: {min_val}, new: {y_tmp[j]}')
+    #         if y_tmp[j] < min_val:
+    #             print('here')
+    #             min_val = y_tmp[j]
+    #             min_indx = j
+
+    #     interval_index[i] = min_indx
+    tolerance = 1e-10  # Adjust the tolerance as needed
+
     for i in range(hf.N):
         y_tmp = np.abs(mid_points - y[i])
-        min_indices = np.where(y_tmp == np.min(y_tmp))[0]
-        min_index = min_indices[0]
-        interval_index[i] = min_index
+        min_indx = 0
+        min_val = np.finfo(float).max
+
+        for j in range(levels):
+
+            if y_tmp[j] < min_val - tolerance:
+                min_val = y_tmp[j]
+                min_indx = j
+
+        interval_index[i] = min_indx
 
     bits = int(np.ceil((np.log2(levels))))
 
@@ -89,8 +134,12 @@ def quntization():
     print('quntized:\n', quantized_list.reshape(hf.N, 1))
     print('error:\n', eq.reshape(hf.N, 1))
     # draw
-    t1.QuantizationTest1('task3_data/test1/Quan1_Out.txt',
-                         encoded_list, quantized_list)
+    if(choice == 1):
+        t2.QuantizationTest2('task3_data/test2/Quan2_Out.txt', interval_index+1,
+                             encoded_list, quantized_list, eq)
+    else:
+        t1.QuantizationTest1('task3_data/test1/Quan1_Out.txt',
+                             encoded_list, quantized_list)
 
     hf.draw(x1=x, y1=y, x2=x, y2=quantized_list, title='Quantization signal',
             label1='Original signal', label2='Quantized signal', type='both')
