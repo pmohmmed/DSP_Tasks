@@ -9,38 +9,12 @@ import helper_functions as hf
 
 
 class SignalProcessing:
+    x_values = []
+    y_values = []
+
     def __init__(self):
         # Initialize the display canvas as None
         self.display_canvas = None
-
-    def read_signal_file(self, path='task1_data.signal1.txt'):
-
-        # Read the contents of the file
-        with open(path, 'r') as file:
-            lines = file.readlines()
-
-        # Remove leading/trailing whitespaces and newline characters
-        lines = [line.strip() for line in lines]
-
-        # Read the first three rows into separate variables
-        self.signalType = int(lines[0])
-        self.isPeriodic = int(lines[1])
-        self.N = int(lines[2])
-        if (self.N == 0):
-            self.x_values = None
-            self.y_values = None
-        else:
-            # Read the remaining rows into a list of lists
-            samples = [list(map(float, line.split(' ')))
-                       for line in lines[3:]]
-
-            self.samples = np.array(samples)
-
-            # Extract x and y values from the two-value groups
-            self.x_values = self.samples[:, 0]
-            self.y_values = self.samples[:, 1]
-        file.close()
-        return self.x_values, self.y_values
 
     def plot_discrete(self):
         hf.draw(self.x_values, self.y_values,
@@ -271,12 +245,13 @@ class SignalProcessing:
 
 
 signal = SignalProcessing()
-signal.read_signal_file(path='task1_data/signal1.txt')
+signal.x_values, signal.y_values = hf.read_signal_file(
+    path='task1_data/signal1.txt')
 
 
 # signal.plot_continuous_discrete()
 # signal.plot_continuous()
 # signal.plot_discrete()
 
-# signal.read_input()
-# signal.gui_display()
+signal.read_input()
+signal.gui_display()

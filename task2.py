@@ -4,11 +4,10 @@ import random
 from tkinter import filedialog
 from tkinter.ttk import *
 import helper_functions as hf
-import task1 as t1
 import numpy as np
 
 
-signal = t1.SignalProcessing()
+
 
 # total files
 # list of lists ex: x[[file1], [file2], [file3]]
@@ -46,19 +45,20 @@ def display_wave():
         x, y = globals()[selected_item]()
     else:
         print("Function not found or not callable")
+
     num_samples = 10
     # Sample 10 random values from x and y
+<<<<<<< HEAD
     if ((x is None and y is None) or (len(x) == 0 and len(y) == 0)):
+=======
+    if ((x is None and y is None) or (len(x) == 0 and len(y) == 0) or selected_item == "Squaring" or selected_item == "Accumulation"):
+>>>>>>> 4c7edf5dc0c5ad2146636f3580cd4ea07c974a2e
         x_samples = x
         y_samples = y
     else:
-        if (selected_item == "Squaring" or selected_item == "Accumulation"):
-            x_samples = x
-            y_samples = y
-        else:
-            sample_indices = random.sample(range(len(x)), num_samples)
-            x_samples = [x[i] for i in sample_indices]
-            y_samples = [y[i] for i in sample_indices]
+        sample_indices = random.sample(range(len(x)), num_samples)
+        x_samples = [x[i] for i in sample_indices]
+        y_samples = [y[i] for i in sample_indices]
 
     hf.draw(x1=x_samples, y1=y_samples,
             title=f"{selected_item} Signal", type="both")
@@ -72,7 +72,7 @@ def open_file(entry):
     file_name = os.path.basename(file_path)
 
     global x, y
-    xi, yi = signal.read_signal_file(path=file_path)
+    xi, yi = hf.read_signal_file(path=file_path)
     x.append(xi)
     y.append(yi)
     entry.delete(0, 'end')
@@ -131,20 +131,11 @@ def onefile_frame():
     create_signal_inputs(1)
 
 
-def cast_to_(value, type='float'):
-    if(type == 'float'):
-        try:
-            float(value)
-            return float(value)
-        except ValueError:
-            return 0
-    elif(type == 'int'):
-        try:
-            int(value)
-            return int(value)
-        except ValueError:
-            return 0
-    else:
+def cast_to_float(value):
+    try:
+        float(value)
+        return float(value)
+    except ValueError:
         return 0
 
 
@@ -171,7 +162,7 @@ def Addition():
 
     hf.write_file(
         file_name="output.txt",
-        N=signal.N, x=x[0].astype(int), y=y_.astype(int)
+        N=hf.N, x=x[0].astype(int), y=y_.astype(int)
     )
 
     return x[0], y_
@@ -200,13 +191,13 @@ def Subtraction():
 
     hf.write_file(
         file_name="output.txt",
-        N=signal.N, x=x[0].astype(int), y=y_.astype(int)
+        N=hf.N, x=x[0].astype(int), y=y_.astype(int)
     )
     return x[0], y_
 
 
 def Multiplication():
-    constant = cast_to_(constant_entry.get())
+    constant = cast_to_float(constant_entry.get())
     y_ = None
     if (y is None) or (y == []):
         return None, None
@@ -214,9 +205,9 @@ def Multiplication():
     y_ = y[0] * constant
 
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x[0].astype(int), y_.astype(int)
+        "output.txt", hf.signalType,
+        hf.isPeriodic,
+        hf.N, x[0].astype(int), y_.astype(int)
     )
 
     return x[0], y_
@@ -230,9 +221,9 @@ def Squaring():
     y_ = np.power(y[0], 2)
 
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x[0].astype(int), y_.astype(int)
+        "output.txt", hf.signalType,
+        hf.isPeriodic,
+        hf.N, x[0].astype(int), y_.astype(int)
     )
 
     return x[0], y_
@@ -241,7 +232,7 @@ def Squaring():
 def Shifting():
 
     x_ = None
-    constant = cast_to_(constant_entry.get()) * -1
+    constant = cast_to_float(constant_entry.get()) * -1
 
     if (y is None) or (y == []):
         return None, None
@@ -249,9 +240,9 @@ def Shifting():
     x_ = x[0] + constant
 
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x_.astype(int), y[0].astype(int)
+        "output.txt", hf.signalType,
+        hf.isPeriodic,
+        hf.N, x_.astype(int), y[0].astype(int)
     )
     return x_, y[0]
 
@@ -273,9 +264,9 @@ def Normalization():
     else:
         y_ = 2 * ((y[0] - ymin) / (ymax - ymin)) - 1
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x[0].astype(int), y_
+        "output.txt", hf.signalType,
+        hf.isPeriodic,
+        hf.N, x[0].astype(int), y_
     )
     return x[0], y_
 
@@ -286,9 +277,9 @@ def Accumulation():
     y_ = np.add.accumulate(y[0]).astype(int)
 
     hf.write_file(
-        "output.txt", signal.signalType,
-        signal.isPeriodic,
-        signal.N, x[0].astype(int), y_.astype(int)
+        "output.txt", hf.signalType,
+        hf.isPeriodic,
+        hf.N, x[0].astype(int), y_.astype(int)
     )
     return x[0], y_
 
@@ -393,7 +384,7 @@ signal_num_entry = Entry(num_frame)  # entry
 
 # button
 signal_num_button = Button(num_frame, text="Apply", command=lambda: create_signal_inputs(
-    int(cast_to_(signal_num_entry.get()))))
+    int(cast_to_float(signal_num_entry.get()))))
 
 # display
 signal_num_label.grid(row=0, column=0)

@@ -1,4 +1,8 @@
 import matplotlib.pyplot as plt
+import numpy as np
+signalType = 0
+isPeriodic = 0
+N = 0
 
 
 def draw(x1=[], y1=[], x2=None, y2=None, label1="", label2="", type="disctete", title='Signal'):
@@ -61,6 +65,36 @@ def read_file(filename=""):
             if len(numbers) == 2:
                 values.append(numbers)
     return signalType, isPeriodic, N, values
+
+
+def read_signal_file(path='task1_data.signal1.txt'):
+    global N, signalType, isPeriodic
+    # Read the contents of the file
+    with open(path, 'r') as file:
+        lines = file.readlines()
+
+    # Remove leading/trailing whitespaces and newline characters
+    lines = [line.strip() for line in lines]
+
+    # Read the first three rows into separate variables
+    signalType = int(lines[0])
+    isPeriodic = int(lines[1])
+    N = int(lines[2])
+    if (N == 0):
+        x_values = None
+        y_values = None
+    else:
+        # Read the remaining rows into a list of lists
+        samples = [list(map(float, line.split(' ')))
+                   for line in lines[3:]]
+
+        samples = np.array(samples)
+
+        # Extract x and y values from the two-value groups
+        x_values = samples[:, 0]
+        y_values = samples[:, 1]
+    file.close()
+    return x_values, y_values
 
 
 def write_file(file_name="", signalType=0, isPeriodic=0, N=0, x=[], y=[]):

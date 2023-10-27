@@ -4,11 +4,10 @@ import random
 from tkinter import filedialog
 from tkinter.ttk import *
 import helper_functions as hf
-import task1 as t1
 import numpy as np
+import task3_data.test1.QuanTest1 as t1
 
 
-signal = t1.SignalProcessing()
 x = None
 y = None
 
@@ -23,7 +22,7 @@ def open_file():
     file_name = os.path.basename(file_path)
 
     global x, y
-    x, y = signal.read_signal_file(path=file_path)
+    x, y = hf.read_signal_file(path=file_path)
 
     entry.delete(0, 'end')
     entry.insert(0, file_name)
@@ -35,7 +34,7 @@ def open_file():
 def quntization():
     levels = hf.cast_to_(num_entry.get(), type="int")
     choice = num_choice.get()
-    interval_index = np.zeros(signal.N, dtype=int)
+    interval_index = np.zeros(hf.N, dtype=int)
     mid_points = None
 
     if ((y is None) or (levels == 0)):
@@ -68,7 +67,7 @@ def quntization():
         mid_points[i] = ((n + (n+delta)) / 2)
         n = n+delta
 
-    for i in range(signal.N):
+    for i in range(hf.N):
         y_tmp = np.abs(mid_points - y[i])
         min_indices = np.where(y_tmp == np.min(y_tmp))[0]
         min_index = min_indices[0]
@@ -76,22 +75,25 @@ def quntization():
 
     bits = int(np.ceil((np.log2(levels))))
 
-    # encoded_list = np.vectorize(
-    #     lambda x: np.binary_repr(x, width=bits))(interval_index)
+    encoded_list = np.vectorize(
+        lambda x: np.binary_repr(x, width=bits))(interval_index)
 
-    encoded_list = np.unpackbits(interval_index.astype(np.uint8)[
-                                 :, np.newaxis], axis=1)[:, -bits:]
+    # encoded_list = np.unpackbits(interval_index.astype(np.uint8)[
+    #                              :, np.newaxis], axis=1)[:, -bits:]
+
     quantized_list = mid_points[(interval_index)]
     eq = quantized_list - y
 
-    print('interval:\n', (interval_index + 1).reshape(signal.N, 1))
-    print('encoded:\n', encoded_list.reshape(signal.N, bits))
-    print('quntized:\n', quantized_list.reshape(signal.N, 1))
-    print('error:\n', eq.reshape(signal.N, 1))
-
+    print('interval:\n', (interval_index + 1).reshape(hf.N, 1))
+    print('encoded:\n', encoded_list.reshape(hf.N, 1))
+    print('quntized:\n', quantized_list.reshape(hf.N, 1))
+    print('error:\n', eq.reshape(hf.N, 1))
     # draw
+    t1.QuantizationTest1('task3_data/test1/Quan1_Out.txt',
+                         encoded_list, quantized_list)
+
     hf.draw(x1=x, y1=y, x2=x, y2=quantized_list, title='Quantization signal',
-            label1='Original Signal', label2='Quantized Signal', type='both')
+            label1='Original signal', label2='Quantized signal', type='both')
 
 
 window = tk.Tk()
