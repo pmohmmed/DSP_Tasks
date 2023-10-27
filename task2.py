@@ -8,8 +8,6 @@ import task1 as t1
 import numpy as np
 
 
-
-
 signal = t1.SignalProcessing()
 
 # total files
@@ -62,7 +60,8 @@ def display_wave():
             x_samples = [x[i] for i in sample_indices]
             y_samples = [y[i] for i in sample_indices]
 
-    hf.draw(x1=x_samples, y1=y_samples, title=f"{selected_item} Signal", type="both")
+    hf.draw(x1=x_samples, y1=y_samples,
+            title=f"{selected_item} Signal", type="both")
 
 
 def open_file(entry):

@@ -7,8 +7,11 @@ def draw(x1 = [], y1 = [],x2 = None, y2 = None, label1 = "", label2="",type = "d
     if x1 is not None and y1 is not None and len(x1) > 0:
             
         count +=1
-
-        if (type == "discrete" or type == 'both'):
+        
+        if (type == "continuous" or type == 'both' or (type != "continuous" and type != "discrete" )):
+            plt.plot(x1, y1, label=label1,color='#eb34ae')
+            
+        if(type == "discrete" or type == 'both'):
             plt.stem(x1, y1, linefmt='-',
                      markerfmt='ro', basefmt=' ')
         if (type == "continuous" or type == 'both'):
