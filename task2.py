@@ -131,11 +131,20 @@ def onefile_frame():
     create_signal_inputs(1)
 
 
-def cast_to_float(value):
-    try:
-        float(value)
-        return float(value)
-    except ValueError:
+def cast_to_(value, type='float'):
+    if(type == 'float'):
+        try:
+            float(value)
+            return float(value)
+        except ValueError:
+            return 0
+    elif(type == 'int'):
+        try:
+            int(value)
+            return int(value)
+        except ValueError:
+            return 0
+    else:
         return 0
 
 
@@ -197,7 +206,7 @@ def Subtraction():
 
 
 def Multiplication():
-    constant = cast_to_float(constant_entry.get())
+    constant = cast_to_(constant_entry.get())
     y_ = None
     if (y is None) or (y == []):
         return None, None
@@ -232,7 +241,7 @@ def Squaring():
 def Shifting():
 
     x_ = None
-    constant = cast_to_float(constant_entry.get()) * -1
+    constant = cast_to_(constant_entry.get()) * -1
 
     if (y is None) or (y == []):
         return None, None
@@ -384,7 +393,7 @@ signal_num_entry = Entry(num_frame)  # entry
 
 # button
 signal_num_button = Button(num_frame, text="Apply", command=lambda: create_signal_inputs(
-    int(cast_to_float(signal_num_entry.get()))))
+    int(cast_to_(signal_num_entry.get()))))
 
 # display
 signal_num_label.grid(row=0, column=0)
