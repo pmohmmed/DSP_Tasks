@@ -48,7 +48,7 @@ def display_wave():
         print("Function not found or not callable")
     num_samples = 10
     # Sample 10 random values from x and y
-    if ((len(x) == 0 and len(y) == 0) or (x is None and y is None)):
+    if ((x is None and y is None) or (len(x) == 0 and len(y) == 0)):
         x_samples = x
         y_samples = y
     else:
