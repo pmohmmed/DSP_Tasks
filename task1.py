@@ -274,9 +274,9 @@ signal = SignalProcessing()
 signal.read_signal_file(path='task1_data/signal1.txt')
 
 
-# # signal.plot_continuous_discrete()
-# # signal.plot_continuous()
-# # signal.plot_discrete()
+signal.plot_continuous_discrete()
+signal.plot_continuous()
+signal.plot_discrete()
 
 # signal.read_input()
 # signal.gui_display()
