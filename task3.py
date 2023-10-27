@@ -66,12 +66,16 @@ def quntization():
 
         mid_points[i] = ((n + (n+delta)) / 2)
         n = n+delta
-
+    print(y)
+    print(mid_points)
     for i in range(hf.N):
         y_tmp = np.abs(mid_points - y[i])
+        print(y_tmp)
         min_indices = np.where(y_tmp == np.min(y_tmp))[0]
         min_index = min_indices[0]
         interval_index[i] = min_index
+        print(min_index)
+        print(min_indices)
 
     bits = int(np.ceil((np.log2(levels))))
 
