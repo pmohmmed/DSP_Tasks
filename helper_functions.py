@@ -69,14 +69,12 @@ def read_file(filename=""):
 
 def read_signal_file(path='task1_data.signal1.txt'):
     global N, signalType, isPeriodic
-    # Read the contents of the file
+
     with open(path, 'r') as file:
         lines = file.readlines()
 
-    # Remove leading/trailing whitespaces and newline characters
     lines = [line.strip() for line in lines]
 
-    # Read the first three rows into separate variables
     signalType = int(lines[0])
     isPeriodic = int(lines[1])
     N = int(lines[2])
@@ -84,13 +82,12 @@ def read_signal_file(path='task1_data.signal1.txt'):
         x_values = None
         y_values = None
     else:
-        # Read the remaining rows into a list of lists
+
         samples = [list(map(float, line.split(' ')))
                    for line in lines[3:]]
 
         samples = np.array(samples)
 
-        # Extract x and y values from the two-value groups
         x_values = samples[:, 0]
         y_values = samples[:, 1]
     file.close()
@@ -99,7 +96,7 @@ def read_signal_file(path='task1_data.signal1.txt'):
 
 def write_file(file_name="", signalType=0, isPeriodic=0, N=0, x=[], y=[]):
     file_contents = ""
-    # Write the values back to a file in the same format
+
     with open(file_name, "w") as file:
         file.write(f"{signalType}\n")
         file.write(f"{isPeriodic}\n")
@@ -107,9 +104,9 @@ def write_file(file_name="", signalType=0, isPeriodic=0, N=0, x=[], y=[]):
 
         for i in range(N):
             file.write(f"{x[i]} {y[i]}\n")
-    # Specify the file name you want to read and print
+
     output_file = file_name
-    # Read and print the contents of the file
+
     with open(output_file, 'r') as file:
         file_contents = file.read()
     return file_contents
