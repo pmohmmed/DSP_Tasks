@@ -48,11 +48,7 @@ def display_wave():
 
     num_samples = 10
     # Sample 10 random values from x and y
-<<<<<<< HEAD
-    if ((x is None and y is None) or (len(x) == 0 and len(y) == 0)):
-=======
     if ((x is None and y is None) or (len(x) == 0 and len(y) == 0) or selected_item == "Squaring" or selected_item == "Accumulation"):
->>>>>>> 4c7edf5dc0c5ad2146636f3580cd4ea07c974a2e
         x_samples = x
         y_samples = y
     else:
