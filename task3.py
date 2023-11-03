@@ -20,6 +20,7 @@ def open_file():
     file_path = filedialog.askopenfilename()
     if not file_path:
         return
+
     file_name = os.path.basename(file_path)
 
     global x, y
@@ -108,7 +109,6 @@ def quntization():
     #             min_indx = j
 
     #     interval_index[i] = min_indx
-    tolerance = 1e-10  # Adjust the tolerance as needed
 
     for i in range(hf.N):
         y_tmp = np.abs(mid_points - y[i])
@@ -117,7 +117,7 @@ def quntization():
 
         for j in range(levels):
 
-            if y_tmp[j] < min_val - tolerance:
+            if y_tmp[j] < min_val - 0.0000000001:
                 min_val = y_tmp[j]
                 min_indx = j
 
@@ -165,7 +165,7 @@ window.iconphoto(True, icon)
 # 1 : levels
 
 num_choice = tk.IntVar()
-num_choice.set(0)  # Default selection
+num_choice.set(0)
 
 bit_radio = tk.Radiobutton(
     window, text="Bits",

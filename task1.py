@@ -13,7 +13,7 @@ class SignalProcessing:
     y_values = []
 
     def __init__(self):
-        # Initialize the display canvas as None
+
         self.display_canvas = None
 
     def plot_discrete(self):
@@ -44,7 +44,7 @@ class SignalProcessing:
             elif "=" in line:
                 key, value = line.split("=")
                 key = key.strip()
-                value = value.strip().strip('"')  # Remove double quotes if present
+                value = value.strip().strip('"')
                 current_test_case[key] = value
 
         if current_test_case:
@@ -62,8 +62,7 @@ class SignalProcessing:
             self.sampling_frequency_entry.pack()
             self.phase_shift_label.pack()
             self.phase_shift_entry.pack()
-            # data check porpuse
-            # self.completed_data = True
+
         else:
             self.amplitude_label.pack_forget()
             self.amplitude_entry.pack_forget()
@@ -73,10 +72,6 @@ class SignalProcessing:
             self.sampling_frequency_entry.pack_forget()
             self.phase_shift_label.pack_forget()
             self.phase_shift_entry.pack_forget()
-            # data check porpuse
-            # self.completed_data = True
-
-    # Function to display sine or cosine wave
 
     def display_wave(self):
         title = ''
@@ -107,32 +102,29 @@ class SignalProcessing:
             print("incorrect value of sampling frequency")
         # =====================================
         # ---             SIN
-        # Calculate the angular frequency (ω) based on the Analog Frequency
+
         angular_frequency = 2 * np.pi * \
             int(analog_frequency_sin)
-        # Initialize an empty list to store the modeled sine wave and indices
+
         indicis_sin = range(
             0, int(sampling_frequency_sin))
 
-        # Loop through the data points
         for i in indicis_sin:
-            # Calculate the sine wave at this time point
+
             sine_value = int(amblitude_sin) * np.sin(angular_frequency * i / int(
                 sampling_frequency_sin) + float(phase_shift_sin))
 
-            # Append the modeled sine value to the list
             wave_sin.append(sine_value)
 
         # =====================================
         # ---             COS
-        # Calculate the angular frequency (ω) based on the Analog Frequency
+
         angular_frequency = 2 * np.pi * \
             int(analog_frequency_cos)
-        # Initialize an empty list to store the modeled sine wave and indices
+
         indicis_cos = range(
             0, int(sampling_frequency_cos))
 
-        # Loop through the data points
         for i in indicis_cos:
             # Calculate the cos wave at this time point
             cosine_value = int(amblitude_cos) * np.cos(
