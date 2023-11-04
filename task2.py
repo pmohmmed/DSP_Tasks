@@ -333,10 +333,18 @@ dropdown.bind("<<ComboboxSelected>>", on_select)
 
 # ================= Display Button ==================
 
-display_button = Button(window, text="Display",
+buttons_frame = tk.Frame(window)
+display_button = Button(buttons_frame, text="Display",
                         command=display_wave, width=36, padding=5)  # button
 # display
-display_button.pack()
+display_button.grid(row=0)
+
+back_main_button = Button(buttons_frame, text="Back",
+                        command=lambda :hf.back_main_menu(window), width=36, padding=5)  # button
+# display
+back_main_button.grid(row=1)
+buttons_frame.pack()
+
 
 # ================= Constant ==================
 # frame

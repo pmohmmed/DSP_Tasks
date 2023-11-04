@@ -228,10 +228,17 @@ class SignalProcessing:
             self.window, text="Enter Phase Shift:")
         self.phase_shift_entry = tk.Entry(self.window)
 
+        buttons_frame = tk.Frame(self.window)
         # Create a button to display the selected wave
         single_display_button = tk.Button(
-            self.window, text="Display", command=self.display_wave)
-        single_display_button.pack()
+            buttons_frame, text="Display", command=self.display_wave)
+        single_display_button.grid(row=0)
+
+        back_main_button = tk.Button(buttons_frame, text="Back",
+                                  command=lambda: hf.back_main_menu(self.window))  # button
+        # display
+        back_main_button.grid(row=1)
+        buttons_frame.pack()
         # Run the main loop
         self.window.mainloop()
 

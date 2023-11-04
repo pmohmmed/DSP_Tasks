@@ -5,13 +5,15 @@ from tkinter import filedialog
 from tkinter.ttk import *
 import helper_functions as hf
 import numpy as np
+import importlib
 
 def import_file(n=1):
-    import importlib
+    main_window.destroy()
     package_name = f"task{n}"
     try:
         # Use import_module to import the package specified by the string
         imported_package = importlib.import_module(package_name)
+        importlib.reload(imported_package)
 
         # Now, you can use the package as you would with a regular import statement
         # print(imported_package._version_)  # Access an attribute of the package (e.g., version)

@@ -1,3 +1,5 @@
+import importlib
+
 import matplotlib.pyplot as plt
 import numpy as np
 signalType = 0
@@ -127,3 +129,8 @@ def cast_to_(value, type='float'):
             return 0
     else:
         return 0
+
+def back_main_menu(window):
+    window.destroy()
+    import main
+    importlib.reload(main)
