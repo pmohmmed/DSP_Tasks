@@ -134,3 +134,12 @@ def back_main_menu(window):
     window.destroy()
     import main
     importlib.reload(main)
+
+
+def switch_to_main(main_window,current_window):
+
+    # Hide the new window
+    current_window.withdraw()
+
+    # Show the main window
+    main_window.deiconify()

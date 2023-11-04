@@ -6,7 +6,8 @@ from tkinter.ttk import *
 import helper_functions as hf
 import numpy as np
 
-import main
+signal_files_frame = label = dropdown_var = dropdown = buttons_frame = display_button = constant_frame = constant_label = constant_entry = normalization_frame = normalization_choice = normalization_choice = option1_radio = option2_radio = num_frame = signal_num_label = signal_num_entry = signal_num_button = None
+window = None
 
 # total files
 # list of lists ex: x[[file1], [file2], [file3]]
@@ -15,6 +16,7 @@ y = None
 
 
 def on_select(event):
+
     selected_item = dropdown_var.get()
     label.config(text=f"You selected: {selected_item}")
 
@@ -279,135 +281,129 @@ def Accumulation():
     return x[0], y_
 
 
-# Create the main window
-window = tk.Tk()
-window.title("Calculating by operations")
-window.geometry("500x500")
-# Program icon
-icon = tk.PhotoImage(
-    file='signal.png')
+def open_gui(root):
+    global window, label, signal_files_frame , dropdown_var , dropdown , buttons_frame , display_button , constant_frame , constant_label , constant_entry , normalization_frame , normalization_choice , normalization_choice , option1_radio , option2_radio , num_frame , signal_num_label , signal_num_entry , signal_num_button
+    
+    # Create the main window
+    window = tk.Toplevel(root)
+    window.title("Calculating by operations")
+    window.geometry("500x500")
+    # Program icon
+    icon = tk.PhotoImage(
+        file='signal.png')
 
-window.iconphoto(True, icon)
+    window.iconphoto(True, icon)
 
-# ============= Signal file ============
-# frame contain : label, entry, button
-# signal frames
-signal_files_frame = tk.Frame(window)
-
-
-# ============================= Start the selection ======================
-label = tk.Label(window, text="Select an operation:",
-                 font=('Arial', 14))  # label
+    # ============= Signal file ============
+    # frame contain : label, entry, button
+    # signal frames
+    signal_files_frame = tk.Frame(window)
 
 
-# choice
-dropdown_var = tk.StringVar()
-
-# drop down list
-dropdown = Combobox(window,
-                    textvariable=dropdown_var,
-                    justify='center',
-                    font=('Arial', 10, 'bold'))
-# list
-dropdown['values'] = ("Addition",
-                      "Subtraction",
-                      "Multiplication",
-                      "Squaring",
-                      "Shifting",
-                      "Normalization",
-                      "Accumulation")
+    # ============================= Start the selection ======================
+    label = tk.Label(window, text="Select an operation:",
+                    font=('Arial', 14))  # label
 
 
-# conf
-dropdown.configure(height=5, width=30)
-# initinal
-dropdown.set("")
+    # choice
+    dropdown_var = tk.StringVar()
 
-# display
-label.pack(pady=10)
-dropdown.pack()
-
-# Bind the event to the selection
-dropdown.bind("<<ComboboxSelected>>", on_select)
-
-# ================= Display Button ==================
-
-buttons_frame = tk.Frame(window)
-display_button = Button(buttons_frame, text="Display",
-                        command=display_wave, width=36, padding=5)  # button
-# display
-display_button.grid(row=0)
-
-back_main_button = Button(buttons_frame, text="Back",
-                        command=lambda :hf.back_main_menu(window), width=36, padding=5)  # button
-# display
-back_main_button.grid(row=1)
-buttons_frame.pack()
+    # drop down list
+    dropdown = Combobox(window,
+                        textvariable=dropdown_var,
+                        justify='center',
+                        font=('Arial', 10, 'bold'))
+    # list
+    dropdown['values'] = ("Addition",
+                        "Subtraction",
+                        "Multiplication",
+                        "Squaring",
+                        "Shifting",
+                        "Normalization",
+                        "Accumulation")
 
 
-# ================= Constant ==================
-# frame
-constant_frame = tk.Frame(window)
+    # conf
+    dropdown.configure(height=5, width=30)
+    # initinal
+    dropdown.set("")
 
-constant_label = Label(constant_frame, text="Constant:",
-                       font=('Arial', 10))  # label
-constant_entry = Entry(constant_frame, width=39)  # entry
+    # display
+    label.pack(pady=10)
+    dropdown.pack()
 
-# ================= Normalization ==================
-# frame
-normalization_frame = tk.Frame(window)
+    # Bind the event to the selection
+    dropdown.bind("<<ComboboxSelected>>", on_select)
 
-# choice
-normalization_choice = tk.StringVar()
-normalization_choice.set("option1")  # Default selection
+    # ================= Display Button ==================
 
-# choice between 0 to 1 and -1 to 1
-# choice1
-option1_radio = tk.Radiobutton(
-    normalization_frame, text="0 to 1",
-    variable=normalization_choice, value="option1")
-# choice 2
-option2_radio = tk.Radiobutton(
-    normalization_frame, text="-1 to 1",
-    variable=normalization_choice, value="option2")
+    buttons_frame = tk.Frame(window)
+    display_button = Button(buttons_frame, text="Display",
+                            command=display_wave, width=36, padding=5)  # button
+    # display
+    display_button.grid(row=0)
 
-# display
-option1_radio.pack()
-option2_radio.pack()
-constant_label.pack()
-constant_entry.pack()
+    # display
 
-# =========== Addition and subtraction frames ============
-
-num_frame = tk.Frame(window)
-# number of signals
-signal_num_label = Label(
-    num_frame, text="# Files:", font=('Arial', 10))  # label
-signal_num_entry = Entry(num_frame)  # entry
-
-# button
-signal_num_button = Button(num_frame, text="Apply", command=lambda: create_signal_inputs(
-    int(cast_to_float(signal_num_entry.get()))))
-
-# display
-signal_num_label.grid(row=0, column=0)
-signal_num_entry.grid(row=0, column=1)
-signal_num_button.grid(row=0, column=2)
+    buttons_frame.pack()
 
 
- 
+    # ================= Constant ==================
+    # frame
+    constant_frame = tk.Frame(window)
+
+    constant_label = Label(constant_frame, text="Constant:",
+                        font=('Arial', 10))  # label
+    constant_entry = Entry(constant_frame, width=39)  # entry
+
+    # ================= Normalization ==================
+    # frame
+    normalization_frame = tk.Frame(window)
+
+    # choice
+    normalization_choice = tk.StringVar()
+    normalization_choice.set("option1")  # Default selection
+
+    # choice between 0 to 1 and -1 to 1
+    # choice1
+    option1_radio = tk.Radiobutton(
+        normalization_frame, text="0 to 1",
+        variable=normalization_choice, value="option1")
+    # choice 2
+    option2_radio = tk.Radiobutton(
+        normalization_frame, text="-1 to 1",
+        variable=normalization_choice, value="option2")
+
+    # display
+    option1_radio.pack()
+    option2_radio.pack()
+    constant_label.pack()
+    constant_entry.pack()
+
+    # =========== Addition and subtraction frames ============
+
+    num_frame = tk.Frame(window)
+    # number of signals
+    signal_num_label = Label(
+        num_frame, text="# Files:", font=('Arial', 10))  # label
+    signal_num_entry = Entry(num_frame)  # entry
+
+    # button
+    signal_num_button = Button(num_frame, text="Apply", command=lambda: create_signal_inputs(
+        int(cast_to_float(signal_num_entry.get()))))
+
+    # display
+    signal_num_label.grid(row=0, column=0)
+    signal_num_entry.grid(row=0, column=1)
+    signal_num_button.grid(row=0, column=2)
+
+
     
     
-def close_gui():
-    window.destroy()
-    main.start_gui()
 
-back_button = Button(window, text="Back", command=close_gui)
-back_button.pack()
-def start_gui():
-    window.mainloop()
-    
-start_gui()
+    back_button = Button(window,text="back",command=lambda:hf.switch_to_main(root,window))
+    back_button.pack()
+
 
 # Run the main loop
 

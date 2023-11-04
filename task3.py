@@ -148,77 +148,84 @@ def quntization():
 
     hf.draw(x1=x, y1=y, x2=x, y2=quantized_list, title='Quantization signal',
             label1='Original signal', label2='Quantized signal', type='both')
+    
+window= num_choice= bit_radio= level_radio=num_entry= num_frame= num_label=label= entry= button=buttons_frame=display_button=back_main_button = None
+
+def open_gui(root):
+    global window, num_choice, bit_radio, level_radio,num_entry, num_frame, num_label,label, entry, button,buttons_frame,display_button,back_main_button
+    global window
+    window = tk.Toplevel(root)
+    window.title("Quntization")
+    window.geometry("500x500")
+    # Program icon
+    icon = tk.PhotoImage(
+        file='signal.png')
+
+    window.iconphoto(True, icon)
 
 
-window = tk.Tk()
-window.title("Quntization")
-window.geometry("500x500")
-# Program icon
-icon = tk.PhotoImage(
-    file='signal.png')
+    # choice
+    # 0 : bits
+    # 1 : levels
 
-window.iconphoto(True, icon)
+    num_choice = tk.IntVar()
+    num_choice.set(0)
 
+    bit_radio = tk.Radiobutton(
+        window, text="Bits",
+        variable=num_choice, value=0, padx=9)
 
-# choice
-# 0 : bits
-# 1 : levels
+    # choice 2
+    level_radio = tk.Radiobutton(
+        window, text="Levels",
+        variable=num_choice, value=1)
 
-num_choice = tk.IntVar()
-num_choice.set(0)
+    # display
+    bit_radio.pack()
+    level_radio.pack()
 
-bit_radio = tk.Radiobutton(
-    window, text="Bits",
-    variable=num_choice, value=0, padx=9)
-
-# choice 2
-level_radio = tk.Radiobutton(
-    window, text="Levels",
-    variable=num_choice, value=1)
-
-# display
-bit_radio.pack()
-level_radio.pack()
-
-num_frame = tk.Frame(window)
-# number of levels/bits
-num_label = tk.Label(num_frame, text="#:", font=('Arial', 15))
-num_entry = tk.Entry(num_frame, width=36)
+    num_frame = tk.Frame(window)
+    # number of levels/bits
+    num_label = tk.Label(num_frame, text="#:", font=('Arial', 15))
+    num_entry = tk.Entry(num_frame, width=36)
 
 
-label = tk.Label(num_frame,
-                 text=f"File:",
-                 font=('Arial', 15))  # label
-entry = tk.Entry(num_frame, width=36)  # entry
-button = tk.Button(num_frame,
-                   text="Browse",
-                   command=open_file)  # button
+    label = tk.Label(num_frame,
+                    text=f"File:",
+                    font=('Arial', 15))  # label
+    entry = tk.Entry(num_frame, width=36)  # entry
+    button = tk.Button(num_frame,
+                    text="Browse",
+                    command=open_file)  # button
 
-# display
-num_label.grid(row=0, column=0)
-num_entry.grid(row=0, column=1)
-
-
-label.grid(row=1, column=0, padx=5)
-entry.grid(row=1, column=1, padx=5)
-button.grid(row=1, column=2)
-
-# display frame
-num_frame.pack()
+    # display
+    num_label.grid(row=0, column=0)
+    num_entry.grid(row=0, column=1)
 
 
-# ================= Display Button ==================
-buttons_frame = tk.Frame(window)
-display_button = Button(buttons_frame, text="Display",
-                        command=quntization, width=36, padding=5)  # button
-# display
-display_button.grid(row=0)
-back_main_button = Button(buttons_frame, text="Back",
-                        command=lambda :hf.back_main_menu(window), width=36, padding=5)  # button
-# display
-back_main_button.grid(row=1)
-buttons_frame.pack()
+    label.grid(row=1, column=0, padx=5)
+    entry.grid(row=1, column=1, padx=5)
+    button.grid(row=1, column=2)
 
+    # display frame
+    num_frame.pack()
+
+
+    # ================= Display Button ==================
+    buttons_frame = tk.Frame(window)
+    display_button = Button(buttons_frame, text="Display",
+                            command=quntization, width=36, padding=5)  # button
+    # display
+    display_button.grid(row=0)
+    # back_main_button = Button(buttons_frame, text="Back",
+    #                         command=lambda :hf.back_main_menu(window), width=36, padding=5)  # button
+
+   
+    # display
+    # back_main_button.grid(row=1)
+    buttons_frame.pack()
+    back_button = Button(window,text="back",command=lambda:hf.switch_to_main(root,window))
+    back_button.pack()
 
 # Run the main loop
-window.mainloop()
+# window.mainloop()

@@ -162,9 +162,10 @@ class SignalProcessing:
             hf.draw(x1=indicis_sin[:10], y1=wave_sin[:10], x2=indicis_cos[:10], y2=wave_cos[:10],
                     label1="Sin sinal", label2='Cos signal', type="both", title='Sin & Cos signals')
 
-    def gui_display(self):
+    def open_gui(self,root):
         # Create the main window
-        self.window = tk.Tk()
+        self.window = tk.Toplevel(root)
+
         self.window.title("Sine/Cosine Wave Viewer")
         self.window.geometry('700x700')
         # Create a label
@@ -234,11 +235,14 @@ class SignalProcessing:
             buttons_frame, text="Display", command=self.display_wave)
         single_display_button.grid(row=0)
 
-        back_main_button = tk.Button(buttons_frame, text="Back",
-                                  command=lambda: hf.back_main_menu(self.window))  # button
+      
         # display
-        back_main_button.grid(row=1)
         buttons_frame.pack()
+        
+        #back
+        back_button = tk.Button(self.window,text="back",command=lambda:hf.switch_to_main(root,self.window))
+        back_button.pack()
+        
         # Run the main loop
         self.window.mainloop()
 
@@ -253,4 +257,4 @@ signal.x_values, signal.y_values = hf.read_signal_file(
 # signal.plot_discrete()
 
 signal.read_input()
-signal.gui_display()
+

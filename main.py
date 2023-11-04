@@ -1,24 +1,30 @@
-import os
+
 import tkinter as tk
-import random
-from tkinter import filedialog
 from tkinter.ttk import *
-import helper_functions as hf
-import numpy as np
-import importlib
+
+# Now you can import the module or package
+import task1
 import task2
+import task3
+import task4
 
-def open_task(i=1):
-    main_window.destroy()
+main_window = None
 
-    
+
+def open_task(i):
+    global main_window
+    # Hide the main window
+    main_window.withdraw()
+    # Create a new top-level window
     if(i == 1):
-        task2.start_gui()
+        task1.signal.open_gui(main_window)
     elif(i == 2):
-        task2.start_gui()
+        task2.open_gui(main_window)  
+    elif(i == 3):
+        task3.open_gui(main_window)     
+    elif(i == 4):
+        task4.open_gui(main_window)       
     
-
-
 def create_task_button(N=1):
     for i in range(N):
         button = tk.Button(main_window,
@@ -27,9 +33,8 @@ def create_task_button(N=1):
         button.pack()
         
 # Create the main main_window
-main_window = None
 
-def start_gui():
+def start_program(n=1):
     global main_window
     main_window = tk.Tk()
     main_window.title("Main Menu")
@@ -40,7 +45,9 @@ def start_gui():
 
     main_window.iconphoto(True, icon)
 
-    number_of_tasks = 2
+    number_of_tasks = 4
     create_task_button(number_of_tasks)
     main_window.mainloop()
 
+
+start_program(4)
