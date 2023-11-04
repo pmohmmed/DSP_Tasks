@@ -6,8 +6,7 @@ from tkinter.ttk import *
 import helper_functions as hf
 import numpy as np
 
-
-
+import main
 
 # total files
 # list of lists ex: x[[file1], [file2], [file3]]
@@ -388,5 +387,19 @@ signal_num_entry.grid(row=0, column=1)
 signal_num_button.grid(row=0, column=2)
 
 
+ 
+    
+    
+def close_gui():
+    window.destroy()
+    main.start_gui()
+
+back_button = Button(window, text="Back", command=close_gui)
+back_button.pack()
+def start_gui():
+    window.mainloop()
+    
+start_gui()
+
 # Run the main loop
-window.mainloop()
+
