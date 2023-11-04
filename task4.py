@@ -1,119 +1,158 @@
+import os
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, filedialog
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from scipy.fftpack import fft, ifft
+import helper_functions as hf
+from tkinter.ttk import *
+
+x = None
+y = None
+def open_file(entry):
+
+    file_path = filedialog.askopenfilename()
+    if not file_path:
+        return
+    file_name = os.path.basename(file_path)
+
+    global x, y
+    x, y = hf.read_signal_file(path=file_path)
+    entry.delete(0, 'end')
+    entry.insert(0, file_name)
+
+def display_wave(dft_choice):
+    global x, y
+    apply_dft_idft(dft_choice)
+
+    if(dft_choice.get() == "dft"):
+        hf.draw(x1=x, y1=y,
+                title="DFT Signal", type="both",label1="Phase", label2="Amplitude")
+    else:
+        hf.draw(x1=x, y1=y,
+                title="Sampling Signal", type="both", label1="n", label2="x[n]")
+
+def modified_wave():
+    global x, y
+    apply_modify_signal()
+    hf.draw(x1=x, y1=y,
+            title="DFT Signal", type="both", label1="Phase", label2="Amplitude")
+def apply_dft_idft(dft_choice):
+    # here to implement your function
+    global x, y
+    if(dft_choice == "dft"):
+        hf.isPeriodic = 1
+    else:
+        hf.isPeriodic = 0
+    # todo
+def apply_modify_signal():
+    # here to implement your function
+    global x, y
+    # todo
 
 
-def apply_fft():
-    global signal, fs
-    fs = float(sampling_frequency_entry.get())
-    N = len(signal)
-    freq = np.fft.fftfreq(N, 1 / fs)
-    amplitude = np.abs(fft(signal))
-    phase = np.angle(fft(signal))
+window = tk.Tk()
+window.title("Frequency Domain Analysis")
+window.geometry("490x460")
+icon = tk.PhotoImage(
+    file='signal.png')
 
-    amplitude_entry.delete(0, 'end')
-    amplitude_entry.insert(0, amplitude)
-    phase_entry.delete(0, 'end')
-    phase_entry.insert(0, phase)
-
-    plot_fft(freq, amplitude, phase)
+window.iconphoto(True, icon)
 
 
-def plot_fft(freq, amplitude, phase):
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(6, 4))
-    ax1.plot(freq, amplitude)
-    ax1.set_ylabel('Amplitude')
-    ax2.plot(freq, phase)
-    ax2.set_ylabel('Phase')
-    ax2.set_xlabel('Frequency (Hz)')
+# frame
+dft_frame = tk.Frame(window,bg='lightblue')
+# ================= DFT_Choice ==================
+# choice
+dft_choice = tk.StringVar()
+dft_choice.set("dft")  # Default selection
+# choice between DFT and IDFT
+# choice1
+option1_radio = tk.Radiobutton(
+    dft_frame, text="DFT",
+    variable=dft_choice, value="dft")
+# choice 2
+option2_radio = tk.Radiobutton(
+    dft_frame, text="IDFT",
+    variable=dft_choice, value="idft")
+option1_radio.grid(row=0,columnspan=5)
+option2_radio.grid(row=1,columnspan=5)
 
-    canvas = FigureCanvasTkAgg(fig, master=fft_frame)
-    canvas_widget = canvas.get_tk_widget()
-    canvas_widget.grid(row=0, column=0)
-
-
-def modify_signal():
-    new_amplitude = eval(amplitude_entry.get())
-    new_phase = eval(phase_entry.get())
-
-    global signal
-    signal = new_amplitude * np.exp(1j * new_phase)
-    plot_signal()
-
-
-def plot_signal():
-    fig, ax = plt.subplots(figsize=(6, 4))
-    t = np.arange(0, len(signal)) / fs
-    ax.plot(t, np.real(signal))
-    ax.set_ylabel('Amplitude')
-    ax.set_xlabel('Time (s)')
-
-    canvas = FigureCanvasTkAgg(fig, master=signal_frame)
-    canvas_widget = canvas.get_tk_widget()
-    canvas_widget.grid(row=0, column=0)
-
-
-def reconstruct_signal():
-    global signal, fs
-    N = len(signal)
-    time_values = np.arange(N) / fs
-    reconstructed_signal = ifft(signal)
-    signal = reconstructed_signal
-    plot_signal()
+file_frame = tk.Frame(dft_frame)
+dft_label = tk.Label(file_frame,
+                 text="File:",
+                 font=('Arial', 10))  # label
+dft_entry = tk.Entry(file_frame,width=50)  # entry
+dft_button = tk.Button(file_frame,
+                   text="Browse",
+                   command=lambda e=dft_entry: open_file(e))  # button
+# display
+dft_label.grid(row=0, column=0)
+dft_entry.grid(row=0, column=1)
+dft_button.grid(row=0, column=2)
+file_frame.grid(row=2,pady=20)
 
 
-app = tk.Tk()
-app.title("Frequency Domain Analysis")
-app.geometry("800x600")
+
+display_button = tk.Button(dft_frame, text="Display",
+                        command=lambda :display_wave(dft_choice), width=50)  # button
+# display
+display_button.grid(row=3)
+dft_frame.grid(padx=50, pady=15)
 
 # Create frames
-input_frame = ttk.LabelFrame(app, text="Input Signal")
-input_frame.pack(pady=10)
+modify_frame = ttk.LabelFrame(window, text="Modify Signal")
 
-fft_frame = ttk.LabelFrame(app, text="FFT")
-fft_frame.pack(pady=10)
+select_label = tk.Label(modify_frame, text="Select an fundamental frequency:",
+                 font=('Arial', 13))  # label
+select_label.grid(row=0,columnspan=4)
 
-signal_frame = ttk.LabelFrame(app, text="Modified Signal")
-signal_frame.pack(pady=10)
+# choice
+dropdown_var = tk.StringVar()
 
-# Sampling frequency input
-sampling_frequency_label = ttk.Label(input_frame, text="Sampling Frequency (Hz):")
-sampling_frequency_label.grid(row=0, column=0)
-sampling_frequency_entry = ttk.Entry(input_frame)
-sampling_frequency_entry.grid(row=0, column=1)
+# drop down list
+fundamental_frequancies = Combobox(modify_frame,
+                    textvariable=dropdown_var,
+                    justify='center',
+                    font=('Arial', 10, 'bold'))
+fundamental_frequancies.grid(row=1,columnspan=4)
+# list
+fundamental_frequancies['values'] = (1, 2, 3, 4, 5, 6)
 
-# Signal modification inputs
-amplitude_label = ttk.Label(input_frame, text="Amplitude:")
-amplitude_label.grid(row=1, column=0)
-amplitude_entry = ttk.Entry(input_frame)
-amplitude_entry.grid(row=1, column=1)
+# conf
+fundamental_frequancies.configure(height=5, width=30)
+# initinal
+fundamental_frequancies.set("")
 
-phase_label = ttk.Label(input_frame, text="Phase:")
-phase_label.grid(row=2, column=0)
-phase_entry = ttk.Entry(input_frame)
-phase_entry.grid(row=2, column=1)
+inside_frame = tk.Frame(modify_frame)
 
-# Apply FFT button
-apply_fft_button = ttk.Button(input_frame, text="Apply FFT", command=apply_fft)
-apply_fft_button.grid(row=3, columnspan=2)
+A_label = tk.Label(inside_frame,
+                 text="A",
+                 font=('Arial', 10))  # Amplitude label
+Phase_label = tk.Label(inside_frame,
+                 text="Phase",
+                 font=('Arial', 10))  # Phase label
+A_entry = tk.Entry(inside_frame)  # Amplitude entry
+Phase_entry = tk.Entry(inside_frame)  # Phase entry
+A_label.grid(row=2, column=0)
+A_entry.grid(row=2, column=1)
+Phase_label.grid(row=2, column=2)
+Phase_entry.grid(row=2, column=3)
+inside_frame.grid(pady=20)
 
-# Modify Signal button
-modify_signal_button = ttk.Button(input_frame, text="Modify Signal", command=modify_signal)
-modify_signal_button.grid(row=4, columnspan=2)
+modify_button = tk.Button(modify_frame, text="Modify Signal",
+                        command=modified_wave, width=42)  # button
 
-# Reconstruct Signal button
-reconstruct_signal_button = ttk.Button(input_frame, text="Reconstruct Signal", command=reconstruct_signal)
-reconstruct_signal_button.grid(row=5, columnspan=2)
+modify_button.grid(row=3)
+modify_frame.grid(padx=50, pady=50)
 
-# Initial signal (Example: A single sinusoid)
-fs = 1000  # Default sampling frequency
-t = np.linspace(0, 1, fs, endpoint=False)
-signal = np.sin(2 * np.pi * 5 * t)  # A single sinusoid
+back_main_button = tk.Button(window, text="Back",
+                        command=lambda :hf.back_main_menu(window), width=50,bg="black",fg="white",font=('Arial',10, 'bold'))  # button
 
-# Plot initial signal
-plot_signal()
+back_main_button.grid(row=4)
 
-app.mainloop()
+
+
+
+window.mainloop()
