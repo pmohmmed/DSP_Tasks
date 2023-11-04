@@ -1,3 +1,5 @@
+import importlib
+
 import matplotlib.pyplot as plt
 import numpy as np
 signalType = 0
@@ -31,8 +33,8 @@ def draw(x1=[], y1=[], x2=None, y2=None, label1="", label2="", type="disctete", 
 
         count += 1
 
-    plt.xlabel('n')
-    plt.ylabel('x[n]')
+    plt.xlabel(label1)
+    plt.ylabel(label2)
     plt.title(title)
     plt.grid(True)
     if(count > 1):
@@ -127,3 +129,8 @@ def cast_to_(value, type='float'):
             return 0
     else:
         return 0
+
+def back_main_menu(window):
+    window.destroy()
+    import main
+    importlib.reload(main)
