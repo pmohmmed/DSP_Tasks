@@ -8,8 +8,8 @@ from scipy.fftpack import fft, ifft
 import helper_functions as hf
 from tkinter.ttk import *
 windwo = dft_frame = dft_choice = option1_radio = option2_radio = option1_radio = option2_radio = file_frame = dft_label = dft_entry = dft_button = display_button = modify_frame = select_label = dropdown_var = fundamental_frequancies = inside_frame = A_label = Phase_label = A_entry = Phase_entry = modify_button = None
-x = None
-y = None
+x_phase= y_phase=x_amplitude= y_amblitude=None
+
 def open_file(entry):
 
     file_path = filedialog.askopenfilename()
@@ -34,10 +34,11 @@ def display_wave(dft_choice):
                 title="Sampling Signal", type="both", label1="n", label2="x[n]")
 
 def modified_wave():
-    global x, y
-    apply_modify_signal()
-    hf.draw(x1=x, y1=y,
-            title="DFT Signal", type="both", label1="Phase", label2="Amplitude")
+    global x_phase, y_phase,x_amplitude, y_amblitude
+
+    apply_modification()
+    hf.draw(x1=x_phase, y1=y_phase,x2=x_amplitude, y2=y_amblitude,
+            title="DFT Signal", type="discrete", label1="Phase", label2="Amplitude")
 def apply_dft_idft(dft_choice):
     # here to implement your function
     global x, y
@@ -46,10 +47,36 @@ def apply_dft_idft(dft_choice):
     else:
         hf.isPeriodic = 0
     # todo
-def apply_modify_signal():
+def apply_modification():
     # here to implement your function
-    global x, y
-    # todo
+    global x_phase, y_phase,x_amplitude, y_amblitude, A_entry, Phase_entry, fundamental_frequancies
+    # #tmp
+    # ff = 6.28
+    # x_ = [0, 1 * ff, 2*ff, 3 *ff]
+    # x_phase = x_amplitude = x_
+    # y_phase = [0, -45, 0, 45]
+    # y_amblitude = [6, 2.8,  2, 2.8]
+    #end of tmp
+    if((x_phase is not None) and (x_amplitude is not None)):
+        a = hf.cast_to_(A_entry.get())
+        p = hf.cast_to_(Phase_entry.get())
+        
+        # git index of the selected fond
+        i = fundamental_frequancies.current()
+        f = 0
+        if (i!=0):
+            f = fundamental_frequancies.get()
+        y_phase[i] = p
+        y_amblitude[i] = a
+        return
+    print('X(k) signal is missing')
+    
+        
+
+    
+
+    
+
 
 
 def open_gui(root):
