@@ -9,8 +9,8 @@ import helper_functions as hf
 from tkinter.ttk import *
 windwo = dft_frame = dft_choice = option1_radio = option2_radio = option1_radio = option2_radio = file_frame = dft_label = dft_entry = dft_button = display_button = modify_frame = select_label = dropdown_var = fundamental_frequancies = inside_frame = A_label = Phase_label = A_entry = Phase_entry = modify_button = None
 x_phase= y_phase=x_amplitude= y_amblitude=None
-
-def open_file(entry):
+x = y = None
+def open_file(entry,dft_choice):
 
     file_path = filedialog.askopenfilename()
     if not file_path:
@@ -18,7 +18,14 @@ def open_file(entry):
     file_name = os.path.basename(file_path)
 
     global x, y
-    x, y = hf.read_signal_file(path=file_path)
+    if(dft_choice.get() == "DFT"):
+        x, y = hf.read_signal_file(path=file_path)
+        print("x = ", x)
+        print("y = ", y)
+    else:
+        x, y = hf.read_amplitude_phase_file(file_path=file_path)
+        print("(A) = ", x)
+        print("Phase = ", y)
     entry.delete(0, 'end')
     entry.insert(0, file_name)
 
@@ -26,12 +33,19 @@ def display_wave(dft_choice):
     global x, y
     apply_dft_idft(dft_choice)
 
-    if(dft_choice.get() == "dft"):
+    if(dft_choice.get() == "DFT"):
+        hf.isPeriodic = 1
         hf.draw(x1=x, y1=y,
                 title="DFT Signal", type="both",label1="Phase", label2="Amplitude")
+        # Format the numbers
+        x = [f'{i:.13f}f' for i in x]
+        y = [f'{i:.13f}f' for i in y]
+        hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=x, y=y)
     else:
+        hf.isPeriodic = 0
         hf.draw(x1=x, y1=y,
                 title="Sampling Signal", type="both", label1="n", label2="x[n]")
+        hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=x, y=y)
 
 def modified_wave():
     global x_phase, y_phase,x_amplitude, y_amblitude
@@ -42,11 +56,38 @@ def modified_wave():
 def apply_dft_idft(dft_choice):
     # here to implement your function
     global x, y
-    if(dft_choice == "dft"):
-        hf.isPeriodic = 1
+    if (dft_choice.get() == "DFT"):
+        x, y = dft(x_n=y, N=hf.N)
+        # # Format the numbers
+        # x = [f'{i:.13f}f' for i in x]
+        # y = [f'{i:.13f}f' for i in y]
+        # Print the results
+        print("(A) = ", x)
+        print("Phase = ", y)
     else:
-        hf.isPeriodic = 0
-    # todo
+        X_n = idft(amplitudes=x, phases=y, N=hf.N)
+        x = np.array(range(hf.N))
+        # Extract the real parts and store them in a list
+        y = [round(xn.real) for xn in X_n]
+        print("x = ", x)
+        print("y = ", y)
+def dft(x_n, N):
+    x_k = np.zeros(N, dtype=np.complex128)
+    for k in range(N):
+        x_k[k] = np.sum(x_n * np.exp(-1j * 2 * np.pi * k * np.arange(N) / N))
+    # Calculate amplitude and phase
+    amplitude = np.abs(x_k)
+    phase = np.angle(x_k)
+
+    return amplitude, phase
+
+# Function to calculate IDFT
+def idft(amplitudes, phases, N):
+    n = np.arange(N)
+    k = n.reshape((N, 1))
+    e = np.exp(1j * 2 * np.pi * k * n / N)
+    X_n = np.dot(e, amplitudes * np.exp(1j * phases))
+    return X_n / N
 def apply_modification():
     # here to implement your function
     global x_phase, y_phase,x_amplitude, y_amblitude, A_entry, Phase_entry, fundamental_frequancies
@@ -96,16 +137,16 @@ def open_gui(root):
     # ================= DFT_Choice ==================
     # choice
     dft_choice = tk.StringVar()
-    dft_choice.set("dft")  # Default selection
+    dft_choice.set("DFT")  # Default selection
     # choice between DFT and IDFT
     # choice1
     option1_radio = tk.Radiobutton(
         dft_frame, text="DFT",
-        variable=dft_choice, value="dft")
+        variable=dft_choice, value="DFT")
     # choice 2
     option2_radio = tk.Radiobutton(
         dft_frame, text="IDFT",
-        variable=dft_choice, value="idft")
+        variable=dft_choice, value="IDFT")
     option1_radio.grid(row=0,columnspan=5)
     option2_radio.grid(row=1,columnspan=5)
 
@@ -116,7 +157,7 @@ def open_gui(root):
     dft_entry = tk.Entry(file_frame,width=50)  # entry
     dft_button = tk.Button(file_frame,
                     text="Browse",
-                    command=lambda e=dft_entry: open_file(e))  # button
+                    command=lambda e=dft_entry: open_file(e,dft_choice=dft_choice))  # button
     # display
     dft_label.grid(row=0, column=0)
     dft_entry.grid(row=0, column=1)

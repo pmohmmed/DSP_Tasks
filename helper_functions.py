@@ -1,4 +1,5 @@
 import importlib
+import re
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -84,8 +85,8 @@ def read_signal_file(path='task1_data.signal1.txt'):
         x_values = None
         y_values = None
     else:
-
-        samples = [list(map(float, line.split(' ')))
+        # Split lines by both space (' ') or comma (',')
+        samples = [list(map(float, re.split(r'[ ,]+', line)))
                    for line in lines[3:]]
 
         samples = np.array(samples)
@@ -94,6 +95,27 @@ def read_signal_file(path='task1_data.signal1.txt'):
         y_values = samples[:, 1]
     file.close()
     return x_values, y_values
+
+def read_amplitude_phase_file(file_path):
+    global N, signalType, isPeriodic
+    amplitudes = []
+    phases = []
+
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
+    signalType = int(lines[0])
+    isPeriodic = int(lines[1])
+    N = int(lines[2])
+    for line in lines[3:]:
+        parts = line.strip().split(',')
+        amplitude = float(parts[0].replace('f', ''))
+        phase = float(parts[1].replace('f', ''))
+        amplitudes.append(amplitude)
+        phases.append(phase)
+    amplitudes = np.array(amplitudes)
+    phases = np.array(phases)
+    file.close()
+    return amplitudes, phases
 
 
 def write_file(file_name="", signalType=0, isPeriodic=0, N=0, x=[], y=[]):
