@@ -8,8 +8,8 @@ from scipy.fftpack import fft, ifft
 import helper_functions as hf
 from tkinter.ttk import *
 windwo = dft_frame = dft_choice = option1_radio = option2_radio = option1_radio = option2_radio = file_frame = dft_label = dft_entry = dft_button = display_button = modify_frame = select_label = dropdown_var = fundamental_frequancies = inside_frame = A_label = Phase_label = A_entry = Phase_entry = modify_button = None
-x_phase= y_phase=x_amplitude= y_amblitude=None
-x = y = None
+# x_phase= y_phase=x_amplitude= y_amblitude=None
+x = y = None #(amblitude, phase)
 def open_file(entry,dft_choice):
 
     file_path = filedialog.askopenfilename()
@@ -48,11 +48,12 @@ def display_wave(dft_choice):
         hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=x, y=y)
 
 def modified_wave():
-    global x_phase, y_phase,x_amplitude, y_amblitude
+    global x, y, x_amplitude, y_amblitude
 
     apply_modification()
-    hf.draw(x1=x_phase, y1=y_phase,x2=x_amplitude, y2=y_amblitude,
-            title="DFT Signal", type="discrete", label1="Phase", label2="Amplitude")
+    # hf.draw(x1=x_phase, y1=y_phase,x2=x_amplitude, y2=y_amblitude,
+    #         title="DFT Signal", type="discrete", label1="Phase", label2="Amplitude")
+   
 def apply_dft_idft(dft_choice):
     # here to implement your function
     global x, y
@@ -90,7 +91,7 @@ def idft(amplitudes, phases, N):
     return X_n / N
 def apply_modification():
     # here to implement your function
-    global x_phase, y_phase,x_amplitude, y_amblitude, A_entry, Phase_entry, fundamental_frequancies
+    global x,y, A_entry, Phase_entry, fundamental_frequancies
     # #tmp
     # ff = 6.28
     # x_ = [0, 1 * ff, 2*ff, 3 *ff]
@@ -98,7 +99,7 @@ def apply_modification():
     # y_phase = [0, -45, 0, 45]
     # y_amblitude = [6, 2.8,  2, 2.8]
     #end of tmp
-    if((x_phase is not None) and (x_amplitude is not None)):
+    if((x is not None) and (y is not None)):
         a = hf.cast_to_(A_entry.get())
         p = hf.cast_to_(Phase_entry.get())
         
@@ -107,8 +108,8 @@ def apply_modification():
         f = 0
         if (i!=0):
             f = fundamental_frequancies.get()
-        y_phase[i] = p
-        y_amblitude[i] = a
+        x[i] = a
+        y[i] = p
         return
     print('X(k) signal is missing')
     
@@ -147,9 +148,18 @@ def open_gui(root):
     option2_radio = tk.Radiobutton(
         dft_frame, text="IDFT",
         variable=dft_choice, value="IDFT")
+    
+    s_frequency_label = tk.Label(dft_frame,
+                    text="Fs",
+                    font=('Arial', 10))  # label
+    s_frequency_entry = tk.Entry(dft_frame,width=50)  # entry
+    
     option1_radio.grid(row=0,columnspan=5)
     option2_radio.grid(row=1,columnspan=5)
-
+    s_frequency_label.grid(row=2,column=0)
+    s_frequency_entry.grid(row=2,column=1)
+    
+    
     file_frame = tk.Frame(dft_frame)
     dft_label = tk.Label(file_frame,
                     text="File:",
