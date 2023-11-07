@@ -7,10 +7,12 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from scipy.fftpack import fft, ifft
 import helper_functions as hf
 from tkinter.ttk import *
+
 windwo = dft_frame = dft_choice = option1_radio = option2_radio = option1_radio = option2_radio = file_frame = dft_label = dft_entry = dft_button = display_button = modify_frame = select_label = dropdown_var = fundamental_frequancies = inside_frame = A_label = Phase_label = A_entry = Phase_entry = modify_button = None
 x_phase= y_phase=x_amplitude= y_amblitude=None
 x = y = None
 Amplitude = Phase = Frequences = None
+
 def open_file(entry,dft_choice):
 
     file_path = filedialog.askopenfilename()
@@ -41,21 +43,31 @@ def display_wave(dft_choice,Fs):
         hf.draw(x1=Frequences, y1=Phase,
                 title="DFT Signal", type="discrete", label1="frequency", label2="phase")
         # Format the numbers
-        Amplitude = [f'{i:.13f}f' for i in Amplitude]
-        Phase = [f'{i:.13f}f' for i in Phase]
-        hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=Amplitude, y=Phase)
+        Amplitude_ = [f'{i:.13f}f' for i in Amplitude]
+        Phase_ = [f'{i:.13f}f' for i in Phase]
+        hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=Amplitude_, y=Phase_)
     else:
         hf.isPeriodic = 0
         hf.draw(x1=x, y1=y,
                 title="Sampling Signal", type="both", label1="n", label2="x[n]")
         hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=x, y=y)
-
+    fundamental_frequancies['values'] = Frequences
 def modified_wave():
-    global x, y, x_amplitude, y_amblitude
+    global x, y, x_amplitude, y_amblitude, Amplitude, Phase, Frequences
 
     apply_modification()
-    hf.draw(x1=x_phase, y1=y_phase,x2=x_amplitude, y2=y_amblitude,
-            title="DFT Signal", type="discrete", label1="Phase", label2="Amplitude")
+    # print(f'Modify wave (amplit):{Amplitude}\after: {Phase}')
+    # print(f'Freq: {Frequences}')
+    
+    hf.draw(x1=Frequences, y1=Amplitude,
+                title="DFT Signal", type="discrete",label1="frequency", label2="amplitude")
+    hf.draw(x1=Frequences, y1=Phase,
+                title="DFT Signal", type="discrete", label1="frequency", label2="phase")
+    # hf.draw(x1=x_phase, y1=y_phase,x2=x_amplitude, y2=y_amblitude,
+    #         title="DFT Signal", type="discrete", label1="Phase", label2="Amplitude")
+    # hf.draw(x1= Frequences, y1= Amplitude, title='Amblitude', type='discrete')
+    # hf.draw(x1= Frequences, y1= Phase, title='phase', type='discrete')
+
 def apply_dft_idft(dft_choice,Fs):
     # here to implement your function
     global Amplitude, Phase, Frequences, x, y
@@ -100,7 +112,7 @@ def idft(amplitudes, phases, N):
     return X_n / N
 def apply_modification():
     # here to implement your function
-    global x,y, A_entry, Phase_entry, fundamental_frequancies
+    global x,y, A_entry, Phase_entry, fundamental_frequancies, Amplitude, Phase
     # #tmp
     # ff = 6.28
     # x_ = [0, 1 * ff, 2*ff, 3 *ff]
@@ -108,17 +120,28 @@ def apply_modification():
     # y_phase = [0, -45, 0, 45]
     # y_amblitude = [6, 2.8,  2, 2.8]
     #end of tmp
+
     if((x is not None) and (y is not None)):
         a = hf.cast_to_(A_entry.get())
         p = hf.cast_to_(Phase_entry.get())
+
         
         # git index of the selected fond
         i = fundamental_frequancies.current()
+
         f = 0
         if (i!=0):
+            print(3)
             f = fundamental_frequancies.get()
-        x[i] = a
-        y[i] = p
+
+        # print(type(Amplitude))
+        # print(type(Amplitude[i]))
+        Amplitude[i] = a
+        Phase[i] = p
+        # print(5)
+        # Phase[i] = str(p) + 'f'
+        # print(6)
+        
         return
     print('X(k) signal is missing')
     
