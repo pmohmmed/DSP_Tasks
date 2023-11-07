@@ -110,6 +110,7 @@ def idft(amplitudes, phases, N):
     e = np.exp(1j * 2 * np.pi * k * n / N)
     X_n = np.dot(e, amplitudes * np.exp(1j * phases))
     return X_n / N
+
 def apply_modification():
     # here to implement your function
     global x,y, A_entry, Phase_entry, fundamental_frequancies, Amplitude, Phase
