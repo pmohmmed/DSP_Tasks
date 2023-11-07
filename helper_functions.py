@@ -98,8 +98,8 @@ def read_signal_file(path='task1_data.signal1.txt'):
 
 def read_amplitude_phase_file(file_path):
     global N, signalType, isPeriodic
-    amplitudes = []
-    phases = []
+    x_values = []
+    y_values = []
 
     with open(file_path, 'r') as file:
         lines = file.readlines()
@@ -107,16 +107,17 @@ def read_amplitude_phase_file(file_path):
     isPeriodic = int(lines[1])
     N = int(lines[2])
     for line in lines[3:]:
-        parts = line.strip().split(',')
-        amplitude = float(parts[0].replace('f', ''))
-        phase = float(parts[1].replace('f', ''))
-        amplitudes.append(amplitude)
-        phases.append(phase)
-    amplitudes = np.array(amplitudes)
-    phases = np.array(phases)
+        parts = line.strip().replace('f', '').split(',')
+        if len(parts) == 1:
+            parts = line.strip().replace('f', '').split()  # Split by space if there's no comma
+        x = float(parts[0])
+        y = float(parts[1])
+        x_values.append(x)
+        y_values.append(y)
+    x_values = np.array(x_values)
+    y_values = np.array(y_values)
     file.close()
-    return amplitudes, phases
-
+    return x_values, y_values
 
 def write_file(file_name="", signalType=0, isPeriodic=0, N=0, x=[], y=[]):
     file_contents = ""

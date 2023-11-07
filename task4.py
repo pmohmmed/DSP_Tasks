@@ -22,7 +22,7 @@ def open_file(entry,dft_choice):
 
     global Amplitude, Phase, Frequences, x, y
     if(dft_choice.get() == "DFT"):
-        x, y = hf.read_signal_file(path=file_path)
+        x, y = hf.read_amplitude_phase_file(file_path=file_path)
         print("x = ", x)
         print("y = ", y)
     else:
