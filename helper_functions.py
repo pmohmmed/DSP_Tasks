@@ -70,52 +70,29 @@ def read_file(filename=""):
     return signalType, isPeriodic, N, values
 
 
-# def read_signal_file(path='task1_data.signal1.txt'):
-#     global N, signalType, isPeriodic
-
-#     with open(path, 'r') as file:
-#         lines = file.readlines()
-
-#     lines = [line.strip() for line in lines]
-
-#     signalType = int(lines[0])
-#     isPeriodic = int(lines[1])
-#     N = int(lines[2])
-#     if (N == 0):
-#         x_values = None
-#         y_values = None
-#     else:
-#         # Split lines by both space (' ') or comma (',')
-#         samples = [list(map(float, re.split(r'[ ,]+', line)))
-#                    for line in lines[3:]]
-
-#         samples = np.array(samples)
-
-#         x_values = samples[:, 0]
-#         y_values = samples[:, 1]
-#     file.close()
-#     return x_values, y_values
-
-def read_signal_file(file_path='task1_data.signal1.txt'):
+def read_signal_file(path='task1_data.signal1.txt'):
     global N, signalType, isPeriodic
-    x_values = []
-    y_values = []
 
-    with open(file_path, 'r') as file:
+    with open(path, 'r') as file:
         lines = file.readlines()
+
+    lines = [line.strip() for line in lines]
+
     signalType = int(lines[0])
     isPeriodic = int(lines[1])
     N = int(lines[2])
-    for line in lines[3:]:
-        parts = line.strip().replace('f', '').split(',')
-        if len(parts) == 1:
-            parts = line.strip().replace('f', '').split()  # Split by space if there's no comma
-        x = float(parts[0])
-        y = float(parts[1])
-        x_values.append(x)
-        y_values.append(y)
-    x_values = np.array(x_values)
-    y_values = np.array(y_values)
+    if (N == 0):
+        x_values = None
+        y_values = None
+    else:
+        # Split lines by both space (' ') or comma (',')
+        samples = [list(map(float, re.split(r'[ ,]+', line)))
+                   for line in lines[3:]]
+
+        samples = np.array(samples)
+
+        x_values = samples[:, 0]
+        y_values = samples[:, 1]
     file.close()
     return x_values, y_values
 def read_amplitude_phase_file(file_path):
