@@ -7,7 +7,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from scipy.fftpack import fft, ifft
 import helper_functions as hf
 from tkinter.ttk import *
-
+import task4_data.signalcompare as sc
+import task4_data
 windwo = dft_frame = dft_choice = option1_radio = option2_radio = option1_radio = option2_radio = file_frame = dft_label = dft_entry = dft_button = display_button = modify_frame = select_label = dropdown_var = fundamental_frequancies = inside_frame = A_label = Phase_label = A_entry = Phase_entry = modify_button = None
 x_phase= y_phase=x_amplitude= y_amblitude=None
 x = y = None
@@ -34,6 +35,7 @@ def open_file(entry,dft_choice):
 
 def display_wave(dft_choice,Fs):
     global Amplitude, Phase, Frequences, x, y
+    
     apply_dft_idft(dft_choice,Fs)
 
     if(dft_choice.get() == "DFT"):
@@ -42,9 +44,19 @@ def display_wave(dft_choice,Fs):
                 title="DFT Signal", type="discrete",label1="frequency", label2="amplitude")
         hf.draw(x1=Frequences, y1=Phase,
                 title="DFT Signal", type="discrete", label1="frequency", label2="phase")
+        amp_test, phase_test = hf.read_amplitude_phase_file('task4_data/IDFT/Input_Signal_IDFT_A,Phase.txt')
+        s1 = sc.SignalComapreAmplitude(np.round(amp_test,decimals=6),np.round(Amplitude,decimals=6))
+        s2= sc.SignalComaprePhaseShift(np.round(phase_test, decimals=6),np.round(Phase, decimals=6))
+        if(s1 == True):
+            print("pass 1")
+        if(s2 == True):
+            print("pass2")
+        
+        
         # Format the numbers
         Amplitude_ = [f'{i:.13f}f' for i in Amplitude]
         Phase_ = [f'{i:.13f}f' for i in Phase]
+        
         hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=Amplitude_, y=Phase_)
     else:
         hf.isPeriodic = 0
@@ -52,6 +64,8 @@ def display_wave(dft_choice,Fs):
                 title="Sampling Signal", type="both", label1="n", label2="x[n]")
         hf.write_file('output.txt', signalType=hf.signalType, isPeriodic=hf.isPeriodic, N=hf.N, x=x, y=y)
     fundamental_frequancies['values'] = Frequences
+    
+    
 def modified_wave():
     global x, y, x_amplitude, y_amblitude, Amplitude, Phase, Frequences
 
@@ -114,13 +128,7 @@ def idft(amplitudes, phases, N):
 def apply_modification():
     # here to implement your function
     global x,y, A_entry, Phase_entry, fundamental_frequancies, Amplitude, Phase
-    # #tmp
-    # ff = 6.28
-    # x_ = [0, 1 * ff, 2*ff, 3 *ff]
-    # x_phase = x_amplitude = x_
-    # y_phase = [0, -45, 0, 45]
-    # y_amblitude = [6, 2.8,  2, 2.8]
-    #end of tmp
+
 
     if((x is not None) and (y is not None)):
         a = hf.cast_to_(A_entry.get())
@@ -135,13 +143,10 @@ def apply_modification():
             print(3)
             f = fundamental_frequancies.get()
 
-        # print(type(Amplitude))
-        # print(type(Amplitude[i]))
+       
         Amplitude[i] = a
         Phase[i] = p
-        # print(5)
-        # Phase[i] = str(p) + 'f'
-        # print(6)
+     
         
         return
     print('X(k) signal is missing')

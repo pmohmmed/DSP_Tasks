@@ -7,6 +7,8 @@ def SignalComapreAmplitude(SignalInput = [] ,SignalOutput= []):
         return False
     else:
         for i in range(len(SignalInput)):
+            res = SignalInput[i]-SignalOutput[i]
+            print(f'oi:{abs(res)}, {SignalInput[i]}, {SignalOutput[i]}')
             if abs(SignalInput[i]-SignalOutput[i])>0.001:
                 return False
             elif SignalInput[i]!=SignalOutput[i]:
