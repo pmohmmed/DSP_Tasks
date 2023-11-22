@@ -8,7 +8,7 @@ isPeriodic = 0
 N = 0
 
 
-def draw(x1=[], y1=[], x2=None, y2=None, label1="", label2="", type="disctete", title='Signal'):
+def draw(x1=[], y1=[], x2=None, y2=None, label1="", label2="", type="discrete", title='Signal'):
     plt.close()
     plt.axhline(0, color='black')
     count = 0
