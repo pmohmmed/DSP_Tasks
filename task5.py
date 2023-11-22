@@ -67,7 +67,7 @@ def open_gui(root):
     function_type = StringVar()
     m = IntVar()
 
-    user_input_frame = Frame(window, bg='lightblue')
+    user_input_frame = Frame(window)
     # ================= Function_Choice ==================
     # choice
     function_type.set("dct")  # Default selection
@@ -86,24 +86,24 @@ def open_gui(root):
     m_entry = Entry(user_input_frame, textvariable=m, width=50)
 
     # apply the operations and display it
-    apply_button = Button(user_input_frame, text='Apply', command=calculate_operation, activeforeground='red', bg='lightblue')
+    apply_button = Button(user_input_frame, text='Apply', command=calculate_operation, width=30)
     # save the m coefficients in txt file
-    save_button = Button(user_input_frame, text='Save', command=calculate_operation, activeforeground='red', bg='lightblue')
+    save_button = Button(user_input_frame, text='Save', command=calculate_operation, width=30)
 
-    # option1_radio.grid(row=0, columnspan=5)
-    # option2_radio.grid(row=1, columnspan=5)
-    # dct_label.grid(row=2, column=0)
-    # dct_entry.grid(row=2, column=1)
-    # dct_button.grid(row=2, column=2)
-    # m_label.grid(row=3, column=0)
-    # m_entry.grid(row=3, column=1)
-    # apply_button.grid(row=4, column=0)
-    # save_button.grid(row=4, column=2)
+    option1_radio.grid(row=0, columnspan=5)
+    option2_radio.grid(row=1, columnspan=5)
+    dct_label.grid(row=2, column=0)
+    dct_entry.grid(row=2, column=1)
+    dct_button.grid(row=2, column=2)
+    m_label.grid(row=3, column=0)
+    m_entry.grid(row=3, column=1)
+    apply_button.grid(row=4, column=0, columnspan=3)
+    save_button.grid(row=5, column=0, columnspan=3)
 
     # back to main
-    back_button = Button(window, text='Back', command=lambda:hf.switch_to_main(root,window), activeforeground='red', width=50, bg='lightblue')
+    back_button = Button(window, text='Back', command=lambda:hf.switch_to_main(root,window), width=50)
 
-    # user_input_frame.grid(row=0, padx=90, pady=20)
-    back_button.pack()
+    user_input_frame.grid(row=0, padx=90, pady=20)
+    back_button.grid(row=1)
 
     window.mainloop()
