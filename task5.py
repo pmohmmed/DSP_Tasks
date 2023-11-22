@@ -8,31 +8,58 @@ from tkinter.ttk import *
 window = None
 function_type = None
 m_entry = 0
+m = 0
 
-Xn = Y = None
-
-
-
-def calculate_operation():
-    print('done')
+Xn = X = Y = None
 
 
 def open_file(entry):
-    global X, Y
+    global Xn, X
     file_path = filedialog.askopenfilename()
     if not file_path:
         return
 
     file_name = os.path.basename(file_path)
-    X, Y = hf.read_signal_file(path=file_path)
+    X, Xn = hf.read_signal_file(path=file_path)
 
     entry.delete(0, 'end')
     entry.insert(0, file_name)
 
     print('Xn: ', Xn)
-    print('Y: ', Y)
+    print('X: ', X)
+  
+
+def operation():
+    global Xn, X, Y
+    if(Xn is None or X is None):
+        return
+    if function_type.get() == 'dct':
+        Y = DCT(Xn)
+    else:
+        Y = remove_DC(Xn)
+        
+    hf.draw(x1 = X, y1 = Y, label1='DCT')
+        
+
+def apply_save():
+    if(Xn is None or X is None):
+        return
+    operation()
+    m = hf.cast_to_(m_entry.get(), type = 'int')
+    y_ = Y[:m, 0]
+    ispriodic = 0
     
+    if function_type.get() == 'dct':
+        ispriodic = 1
+        
+    hf.write_file('Output.txt', isPeriodic=ispriodic, N = m, x= np.arange(m), y = y_)
+    
+    
+    
+  
 def DCT(Xn):
+    global Y
+    
     Xn= np.array(Xn)
     
     N = Xn.size
@@ -41,15 +68,18 @@ def DCT(Xn):
     for k in range(N):
 
         Yk[k] = np.sqrt(2/N) * np.sum(Xn * np.cos(np.pi/(4*N)*(2*n-1)*(2*k - 1)))
-    return Yk
+    return Yk.reshape(N,1)
 
 
 def remove_DC(Xn):
+    global Y
     Xn = np.array(Xn)
-    mean = Xn.mean()
-    Y = Xn - mean
-    return Y
 
+    mean = Xn.mean()
+    print(2)
+    Y = Xn - mean
+
+    return Y.reshape(Xn.size,1)
 
 dct_x, dct_y = hf.read_signal_file(path='task5_data/DCT/DCT_input.txt')
 dc_x, dc_y = hf.read_signal_file(path='task5_data/RM_DC/DC_component_input.txt')
@@ -57,11 +87,11 @@ dc_x, dc_y = hf.read_signal_file(path='task5_data/RM_DC/DC_component_input.txt')
 
 
 def open_gui(root):
-    global window, function_type,m_entry
+    global window, function_type,m_entry, m
     
     window = Toplevel(root)
-    window.title("BachPropagation Task")
-    window.geometry("600x500")
+    window.title("Task 5")
+    window.geometry("800x500")
     icon = PhotoImage(
         file='signal.png')
     function_type = StringVar()
@@ -89,6 +119,9 @@ def open_gui(root):
     apply_button = Button(user_input_frame, text='Apply', command=calculate_operation, width=30)
     # save the m coefficients in txt file
     save_button = Button(user_input_frame, text='Save', command=calculate_operation, width=30)
+    apply_button = Button(user_input_frame, text='Apply', command=operation, width=30)
+    # save the m coefficients in txt file
+    save_button = Button(user_input_frame, text='Apply And Save', command=apply_save, width=30)
 
     option1_radio.grid(row=0, columnspan=5)
     option2_radio.grid(row=1, columnspan=5)
@@ -105,5 +138,13 @@ def open_gui(root):
 
     user_input_frame.grid(row=0, padx=90, pady=20)
     back_button.grid(row=1)
+    apply_button.grid(row=4, columnspan = 3)
+    save_button.grid(row=5, columnspan= 3)
+
+    # back to main
+    back_button = Button(window, text='Back', command=lambda:hf.switch_to_main(root,window))
+
+    user_input_frame.grid(row=0, padx=90, pady=20)
+
 
     window.mainloop()
