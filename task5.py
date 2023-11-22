@@ -116,11 +116,8 @@ def open_gui(root):
     m_entry = Entry(user_input_frame, textvariable=m, width=50)
 
     # apply the operations and display it
-    apply_button = Button(user_input_frame, text='Apply', command=calculate_operation, width=30)
-    # save the m coefficients in txt file
-    save_button = Button(user_input_frame, text='Save', command=calculate_operation, width=30)
     apply_button = Button(user_input_frame, text='Apply', command=operation, width=30)
-    # save the m coefficients in txt file
+    # apply and save the m coefficients in txt file
     save_button = Button(user_input_frame, text='Apply And Save', command=apply_save, width=30)
 
     option1_radio.grid(row=0, columnspan=5)
