@@ -7,6 +7,7 @@ import task1
 import task2
 import task3
 import task4
+import task5
 
 main_window = None
 
@@ -23,7 +24,9 @@ def open_task(i):
     elif(i == 3):
         task3.open_gui(main_window)     
     elif(i == 4):
-        task4.open_gui(main_window)       
+        task4.open_gui(main_window)
+    elif(i == 5):
+        task5.open_gui(main_window)       
     
 def create_task_button(N=1):
     for i in range(N):
@@ -34,7 +37,7 @@ def create_task_button(N=1):
         
 # Create the main main_window
 
-def start_program(n=1):
+def start_program(number_of_tasks=1):
     global main_window
     main_window = tk.Tk()
     main_window.title("Main Menu")
@@ -45,9 +48,8 @@ def start_program(n=1):
 
     main_window.iconphoto(True, icon)
 
-    number_of_tasks = 4
     create_task_button(number_of_tasks)
     main_window.mainloop()
 
 
-start_program(4)
+start_program(5)
