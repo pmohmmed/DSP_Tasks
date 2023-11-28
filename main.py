@@ -8,6 +8,7 @@ import task2
 import task3
 import task4
 import task5
+import task6
 
 main_window = None
 
@@ -26,7 +27,9 @@ def open_task(i):
     elif(i == 4):
         task4.open_gui(main_window)
     elif(i == 5):
-        task5.open_gui(main_window)       
+        task5.open_gui(main_window)   
+    elif(i == 6):
+        task6.open_gui(main_window)       
     
 def create_task_button(N=1):
     for i in range(N):
@@ -52,4 +55,4 @@ def start_program(number_of_tasks=1):
     main_window.mainloop()
 
 
-start_program(5)
+start_program(6)

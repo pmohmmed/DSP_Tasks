@@ -28,10 +28,10 @@ def operation():
         return
     if function_type.get() == 'dct':
         Y = DCT(Xn)
-        compare.SignalSamplesAreEqual('task5_data\\DCT\\DCT_output.txt', Y)
+        compare.SignalSamplesAreEqual('task5_data/DCT/DCT_output.txt', Y)
     else:
         Y = remove_DC(Xn)
-        compare.SignalSamplesAreEqual('task5_data\\RM_DC\\DC_component_output.txt', Y)
+        compare.SignalSamplesAreEqual('task5_data/RM_DC/DC_component_output.txt', Y)
     hf.draw(x1 = X, y1 = Y, label1='DCT')
         
 
