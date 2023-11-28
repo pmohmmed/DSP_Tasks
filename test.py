@@ -1,45 +1,41 @@
-import math
-import numpy as np
+from helper_functions import *
+from task6_data.TestCases.Derivative_Updated.DerivativeSignal import *
 
-# Define the time-domain signal x(n)
-x_n = [1,3,5,7,9,11,13,15]
-A = np.array([64.0, 20.9050074380220, 11.3137084989848, 8.65913760233915, 8, 8.65913760233915, 11.3137084989848, 20.9050074380220])
-Phase = np.array([0.0, 1.96349540849362, 2.35619449019235, 2.74889357189107, -3.14159265358979, -2.74889357189107, -2.35619449019235, -1.96349540849362])
-N = 8
-varia = input("Enter type of operation: ")
+# # this is first phase
+# def Smoothing(x, k):
+#     out_from_smooth = []
+#     for i in range(len(x) - k + 1):
+#         temp_sum = 0
+#         for j in range(k):
+#             temp_sum += x[i + j]
+#         out_from_smooth.append(format(temp_sum / k, '.6f'))
+#     return out_from_smooth
+# x, y = read_signal_file('task2_data/input/Signal1.txt')
+# x2 , y2 = read_signal_file('task2_data/input/Signal2.txt')
+#
+# x_x = Smoothing(y, 3)
+# print(x_x)
+# print(len(x_x))
+# x_x2 = Smoothing(y2, 5)
+# print(x_x2)
+# print(len(x_x2))
 
+# # this the second phase
+# DerivativeSignal()
 
-def dft(x_n, N):
-    x_k = np.zeros(N, dtype=np.complex128)
-    for k in range(N):
-        x_k[k] = np.sum(x_n * np.exp(-1j * 2 * np.pi * k * np.arange(N) / N))
-    # Calculate amplitude and phase
-    amplitude = np.abs(x_k)
-    phase = np.angle(x_k)
+# # this is fourth phase
+# def Folding_a_signal(x, y):
+#     output_signals = {}
+#     signal_map = {}
+#     for i in range(len(x)):
+#         signal_map[x[i]] = y[i]
+#     for i, j in signal_map.items():
+#         output_signals[int(i)] = int(signal_map[-int(i)])
+#     return list(output_signals.keys()), list(output_signals.values())
+#
+# x, y = read_signal_file('task6_data/TestCases/Shifting_and_Folding/input_fold.txt')
+# reX, reY = Folding_a_signal(x,y)
+# print(reX)
+# print(reY)
 
-    return amplitude, phase
-
-# Function to calculate IDFT
-def idft(amplitudes, phases, N):
-    n = np.arange(N)
-    k = n.reshape((N, 1))
-    e = np.exp(1j * 2 * np.pi * k * n / N)
-    X_n = np.dot(e, amplitudes * np.exp(1j * phases))
-    return X_n / N
-
-if(varia == "DFT"):
-    x, y = dft(x_n=x_n,N=N)
-    # Format the numbers
-    x = [f'{i:.13f}f' for i in x]
-    y = [f'{i:.13f}f' for i in y]
-    # Print the results
-    print("(A) = ", x)
-    print("Phase = ", y)
-else:
-    X_n = idft(amplitudes=A,phases=Phase,N=N)
-    x = np.array(range(N))
-    # Extract the real parts and store them in a list
-    y = [round(xn.real) for xn in X_n]
-    print("x = ",x)
-    print("y = ",y)
 
