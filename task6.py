@@ -55,8 +55,11 @@ def apply_feature():
     selected_item = dropdown_var.get()
     if(selected_item == "Smoothing"):
         window_size =hf.cast_to_(num_entry.get(),'int')
+        
         x_values_smooth, y_values_smooth = Smoothing(n=x_values, x_n=y_values, window_size=window_size)
         # hf.draw(x1=list(x_values),y1=y_values,label1="n",label2='y[n]',type='discrete',title='Smoothing Signals')
+        print("smoothed:\n ", y_values_smooth)
+        
         if(file_name == 'Signal2.txt'):
             print('Test on Smoothing on Signal2 ...')
             compare.SignalSamplesAreEqual(file_name='task6_data/TestCases/Moving_Average/OutMovAvgTest2.txt', samples=y_values_smooth)
@@ -92,6 +95,7 @@ def Smoothing(n, x_n, window_size):
         sum = 0
         for j in range(window_size):
             sum += x_n[i + j]
+            
         y_n.append(round(float(sum / window_size), 6))
     return n, y_n
 
