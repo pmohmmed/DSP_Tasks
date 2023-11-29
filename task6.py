@@ -110,6 +110,7 @@ def Smoothing(n, x_n, window_size):
 def Shifting(n, x_n, k):
     new_x = [a + k for a in n]
     return new_x, x_n
+
 def Folding(n, x_n):
     output_signals = {}
     signal_map = {}
@@ -117,6 +118,8 @@ def Folding(n, x_n):
         signal_map[n[i]] = x_n[i]
     for i, j in signal_map.items():
         output_signals[int(i)] = int(signal_map[-int(i)])
+    print("keys: ", list(output_signals.keys()))
+    print("values: ", list(output_signals.values()))
     return list(output_signals.keys()), list(output_signals.values())
 
 def Folding_with_Shifting (n, x_n, k):
