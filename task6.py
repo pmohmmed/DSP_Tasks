@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import filedialog
 import numpy as np
 import helper_functions as hf
+import time
 from task4 import *
 from tkinter.ttk import *
 import task5_data.comparesignal2 as compare
@@ -62,17 +63,21 @@ def apply_feature():
         
         if(file_name == 'Signal2.txt'):
             print('Test on Smoothing on Signal2 ...')
+            time.sleep(3)
             compare.SignalSamplesAreEqual(file_name='task6_data/TestCases/Moving_Average/OutMovAvgTest2.txt', samples=y_values_smooth)
         else:
             print('Test on Smoothing on Signal1 ...')
+            time.sleep(3)
             compare.SignalSamplesAreEqual(file_name='task6_data/TestCases/Moving_Average/OutMovAvgTest1.txt', samples=y_values_smooth)
     elif(selected_item == "Sharpening"):
         print('Test Sharpening ...')
+        time.sleep(3)
         DerivativeSignal()
 
     elif(selected_item == "Folding"):
         x_values_fold, y_values_fold = Folding(n=x_values, x_n=y_values)
         print('Test on Folding ...')
+        time.sleep(3)
         Shift_Fold_Signal(file_name='task6_data/TestCases/Shifting_and_Folding/Output_fold.txt', Your_indices=x_values_fold, Your_samples=y_values_fold)
         
     elif(selected_item == "Shifted Folded Signal"):
@@ -80,13 +85,16 @@ def apply_feature():
         x_values_fold_shif, y_values_fold_shift = Folding_with_Shifting(n=x_values, x_n=y_values, k=k)
         if(k < 0):
             print('Test on Folding with Shifting when k = -500 ...')
+            time.sleep(3)
             Shift_Fold_Signal(file_name='task6_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
         else:
             print('Test on Folding with Shifting when k = 500 ...')
+            time.sleep(3)
             Shift_Fold_Signal(file_name='task6_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt', Your_indices=x_values_fold_shif,Your_samples=y_values_fold_shift)
     elif(selected_item == "Remove Dc"):
         x_values_remove_ds, y_values_remove_ds = Remove_DC(n=x_values, x_n=y_values)
         print('Test on Remove_DC ...')
+        time.sleep(3)
         compare.SignalSamplesAreEqual(file_name='task5_data/RM_DC/DC_component_output.txt', samples=y_values_remove_ds)
 
 def Smoothing(n, x_n, window_size):
