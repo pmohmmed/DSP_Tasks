@@ -33,8 +33,11 @@ def open_task(i):
     
 def create_task_button(N=1):
     for i in range(N):
+        k = i + 1
+        if(k == 6):
+            k = "6 & 7"
         button = tk.Button(main_window,
-                           text=f"Task{i+1}",
+                           text=f"Task {k}",
                            command=lambda e = i+1: open_task(e))  # button
         button.pack()
         
