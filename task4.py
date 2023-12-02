@@ -111,6 +111,7 @@ def dft(x_n, N):
     x_k = np.zeros(N, dtype=np.complex128)
     for k in range(N):
         x_k[k] = np.sum(x_n * np.exp(-1j * 2 * np.pi * k * np.arange(N) / N))
+    
     # Calculate amplitude and phase
     amplitude = np.abs(x_k)
     phase = np.angle(x_k)
