@@ -78,69 +78,69 @@
 # # x, fin_out = Remove_DC(xx,yy)
 # # print(x)
 # # print(fin_out)
-import numpy as np
-min = 0 + 0
-max = 5 + 3
-indices = np.arange(min, max+1)
-print("indices: ", indices)
-for index in indices:
-    print(index)
-def Convolve(signal_x,signal_y, filter_x, filter_y):
-    map_x= {key: value for key, value in zip(signal_x, signal_y)}
-    map_h = {key: value for key, value in zip(filter_x, filter_y)}
-
-    min_h = filter_x[0]
-    max_h = filter_x[-1]
-    
-    min_x = signal_x[0]
-    max_x = signal_x[-1]
-    
-    min = min_h + min_x
-    max = max_h + max_x
-    
-    indices = np.arange(min, max+1)
-    
-    samples = []
-    print("indices: ", indices)
-    print(map_x)
-    print(map_h)
-    print('\n\n\n')
-    print(f"min_x: {min_x}, min_y: {max_x}, min_h: {min_h}, max_h: {max_h}")
-    for n in indices:
-
-        sum = 0
-        i_x, i_h = 0, 0
-        k = signal_x[0]
-        print(f"y[{n}]:")
-        while True:
-            
-            i_x = k 
-            i_h = n - k
-            
-            if (i_x< min_x or i_h > max_h):
-                k+=1
-                continue
-            if (i_x > max_x or i_h < min_h):
-                break
-            print(f"\ni_x: {i_x}, i_h = {i_h}")
-            
-            # i = np.where(indices == i_x)[0][0]
-            # j = np.where(indices == i_h)[0][0]
-            # print(map_x[i_x], ", ", map_h[i_h])
-           
-            
-            sum += map_x[i_x] * map_h[i_h]
-            k+=1 
-            
-        samples.append(sum)
-
-    print("res: ")
-    print(int(samples))
-    print(int(indices))
-
-    
-x = [-2,-1,0,1]
-y = [1,2,1,1]
-f_x = [0,1,2,3,4,5]
-f_y = [1,-1,0,0,1,1]
-Convolve(x,y,f_x, f_y)
+# import numpy as np
+# min = 0 + 0
+# max = 5 + 3
+# indices = np.arange(min, max+1)
+# print("indices: ", indices)
+# for index in indices:
+#     print(index)
+# def Convolve(signal_x,signal_y, filter_x, filter_y):
+#     map_x= {key: value for key, value in zip(signal_x, signal_y)}
+#     map_h = {key: value for key, value in zip(filter_x, filter_y)}
+#
+#     min_h = filter_x[0]
+#     max_h = filter_x[-1]
+#
+#     min_x = signal_x[0]
+#     max_x = signal_x[-1]
+#
+#     min = min_h + min_x
+#     max = max_h + max_x
+#
+#     indices = np.arange(min, max+1)
+#
+#     samples = []
+#     print("indices: ", indices)
+#     print(map_x)
+#     print(map_h)
+#     print('\n\n\n')
+#     print(f"min_x: {min_x}, min_y: {max_x}, min_h: {min_h}, max_h: {max_h}")
+#     for n in indices:
+#
+#         sum = 0
+#         i_x, i_h = 0, 0
+#         k = signal_x[0]
+#         print(f"y[{n}]:")
+#         while True:
+#
+#             i_x = k
+#             i_h = n - k
+#
+#             if (i_x< min_x or i_h > max_h):
+#                 k+=1
+#                 continue
+#             if (i_x > max_x or i_h < min_h):
+#                 break
+#             print(f"\ni_x: {i_x}, i_h = {i_h}")
+#
+#             # i = np.where(indices == i_x)[0][0]
+#             # j = np.where(indices == i_h)[0][0]
+#             # print(map_x[i_x], ", ", map_h[i_h])
+#
+#
+#             sum += map_x[i_x] * map_h[i_h]
+#             k+=1
+#
+#         samples.append(sum)
+#
+#     print("res: ")
+#     print(int(samples))
+#     print(int(indices))
+#
+#
+# x = [-2,-1,0,1]
+# y = [1,2,1,1]
+# f_x = [0,1,2,3,4,5]
+# f_y = [1,-1,0,0,1,1]
+# Convolve(x,y,f_x, f_y)
