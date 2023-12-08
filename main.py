@@ -23,7 +23,7 @@ def open_task(i):
     elif(i == 2):
         task2.open_gui(main_window)  
     elif(i == 3):
-        task3.open_gui(main_window)     
+        task3.open_gui(main_window)
     elif(i == 4):
         task4.open_gui(main_window)
     elif(i == 5):
