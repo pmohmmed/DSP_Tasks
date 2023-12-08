@@ -1,15 +1,16 @@
+import math
 import os
 from tkinter import *
 from tkinter import filedialog
-import numpy as np
 import helper_functions as hf
 import time
 from task4 import *
 from tkinter.ttk import *
 import task5_data.comparesignal2 as compare
-from task6_data.TestCases.Derivative_Updated.DerivativeSignal import DerivativeSignal
-from task6_data.TestCases.Shifting_and_Folding.Shift_Fold_Signal import Shift_Fold_Signal
-from task6_data.TestCases.Convolution import ConvTest
+from task6_7_8_data.TestCases.Derivative_Updated.DerivativeSignal import DerivativeSignal
+from task6_7_8_data.TestCases.Shifting_and_Folding.Shift_Fold_Signal import Shift_Fold_Signal
+from task6_7_8_data.TestCases.Convolution import ConvTest
+from task6_7_8_data.TestCases.Point1_Correlation import CompareSignal
 dropdown_var = num_entry = num_label =signal_f_entry=x_values=y_values=file_name= filter_f_label =filter_f_entry =filter_f_button=file_frame_2 = file_frame = None
 filter_x =  filter_y = None
 def open_file():
@@ -89,11 +90,11 @@ def apply_feature():
         if(file_name == 'Signal2.txt'):
             print('Test on Smoothing on Signal2 ...')
             time.sleep(3)
-            compare.SignalSamplesAreEqual(file_name='task6_data/TestCases/Moving_Average/OutMovAvgTest2.txt', samples=y_values_smooth)
+            compare.SignalSamplesAreEqual(file_name='task6_7_8_data/TestCases/Moving_Average/OutMovAvgTest2.txt', samples=y_values_smooth)
         else:
             print('Test on Smoothing on Signal1 ...')
             time.sleep(3)
-            compare.SignalSamplesAreEqual(file_name='task6_data/TestCases/Moving_Average/OutMovAvgTest1.txt', samples=y_values_smooth)
+            compare.SignalSamplesAreEqual(file_name='task6_7_8_data/TestCases/Moving_Average/OutMovAvgTest1.txt', samples=y_values_smooth)
     elif(selected_item == "Sharpening"):
         print('Test Sharpening ...')
         time.sleep(3)
@@ -103,7 +104,7 @@ def apply_feature():
         x_values_fold, y_values_fold = Folding(n=x_values, x_n=y_values)
         print('Test on Folding ...')
         time.sleep(3)
-        Shift_Fold_Signal(file_name='task6_data/TestCases/Shifting_and_Folding/Output_fold.txt', Your_indices=x_values_fold, Your_samples=y_values_fold)
+        Shift_Fold_Signal(file_name='task6_7_8_data/TestCases/Shifting_and_Folding/Output_fold.txt', Your_indices=x_values_fold, Your_samples=y_values_fold)
         
     elif(selected_item == "Shifted Folded Signal"):
         k = hf.cast_to_(num_entry.get(), 'int')
@@ -111,11 +112,11 @@ def apply_feature():
         if(k < 0):
             print('Test on Folding with Shifting when k = -500 ...')
             time.sleep(3)
-            Shift_Fold_Signal(file_name='task6_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
+            Shift_Fold_Signal(file_name='task6_7_8_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
         else:
             print('Test on Folding with Shifting when k = 500 ...')
             time.sleep(3)
-            Shift_Fold_Signal(file_name='task6_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt', Your_indices=x_values_fold_shif,Your_samples=y_values_fold_shift)
+            Shift_Fold_Signal(file_name='task6_7_8_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
     elif(selected_item == "Remove Dc"):
         x_values_remove_ds, y_values_remove_ds = Remove_DC(n=x_values, x_n=y_values)
         print('Test on Remove_DC ...')
@@ -126,6 +127,11 @@ def apply_feature():
         print('Test on Convulotion ...')
         time.sleep(3)
         ConvTest.ConvTest(indices, samples_convoloved)
+    elif (selected_item == "Correlation"):
+        indices, samples_correlate = Correlate(signal_x=x_values, signal_y=y_values, filter_y=filter_y)
+        print('Test on Correlation ...')
+        time.sleep(3)
+        CompareSignal.Compare_Signals(file_name='task6_7_8_data/TestCases/Point1_Correlation/CorrOutput.txt', Your_indices=indices, Your_samples=samples_correlate)
         
         
         
@@ -171,45 +177,54 @@ def Remove_DC(n, x_n):
 def Convolve(signal_x,signal_y, filter_x, filter_y):
     map_x= {key: value for key, value in zip(signal_x, signal_y)}
     map_h = {key: value for key, value in zip(filter_x, filter_y)}
-
     min_h = filter_x[0]
     max_h = filter_x[-1]
-    
     min_x = signal_x[0]
     max_x = signal_x[-1]
-    
     min = min_h + min_x
     max = max_h + max_x
-    
     indices = np.arange(min, max+1)
     samples = []
-
     for n in indices:
-
         sum = 0
         i_x, i_h = 0, 0
         k = signal_x[0]
-
         while True:
-            
             i_x = k 
             i_h = n - k
-            
             #[0, 1, 2, 3] [0, 1, 2, 3, 4, 5, 6]
             #[1, 2, 1, 1] [1, -1, 0, 0, 1, 1]
-            
             if (i_x< min_x or i_h > max_h):
                 k+=1
                 continue
             if (i_x > max_x or i_h < min_h):
                 break
-            
             sum += int(map_x[i_x] * map_h[i_h])
-            k+=1 
-            
+            k+=1
         samples.append(sum)
     return indices, samples
 
+def shift_list(lst):
+    return np.concatenate((lst[1:], lst[:1]))
+def average_correlation(lst1,lst2):
+    lst1 = np.array(lst1)
+    lst2 = np.array(lst2)
+    lst1_square = np.sum(lst1 ** 2)
+    lst2_square = np.sum(lst2 ** 2)
+    mul = lst1_square*lst2_square
+    return math.sqrt(mul)/len(lst1)
+
+def Correlate(signal_x,signal_y, filter_y):
+    samples = []
+    length = len(signal_x)
+    for i in range(length):
+        corr = 0
+        for j in range(length):
+            corr += signal_y[j]*filter_y[j]
+        corr = corr/length
+        samples.append(corr/average_correlation(signal_y,filter_y))
+        filter_y = shift_list(filter_y)
+    return signal_x, samples
         
         
     

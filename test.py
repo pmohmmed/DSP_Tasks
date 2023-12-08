@@ -1,7 +1,11 @@
 # from helper_functions import *
 # from task4 import *
 # import numpy as np
-# from task6_data.TestCases.Derivative_Updated.DerivativeSignal import *
+# from task6_7_8_data.TestCases.Derivative_Updated.DerivativeSignal import *
+# import math
+
+# import numpy as np
+
 
 # # # this is first phase
 # # def Smoothing(x, k):
@@ -44,7 +48,7 @@
 #     print("values: ", list(output_signals.values()))
 #     return list(output_signals.keys()), list(output_signals.values())
 
-# # x, y = read_signal_file('task6_data/TestCases/Shifting_and_Folding/input_fold.txt')
+# # x, y = read_signal_file('task6_7_8_data/TestCases/Shifting_and_Folding/input_fold.txt')
 # x = [-2,-1,0,1,2]
 # y = [1, 2,5, -2, -1]
 # reX, reY = Folding_a_signal(x,y)
@@ -144,3 +148,33 @@
 # f_x = [0,1,2,3,4,5]
 # f_y = [1,-1,0,0,1,1]
 # Convolve(x,y,f_x, f_y)
+
+# def shift_list(lst):
+#     return np.concatenate((lst[1:], lst[:1]))
+# def average_correlation(lst1,lst2):
+#     lst1 = np.array(lst1)
+#     lst2 = np.array(lst2)
+#     lst1_square = np.sum(lst1 ** 2)
+#     lst2_square = np.sum(lst2 ** 2)
+#     mul = lst1_square*lst2_square
+#     return math.sqrt(mul)/len(lst1)
+#
+# def Correlate(signal_x,signal_y, filter_y):
+#     samples = []
+#     length = len(signal_x)
+#     print(length)
+#     print(signal_y)
+#     print(filter_y)
+#     for i in range(length):
+#         corr = 0
+#         for j in range(length):
+#             corr += signal_y[j]*filter_y[j]
+#         corr = corr/length
+#         samples.append(corr/average_correlation(signal_y,filter_y))
+#         filter_y = shift_list(filter_y)
+#         print(filter_y)
+#     return signal_x, samples
+#
+# x,y=Correlate(signal_x=[0,1,2,3,4],signal_y=[2,1,0,0,3],filter_y=[3,2,1,1,5])
+# print(x)
+# print(y)
