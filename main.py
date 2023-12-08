@@ -35,7 +35,7 @@ def create_task_button(N=1):
     for i in range(N):
         k = i + 1
         if(k == 6):
-            k = "6 & 7"
+            k = "(6 , 7, 8)"
         button = tk.Button(main_window,
                            text=f"Task {k}",
                            command=lambda e = i+1: open_task(e))  # button

@@ -53,7 +53,7 @@ def on_select(e):
         window_size_display()
     elif(selected_item == "Shifted Folded Signal"):
         k_display()
-    elif(selected_item == "Convulotion"):
+    elif(selected_item == "Convulotion" or selected_item == "Correlation"):
         filter_disply()
 
     apply_button.pack()
@@ -195,6 +195,9 @@ def Convolve(signal_x,signal_y, filter_x, filter_y):
             i_x = k 
             i_h = n - k
             
+            #[0, 1, 2, 3] [0, 1, 2, 3, 4, 5, 6]
+            #[1, 2, 1, 1] [1, -1, 0, 0, 1, 1]
+            
             if (i_x< min_x or i_h > max_h):
                 k+=1
                 continue
@@ -214,7 +217,7 @@ def open_gui(root):
     global window, dropdown_var,num_label ,num_entry,apply_button,signal_f_entry,filter_f_label ,filter_f_entry ,filter_f_button, file_frame_2, file_frame
     
     window = Toplevel(root)
-    window.title("Task 6 & 7")
+    window.title("Task ( 6 , 7 , 8 )")
     window.geometry("800x500")
     icon = PhotoImage(
         file='signal.png')
@@ -237,7 +240,7 @@ def open_gui(root):
                         font=('Arial', 10, 'bold'))
     # list
     dropdown['values'] = ("Smoothing", "Sharpening",
-               "Folding", "Shifted Folded Signal", "Remove Dc", "Convulotion")
+               "Folding", "Shifted Folded Signal", "Remove Dc", "Convulotion", "Correlation")
     
   # conf
     dropdown.configure(height=5, width=30)
