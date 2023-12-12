@@ -6,22 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c03d5e3a-64d4-4f91-8319-0ff6a523f77d" name="Changes" comment="add only some samples in fun draw.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6.py" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Convolution/ConvTest.py" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Convolution/ConvTest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Convolution/Input_conv_Sig1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Convolution/Input_conv_Sig1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Convolution/Input_conv_Sig2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Convolution/Input_conv_Sig2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Derivative_Updated/DerivativeSignal.py" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Derivative_Updated/DerivativeSignal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Moving_Average/Instructions.docx" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Moving_Average/Instructions.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Moving_Average/OutMovAvgTest1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Moving_Average/OutMovAvgTest1.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Moving_Average/OutMovAvgTest2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Moving_Average/OutMovAvgTest2.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Remove DC.docx" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Remove DC.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Shifting_and_Folding/Output_fold.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Shifting_and_Folding/Output_fold.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Shifting_and_Folding/Shift_Fold_Signal.py" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Shifting_and_Folding/Shift_Fold_Signal.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/task6_data/TestCases/Shifting_and_Folding/input_fold.txt" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8_data/TestCases/Shifting_and_Folding/input_fold.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task6_7_8.py" beforeDir="false" afterPath="$PROJECT_DIR$/task6_7_8.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/task6_7_8_data/TestCases/Point1_Correlation/CorrOutput.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
