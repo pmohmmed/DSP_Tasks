@@ -131,7 +131,7 @@ def apply_feature():
         indices, samples_correlate = Correlate(signal_x=x_values, signal_y=y_values, filter_y=filter_y)
         print('Test on Correlation ...')
         time.sleep(3)
-        CompareSignal.Compare_Signals(file_name='task6_7_8_data/TestCases/Point1_Correlation/Corr_Output.txt', Your_indices=indices, Your_samples=samples_correlate)
+        CompareSignal.Compare_Signals(file_name='task6_7_8_data/TestCases/Point1_Correlation/CorrOutput.txt', Your_indices=indices, Your_samples=samples_correlate)
         
         
         
@@ -222,7 +222,7 @@ def Correlate(signal_x,signal_y, filter_y):
         for j in range(length):
             corr += signal_y[j]*filter_y[j]
         corr = corr/length
-        samples.append(corr)
+        samples.append(corr/average_correlation(signal_y,filter_y))
         filter_y = shift_list(filter_y)
     return signal_x, samples
         
