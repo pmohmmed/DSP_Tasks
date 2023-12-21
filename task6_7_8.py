@@ -212,6 +212,7 @@ def average_correlation(lst1,lst2):
     lst1_square = np.sum(lst1 ** 2)
     lst2_square = np.sum(lst2 ** 2)
     mul = lst1_square*lst2_square
+    
     return math.sqrt(mul)/len(lst1)
 
 def Correlate(signal_x,signal_y, filter_y):
@@ -222,8 +223,10 @@ def Correlate(signal_x,signal_y, filter_y):
         for j in range(length):
             corr += signal_y[j]*filter_y[j]
         corr = corr/length
+        corr /= average_correlation(signal_y, filter_y)
         samples.append(corr)
         filter_y = shift_list(filter_y)
+    print(samples)
     return signal_x, samples
         
         
