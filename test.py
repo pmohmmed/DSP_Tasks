@@ -178,3 +178,30 @@
 # x,y=Correlate(signal_x=[0,1,2,3,4],signal_y=[2,1,0,0,3],filter_y=[3,2,1,1,5])
 # print(x)
 # print(y)
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Given points
+points = np.array([[-2, 1], [-1, 2], [0, 1], [1, 1]])
+
+# Extract time and amplitude
+time = points[:, 0]
+amplitude = points[:, 1]
+
+# Plot the given points
+plt.stem(time, amplitude, basefmt='k', use_line_collection=True)
+plt.xlabel('Time')
+plt.ylabel('Amplitude')
+plt.title('Given Signal Points')
+plt.show()
+
+# Perform FFT
+fft_result = np.fft.fft(amplitude)
+freq = np.fft.fftfreq(len(fft_result), d=(time[1] - time[0]))
+
+# Plot the frequency spectrum
+plt.stem(freq, np.abs(fft_result), basefmt='k', use_line_collection=True)
+plt.xlabel('Frequency')
+plt.ylabel('Amplitude')
+plt.title('Frequency Spectrum')
+plt.show()
