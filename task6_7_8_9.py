@@ -2,15 +2,18 @@ import math
 import os
 from tkinter import *
 from tkinter import filedialog
+
+import numpy as np
+
 import helper_functions as hf
 import time
 from task4 import *
 from tkinter.ttk import *
 import task5_data.comparesignal2 as compare
-from task6_7_8_data.TestCases.Derivative_Updated.DerivativeSignal import DerivativeSignal
-from task6_7_8_data.TestCases.Shifting_and_Folding.Shift_Fold_Signal import Shift_Fold_Signal
-from task6_7_8_data.TestCases.Convolution import ConvTest
-from task6_7_8_data.TestCases.Point1_Correlation import CompareSignal
+from task6_7_8_9_data.TestCases.Derivative_Updated.DerivativeSignal import DerivativeSignal
+from task6_7_8_9_data.TestCases.Shifting_and_Folding.Shift_Fold_Signal import Shift_Fold_Signal
+from task6_7_8_9_data.TestCases.Convolution import ConvTest
+from task6_7_8_9_data.TestCases.Point1_Correlation import CompareSignal
 dropdown_var = num_entry = num_label =signal_f_entry=x_values=y_values=file_name= filter_f_label =filter_f_entry =filter_f_button=file_frame_2 = file_frame = None
 filter_x =  filter_y = None
 def open_file():
@@ -54,7 +57,7 @@ def on_select(e):
         window_size_display()
     elif(selected_item == "Shifted Folded Signal"):
         k_display()
-    elif(selected_item == "Convulotion" or selected_item == "Correlation"):
+    elif(selected_item == "Convolution" or selected_item == "Correlation" or selected_item == "Fast Convolution" or selected_item == "Fast Correlation"):
         filter_disply()
 
     apply_button.pack()
@@ -90,11 +93,11 @@ def apply_feature():
         if(file_name == 'Signal2.txt'):
             print('Test on Smoothing on Signal2 ...')
             time.sleep(3)
-            compare.SignalSamplesAreEqual(file_name='task6_7_8_data/TestCases/Moving_Average/OutMovAvgTest2.txt', samples=y_values_smooth)
+            compare.SignalSamplesAreEqual(file_name='task6_7_8_9_data/TestCases/Moving_Average/OutMovAvgTest2.txt', samples=y_values_smooth)
         else:
             print('Test on Smoothing on Signal1 ...')
             time.sleep(3)
-            compare.SignalSamplesAreEqual(file_name='task6_7_8_data/TestCases/Moving_Average/OutMovAvgTest1.txt', samples=y_values_smooth)
+            compare.SignalSamplesAreEqual(file_name='task6_7_8_9_data/TestCases/Moving_Average/OutMovAvgTest1.txt', samples=y_values_smooth)
     elif(selected_item == "Sharpening"):
         print('Test Sharpening ...')
         time.sleep(3)
@@ -104,7 +107,7 @@ def apply_feature():
         x_values_fold, y_values_fold = Folding(n=x_values, x_n=y_values)
         print('Test on Folding ...')
         time.sleep(3)
-        Shift_Fold_Signal(file_name='task6_7_8_data/TestCases/Shifting_and_Folding/Output_fold.txt', Your_indices=x_values_fold, Your_samples=y_values_fold)
+        Shift_Fold_Signal(file_name='task6_7_8_9_data/TestCases/Shifting_and_Folding/Output_fold.txt', Your_indices=x_values_fold, Your_samples=y_values_fold)
         
     elif(selected_item == "Shifted Folded Signal"):
         k = hf.cast_to_(num_entry.get(), 'int')
@@ -112,29 +115,38 @@ def apply_feature():
         if(k < 0):
             print('Test on Folding with Shifting when k = -500 ...')
             time.sleep(3)
-            Shift_Fold_Signal(file_name='task6_7_8_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
+            Shift_Fold_Signal(file_name='task6_7_8_9_data/TestCases/Shifting_and_Folding/Output_ShiftFoldedby-500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
         else:
             print('Test on Folding with Shifting when k = 500 ...')
             time.sleep(3)
-            Shift_Fold_Signal(file_name='task6_7_8_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
+            Shift_Fold_Signal(file_name='task6_7_8_9_data/TestCases/Shifting_and_Folding/Output_ShifFoldedby500.txt', Your_indices=x_values_fold_shif, Your_samples=y_values_fold_shift)
     elif(selected_item == "Remove Dc"):
         x_values_remove_ds, y_values_remove_ds = Remove_DC(n=x_values, x_n=y_values)
         print('Test on Remove_DC ...')
         time.sleep(3)
         compare.SignalSamplesAreEqual(file_name='task5_data/RM_DC/DC_component_output.txt', samples=y_values_remove_ds)
-    elif(selected_item == "Convulotion"):
+    elif(selected_item == "Convolution"):
         indices, samples_convoloved = Convolve(signal_x=x_values, signal_y=y_values, filter_x=filter_x, filter_y=filter_y)
-        print('Test on Convulotion ...')
+        print('Test on Convolution ...')
         time.sleep(3)
         ConvTest.ConvTest(indices, samples_convoloved)
     elif (selected_item == "Correlation"):
         indices, samples_correlate = Correlate(signal_x=x_values, signal_y=y_values, filter_y=filter_y)
         print('Test on Correlation ...')
         time.sleep(3)
-        CompareSignal.Compare_Signals(file_name='task6_7_8_data/TestCases/Point1_Correlation/CorrOutput.txt', Your_indices=indices, Your_samples=samples_correlate)
-        
-        
-        
+        CompareSignal.Compare_Signals(file_name='task6_7_8_9_data/TestCases/Point1_Correlation/CorrOutput.txt', Your_indices=indices, Your_samples=samples_correlate)
+    elif (selected_item == "Fast Convolution"):
+        indices, samples_fast_convolved = fastConvolve(signal_x=x_values, signal_y=y_values, filter_x=filter_x, filter_y=filter_y)
+        print('Test on Fast Convolution ...')
+        time.sleep(3)
+        ConvTest.ConvTest(indices, samples_fast_convolved)
+    elif (selected_item == "Fast Correlation"):
+        indices, samples_fast_correlate = fastCorrelate(signal_x=x_values, signal_y=y_values, filter_x=filter_x, filter_y=filter_y)
+        print('Test on Fast Correlation ...')
+        time.sleep(3)
+        CompareSignal.Compare_Signals(file_name='task6_7_8_9_data/TestCases/Fast_Correlation/Corr_Output.txt',
+                                      Your_indices=indices, Your_samples=samples_fast_correlate)
+
 
 def Smoothing(n, x_n, window_size):
     y_n = []
@@ -165,14 +177,13 @@ def Folding_with_Shifting (n, x_n, k):
     return output_signals_x, output_signals_y
 
 def Remove_DC(n, x_n):
-    
     amplitude, phase = dft(x_n, len(n))
     amplitude[0] = np.abs(complex(0, 0))
     phase[0] = np.angle(complex(0, 0))
     final_output = idft(amplitude, phase, len(n))
+    print(final_output)
     final_output = [np.round(z, 3) for z in final_output]
     final_output = [value.real for value in final_output]
-   
     return n, final_output
 def Convolve(signal_x,signal_y, filter_x, filter_y):
     map_x= {key: value for key, value in zip(signal_x, signal_y)}
@@ -225,7 +236,36 @@ def Correlate(signal_x,signal_y, filter_y):
         samples.append(corr/average_correlation(signal_y,filter_y))
         filter_y = shift_list(filter_y)
     return signal_x, samples
-        
+
+def pad_signal(signal, newLength):
+    length_padding = newLength - len(signal)
+    padded_signal = np.pad(signal, (0, length_padding), 'constant')
+    return padded_signal
+def polar_to_complex(amplitude, phase):
+    real_part = amplitude * np.cos(phase)
+    imag_part = amplitude * np.sin(phase)
+    complex_signal = real_part + 1j * imag_part
+    return complex_signal
+def fastConvolve(signal_x,signal_y, filter_x, filter_y):
+    min = signal_x[0] + filter_x[0]
+    max = signal_x[-1] + filter_x[-1]
+    indices = np.arange(min, max + 1)
+    N1 = len(signal_x)
+    N2 = len(filter_x)
+    newLength = N1 + N2 - 1
+    signal_y = pad_signal(signal_y,newLength)
+    filter_y = pad_signal(filter_y,newLength)
+    amplitude_signal, phase_signal = dft(signal_y, len(signal_y))
+    amplitude_filter, phase_filter = dft(filter_y, len(filter_y))
+    complex_signal = polar_to_complex(amplitude_signal, phase_signal)
+    complex_filter = polar_to_complex(amplitude_filter, phase_filter)
+    multi_harmonic = complex_signal*complex_filter
+    amplitude = np.abs(multi_harmonic)
+    phase = np.angle(multi_harmonic)
+    final_result = np.round(idft(amplitude, phase, len(amplitude)).real) + 0
+    return indices, final_result
+def fastCorrelate(signal_x,signal_y, filter_x, filter_y):
+    print('plapla')
         
     
 def open_gui(root):
@@ -255,7 +295,7 @@ def open_gui(root):
                         font=('Arial', 10, 'bold'))
     # list
     dropdown['values'] = ("Smoothing", "Sharpening",
-               "Folding", "Shifted Folded Signal", "Remove Dc", "Convulotion", "Correlation")
+               "Folding", "Shifted Folded Signal", "Remove Dc", "Convolution", "Correlation", "Fast Convolution", "Fast Correlation")
     
   # conf
     dropdown.configure(height=5, width=30)

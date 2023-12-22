@@ -1,10 +1,10 @@
 # from helper_functions import *
-# from task4 import *
+from task4 import *
 # import numpy as np
-# from task6_7_8_data.TestCases.Derivative_Updated.DerivativeSignal import *
+# from task6_7_8_9_data.TestCases.Derivative_Updated.DerivativeSignal import *
 # import math
 
-# import numpy as np
+import numpy as np
 
 
 # # # this is first phase
@@ -48,7 +48,7 @@
 #     print("values: ", list(output_signals.values()))
 #     return list(output_signals.keys()), list(output_signals.values())
 
-# # x, y = read_signal_file('task6_7_8_data/TestCases/Shifting_and_Folding/input_fold.txt')
+# # x, y = read_signal_file('task6_7_8_9_data/TestCases/Shifting_and_Folding/input_fold.txt')
 # x = [-2,-1,0,1,2]
 # y = [1, 2,5, -2, -1]
 # reX, reY = Folding_a_signal(x,y)
@@ -178,3 +178,43 @@
 # x,y=Correlate(signal_x=[0,1,2,3,4],signal_y=[2,1,0,0,3],filter_y=[3,2,1,1,5])
 # print(x)
 # print(y)
+
+
+def pad_signal(signal, newLength):
+    length_padding = newLength - len(signal)
+    padded_signal = np.pad(signal, (0, length_padding), 'constant')
+    return padded_signal
+def polar_to_complex(amplitude, phase):
+    real_part = amplitude * np.cos(phase)
+    imag_part = amplitude * np.sin(phase)
+    complex_signal = real_part + 1j * imag_part
+    return complex_signal
+def fastConvolve(signal_x,signal_y, filter_x, filter_y):
+    N1 = len(signal_x)
+    N2 = len(filter_x)
+    newLength = N1 + N2 - 1
+    signal_y = pad_signal(signal_y,newLength)
+    filter_y = pad_signal(filter_y,newLength)
+    amplitude_signal, phase_signal = dft(signal_y, len(signal_y))
+    amplitude_filter, phase_filter = dft(filter_y, len(filter_y))
+    complex_signal = polar_to_complex(amplitude_signal, phase_signal)
+    complex_filter = polar_to_complex(amplitude_filter, phase_filter)
+    multi_harmonic = complex_signal*complex_filter
+    print(multi_harmonic)
+    amplitude = np.abs(multi_harmonic)
+    phase = np.angle(multi_harmonic)
+    print(amplitude)
+    print(phase)
+    final_result = np.round(idft(amplitude, phase, len(amplitude)).real) + 0
+    return final_result
+
+
+
+# Example usage
+x_values = [-2, -1, 0, 1]
+y_values = [1, 2, 1, 1]
+filter_x = [0, 1, 2, 3, 4, 5]
+filter_y = [1, -1, 0, 0, 1, 1]
+
+
+fastConvolve(x_values, y_values, filter_x, filter_y)
