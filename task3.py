@@ -64,52 +64,13 @@ def quntization():
     mid_points = np.zeros(levels)
 
     n = min
+    #calculate mid points
     for i in range(levels):
 
         mid_points[i] = ((n + (n+delta)) / 2)
         n = n+delta
-    for i in range(hf.N):
-        y_tmp = np.abs(mid_points - y[i])
-        min_indices = np.where(y_tmp == np.min(y_tmp))[0]
-        min_index = min_indices[0]
-        interval_index[i] = min_index
-
-    # for i in range(hf.N):
-    #     y_tmp = np.abs(mid_points - y[i])
-    #     min_indices = np.where(y_tmp == np.min(y_tmp))[0]
-    #     min_index = min_indices[0]
-    #     interval_index[i] = min_index
-
-    # for i in range(hf.N):
-    #     y_tmp = np.abs(mid_points - y[i])
-    #     min_indx = 0
-    #     min_val = 100000000
-    #     print("iteration: ", i+1)
-    #     print(y_tmp)
-    #     for j in range(levels):
-    #         print(f'min: {min_val}, new: {y_tmp[j]}')
-
-    #         if(y_tmp[j] < min_val):
-    #             print('here')
-    #             min_val = y_tmp[j]
-    #             min_indx = j
-
-    #     interval_index[i] = min_indx
-    # for i in range(hf.N):
-    #     y_tmp = np.abs(mid_points - y[i])
-    #     min_indx = 0
-    #     min_val = np.finfo(float).max
-    #     print("iteration: ", i+1)
-    #     print(y_tmp)
-    #     for j in range(levels):
-    #         print(f'min: {min_val}, new: {y_tmp[j]}')
-    #         if y_tmp[j] < min_val:
-    #             print('here')
-    #             min_val = y_tmp[j]
-    #             min_indx = j
-
-    #     interval_index[i] = min_indx
-
+        
+    # update interval index
     for i in range(hf.N):
         y_tmp = np.abs(mid_points - y[i])
         min_indx = 0
@@ -122,6 +83,7 @@ def quntization():
                 min_indx = j
 
         interval_index[i] = min_indx
+    print(f"interval_index: {interval_index}")
 
     bits = int(np.ceil((np.log2(levels))))
 

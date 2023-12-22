@@ -233,9 +233,16 @@ def Shifting():
 
     if (y is None) or (y == []):
         return None, None
-
+    print('here')
+    # print(x.shape)
+    print('before x: ', x)
+    print('x[0]: ', x[0])
     x_ = x[0] + constant
-
+    print('after x: ', x)
+    print('x[0]: ', x[0])
+    
+    
+    print()
     hf.write_file(
         "output.txt", hf.signalType,
         hf.isPeriodic,

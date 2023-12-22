@@ -144,9 +144,11 @@ def apply_modification():
             print(3)
             f = fundamental_frequancies.get()
 
-       
+        diff = p - Phase[i]
         Amplitude[i] = a
         Phase[i] = p
+       
+        Phase[(-i -1)] = Phase[(-i -1)] - diff
      
         
         return

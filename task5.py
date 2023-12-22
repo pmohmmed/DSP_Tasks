@@ -40,7 +40,9 @@ def apply_save():
         return
     operation()
     m = hf.cast_to_(m_entry.get(), type = 'int')
+    print('before: ',Y)
     y_ = Y[:m, 0]
+    print('after: ', y_)
     ispriodic = 0
     if function_type.get() == 'dct':
         ispriodic = 1
