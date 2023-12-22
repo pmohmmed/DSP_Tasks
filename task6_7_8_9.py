@@ -141,7 +141,7 @@ def apply_feature():
         time.sleep(3)
         ConvTest.ConvTest(indices, samples_fast_convolved)
     elif (selected_item == "Fast Correlation"):
-        indices, samples_fast_correlate = fastCorrelate(signal_x=x_values, signal_y=y_values, filter_x=filter_x, filter_y=filter_y)
+        indices, samples_fast_correlate = fastCorrelate(signal_x_1=x_values, signal_y_1=y_values, signal_x_2=filter_x, signal_y_2=filter_y)
         print('Test on Fast Correlation ...')
         time.sleep(3)
         CompareSignal.Compare_Signals(file_name='task6_7_8_9_data/TestCases/Fast_Correlation/Corr_Output.txt',
@@ -185,6 +185,7 @@ def Remove_DC(n, x_n):
     final_output = [np.round(z, 3) for z in final_output]
     final_output = [value.real for value in final_output]
     return n, final_output
+
 def Convolve(signal_x,signal_y, filter_x, filter_y):
     map_x= {key: value for key, value in zip(signal_x, signal_y)}
     map_h = {key: value for key, value in zip(filter_x, filter_y)}
@@ -249,25 +250,50 @@ def polar_to_complex(amplitude, phase):
     complex_signal = real_part + 1j * imag_part
     return complex_signal
 def fastConvolve(signal_x,signal_y, filter_x, filter_y):
+    
     min = signal_x[0] + filter_x[0]
     max = signal_x[-1] + filter_x[-1]
+    
     indices = np.arange(min, max + 1)
     N1 = len(signal_x)
     N2 = len(filter_x)
+    
     newLength = N1 + N2 - 1
     signal_y = pad_signal(signal_y,newLength)
     filter_y = pad_signal(filter_y,newLength)
+    
     amplitude_signal, phase_signal = dft(signal_y, len(signal_y))
     amplitude_filter, phase_filter = dft(filter_y, len(filter_y))
+    
     complex_signal = polar_to_complex(amplitude_signal, phase_signal)
     complex_filter = polar_to_complex(amplitude_filter, phase_filter)
+    
     multi_harmonic = complex_signal*complex_filter
+    
     amplitude = np.abs(multi_harmonic)
     phase = np.angle(multi_harmonic)
+    
     final_result = np.round(idft(amplitude, phase, len(amplitude)).real) + 0
+    
     return indices, final_result
-def fastCorrelate(signal_x,signal_y, filter_x, filter_y):
-    print('plapla')
+
+def fastCorrelate(signal_x_1,signal_y_1, signal_x_2, signal_y_2):
+    amplitude_signal, phase_signal = dft(signal_y_1, len(signal_y_1))
+    amplitude_2, phase_2 = dft(signal_y_2, len(signal_y_2))
+    
+    X_1 = polar_to_complex(amplitude_signal, phase_signal)
+    X_2 = polar_to_complex(amplitude_2, phase_2)
+    
+    X_star = np.conjugate(X_1)
+    
+    
+    mul = np.round((X_2 * X_star))
+    amplitude = np.abs(mul)
+    phase = np.angle(mul)
+    final_result = np.round(idft(amplitude, phase, len(amplitude)).real) + 0
+    final_result /= len(signal_y_1)
+
+    return signal_x_1, final_result
         
     
 def open_gui(root):
